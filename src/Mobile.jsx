@@ -152,3 +152,157 @@ export default function Mobile() {
         );
         batteryObj.removeEventListener("chargingchange", () =>
           updateBattery(batteryObj),
+        );
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleUnlock = () => setIsUnlocked(true);
+  const handleLock = () => setIsUnlocked(false);
+
+  const hours = currentTime.getHours() % 12 || 12;
+  const minutes = currentTime.getMinutes().toString().padStart(2, "0");
+  const formattedTime = `${hours}:${minutes}`;
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-0 sm:p-4 overflow-hidden select-none">
+      {!isUnlocked ? (
+        <IosBootAndLock onUnlock={handleUnlock} />
+      ) : (
+        <div className="relative w-full sm:w-[390px] h-screen sm:h-[844px] sm:rounded-[50px] bg-black shadow-2xl overflow-hidden border-0 outline-none flex flex-col justify-start">
+          {/* iOS Blurred Background */}
+          <div
+            className="absolute inset-0 bg-cover bg-center scale-105"
+            style={{
+              backgroundImage: `url(${mobileWallpaper})`,
+              filter: "blur(25px) brightness(0.92)",
+            }}
+          />
+
+          {/* MAIN HOME GRID CONTENT */}
+          <div className="mt-12 flex-1 overflow-y-auto">
+            <HomeScreenGrid setActiveApp={setActiveApp} />
+          </div>
+
+          {/* BOTTOM SEARCH PILL & DOCK */}
+          <div className="relative z-30 pb-2 px-5 flex flex-col items-center mt-auto">
+            {/* Search Pill */}
+            <div className="bg-white/20 backdrop-blur-xl px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm border border-white/10 cursor-pointer active:scale-95 transition-transform mb-3">
+              <SearchIcon />
+              <span className="text-[12px] font-medium text-white/90 tracking-tight">
+                Search
+              </span>
+            </div>
+
+            {/* Bottom Dock Container */}
+            <div className="w-full bg-white/20 backdrop-blur-3xl rounded-[38px] p-3.5 flex justify-between items-center border border-white/20 shadow-2xl px-5">
+              {DOCK_APPS.map((dockApp) => (
+                <div
+                  key={dockApp.id}
+                  className="relative cursor-pointer active:scale-90 transition-transform duration-150"
+                  onClick={() => setActiveApp(dockApp.id)}
+                >
+                  <div className="relative w-[62px] h-[62px] [clip-path:inset(0_round_22.5%)] flex items-center justify-center overflow-hidden">
+                    {dockApp.imgSrc ? (
+                      <img
+                        src={dockApp.imgSrc}
+                        alt={dockApp.id}
+                        className="w-full h-full object-cover scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-slate-700/80 flex items-center justify-center">
+                        <span className="text-[12px] text-white/80 font-semibold uppercase tracking-wider">
+                          {dockApp.id.substring(0, 2)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {dockApp.badge && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#FF3B30] text-white text-[11px] font-bold px-1.5 min-w-[20px] h-[20px] rounded-full flex items-center justify-center border-2 border-white/20 shadow-md z-10">
+                      {dockApp.badge}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Home Indicator */}
+            <div className="w-36 h-1 bg-white/90 rounded-full mt-3 mb-1" />
+          </div>
+
+          {/* APP OVERLAY MODAL (z-40) */}
+          <AnimatePresence>
+            {activeApp && (
+              <AppModal
+                activeApp={activeApp}
+                onClose={() => setActiveApp(null)}
+              />
+            )}
+          </AnimatePresence>
+
+          {/* TOP STATUS BAR & DYNAMIC ISLAND */}
+          <div className="absolute top-0 inset-x-0 z-50 flex justify-between items-center px-7 pt-3.5 pb-1 text-white pointer-events-none">
+            {/* Time */}
+            <span className="text-[15px] font-semibold tracking-tight text-white/95 pointer-events-auto">
+              {formattedTime}
+            </span>
+
+            {/* Dynamic Island */}
+            <button
+              onClick={handleLock}
+              title="Lock Phone"
+              className="
+      absolute
+      left-1/2
+      -translate-x-1/2
+      top-2.5
+      w-[120px]
+      h-[35px]
+      bg-black
+      rounded-full
+      z-50
+      cursor-pointer
+      active:scale-95
+      transition-transform
+      pointer-events-auto
+      shadow-md
+    "
+            >
+              {/* Orange microphone dot */}
+              <span
+                className="
+        absolute
+        right-[38px]
+        top-1/2
+        -translate-y-1/2
+        w-[6px]
+        h-[6px]
+        bg-[#FF9500]
+        rounded-full
+        shadow-[0_0_4px_rgba(255,149,0,0.6)]
+      "
+              />
+            </button>
+
+            {/* Right status icons */}
+            <div className="flex items-center gap-1.5 pointer-events-auto">
+              <SignalBarsIcon />
+
+              <span className="text-[12px] font-semibold tracking-tight text-white/95">
+                5G
+              </span>
+
+              <BatteryPillIcon level={batteryLevel} isCharging={isCharging} />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
