@@ -65,3 +65,72 @@ export default function TerminalApp() {
         });
         break;
 
+      case "achievements":
+        newHistory.push({
+          type: "output",
+          text: "🏆 Solved 970+ DSA problems on LeetCode\n🏆 Achieved LeetCode contest rating of 1608 with a 500+ daily POTD streak\n🏆 Achieved CodeChef 2-star rating (1400+)",
+        });
+        break;
+
+      case "contact":
+        newHistory.push({
+          type: "output",
+          text: "Phone: +91-8927182293\nEmail: bikashdalapati09@gmail.com\nLinkedIn: linkedin.com/in/bikashdalapati09\nGitHub: github.com/bikashdalapati-09",
+        });
+        break;
+
+      case "clear":
+        setHistory([]);
+        setInput("");
+        return;
+
+      case "date":
+        newHistory.push({ type: "output", text: new Date().toString() });
+        break;
+
+      default:
+        newHistory.push({
+          type: "output",
+          text: `zsh: command not found: ${input}. Type 'help' for available commands.`,
+        });
+    }
+
+    setHistory(newHistory);
+    setInput("");
+  };
+
+  return (
+    <div
+      ref={scrollContainerRef}
+      onClick={() => inputRef.current?.focus({ preventScroll: true })}
+      className="w-full h-full min-h-0 flex flex-col p-4 bg-black/85 backdrop-blur-xl font-mono text-xs text-emerald-400 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent cursor-text"
+    >
+      <div className="flex flex-col gap-2">
+        {history.map((item, index) => (
+          <div
+            key={index}
+            className={
+              item.type === "input"
+                ? "text-white font-semibold"
+                : "text-zinc-300 whitespace-pre-line"
+            }
+          >
+            {item.text}
+          </div>
+        ))}
+
+        {/* Active Command Prompt Line */}
+        <form onSubmit={handleCommand} className="flex items-center gap-2 mt-1 shrink-0">
+          <span className="text-emerald-500 font-bold shrink-0">bikash@macbook ~ %</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 min-w-0 bg-transparent text-white outline-none font-mono text-xs caret-emerald-400"
+          />
+        </form>
+      </div>
+    </div>
+  );
+}
