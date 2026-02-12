@@ -151,3 +151,157 @@ export default function CalculatorApp({ onClose }) {
         <span className="text-6xl font-light tracking-normal text-right w-full overflow-x-auto whitespace-nowrap scrollbar-none">
           {display}
         </span>
+      </div>
+
+      {/* Calculator Buttons Grid */}
+      <div className="grid grid-cols-4 gap-3.5 w-full max-w-[340px] mx-auto pb-2">
+        
+        {/* Row 1 */}
+        <button
+          onClick={backspace}
+          className="w-full aspect-square rounded-full bg-[#505050] hover:bg-[#686868] text-white text-xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          <FaBackspace className="w-5 h-5" />
+        </button>
+        <button
+          onClick={clearAll}
+          className="w-full aspect-square rounded-full bg-[#505050] hover:bg-[#686868] text-white text-xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          {display !== "0" || expression !== "" ? "C" : "AC"}
+        </button>
+        <button
+          onClick={inputPercent}
+          className="w-full aspect-square rounded-full bg-[#505050] hover:bg-[#686868] text-white text-xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          %
+        </button>
+        <button
+          onClick={() => performOperation("÷")}
+          className={`w-full aspect-square rounded-full text-2xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm ${
+            operation === "÷" && waitingForOperand
+              ? "bg-white text-[#FF9F0A]"
+              : "bg-[#FF9F0A] hover:bg-[#ffb03a] text-white"
+          }`}
+        >
+          ÷
+        </button>
+
+        {/* Row 2 */}
+        <button
+          onClick={() => inputDigit(7)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          7
+        </button>
+        <button
+          onClick={() => inputDigit(8)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          8
+        </button>
+        <button
+          onClick={() => inputDigit(9)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          9
+        </button>
+        <button
+          onClick={() => performOperation("×")}
+          className={`w-full aspect-square rounded-full text-2xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm ${
+            operation === "×" && waitingForOperand
+              ? "bg-white text-[#FF9F0A]"
+              : "bg-[#FF9F0A] hover:bg-[#ffb03a] text-white"
+          }`}
+        >
+          ×
+        </button>
+
+        {/* Row 3 */}
+        <button
+          onClick={() => inputDigit(4)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          4
+        </button>
+        <button
+          onClick={() => inputDigit(5)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          5
+        </button>
+        <button
+          onClick={() => inputDigit(6)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          6
+        </button>
+        <button
+          onClick={() => performOperation("-")}
+          className={`w-full aspect-square rounded-full text-2xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm ${
+            operation === "-" && waitingForOperand
+              ? "bg-white text-[#FF9F0A]"
+              : "bg-[#FF9F0A] hover:bg-[#ffb03a] text-white"
+          }`}
+        >
+          −
+        </button>
+
+        {/* Row 4 */}
+        <button
+          onClick={() => inputDigit(1)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          1
+        </button>
+        <button
+          onClick={() => inputDigit(2)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          2
+        </button>
+        <button
+          onClick={() => inputDigit(3)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          3
+        </button>
+        <button
+          onClick={() => performOperation("+")}
+          className={`w-full aspect-square rounded-full text-2xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm ${
+            operation === "+" && waitingForOperand
+              ? "bg-white text-[#FF9F0A]"
+              : "bg-[#FF9F0A] hover:bg-[#ffb03a] text-white"
+          }`}
+        >
+          +
+        </button>
+
+        {/* Row 5 */}
+        <button
+          onClick={toggleSign}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          +/−
+        </button>
+        <button
+          onClick={() => inputDigit(0)}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          0
+        </button>
+        <button
+          onClick={inputDot}
+          className="w-full aspect-square rounded-full bg-[#333333] hover:bg-[#444444] text-white text-2xl font-normal flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          .
+        </button>
+        <button
+          onClick={handleEquals}
+          className="w-full aspect-square rounded-full bg-[#FF9F0A] hover:bg-[#ffb03a] text-white text-2xl font-medium flex items-center justify-center active:scale-95 transition-all cursor-pointer shadow-sm"
+        >
+          =
+        </button>
+      </div>
+    </div>
+  );
+}
