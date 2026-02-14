@@ -132,3 +132,138 @@ export default function LinkedInApp() {
               </div>
 
               {/* Action Buttons */}
+              <div className="flex items-center gap-2 mt-4">
+                <button className="flex-1 sm:flex-none px-4 py-1.5 rounded-full bg-[#70b5f9] text-black font-semibold text-xs text-center">
+                  Open to
+                </button>
+                <button className="flex-1 sm:flex-none px-4 py-1.5 rounded-full border border-[#70b5f9] text-[#70b5f9] font-semibold text-xs text-center">
+                  Add section
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Institution Box (Desktop view) */}
+            <div className="hidden sm:flex bg-[#1b1f23]/80 border border-white/10 rounded-lg p-3 items-center gap-3 self-start">
+              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-[#71b5fb] text-sm">
+                <FaBuilding />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-white">{profileData.institution}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Body */}
+      <div className="p-4 flex flex-col gap-4 max-w-4xl mx-auto w-full">
+        
+        {/* About Section */}
+        <div className="bg-[#24292e] rounded-lg p-5 border border-white/10 shadow-sm">
+          <h2 className="text-sm font-bold tracking-wide text-white mb-2 flex items-center gap-2">
+            <FaUser className="text-[#71b5fb]" /> About
+          </h2>
+          <p className="text-xs text-zinc-300 leading-relaxed">
+            {profileData.about}
+          </p>
+        </div>
+
+        {/* Experience Section */}
+        <div className="bg-[#24292e] rounded-lg p-5 border border-white/10 shadow-sm">
+          <h2 className="text-sm font-bold tracking-wide text-white mb-4 flex items-center gap-2">
+            <FaBriefcase className="text-[#71b5fb]" /> Experience
+          </h2>
+          <div className="flex flex-col gap-4">
+            {profileData.experience.map((exp, index) => (
+              <div key={index} className="flex gap-3 pb-4 border-b border-white/5 last:border-none last:pb-0">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center font-bold text-zinc-300 text-xs shrink-0 mt-0.5">
+                  {exp.company.charAt(0)}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xs font-bold text-white">{exp.role}</h3>
+                  <p className="text-[11px] text-zinc-300">{exp.company} · {exp.employmentType}</p>
+                  <p className="text-[10px] text-zinc-400 mt-0.5">{exp.period} · {exp.duration}</p>
+                  <p className="text-[10px] text-zinc-400">{exp.location}</p>
+                  
+                  <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
+                    {exp.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mt-2.5">
+                    {exp.skillsUsed.map((skill, sIdx) => (
+                      <span key={sIdx} className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-zinc-300">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Education Section */}
+        <div className="bg-[#24292e] rounded-lg p-5 border border-white/10 shadow-sm">
+          <h2 className="text-sm font-bold tracking-wide text-white mb-4 flex items-center gap-2">
+            <FaGraduationCap className="text-[#71b5fb]" /> Education
+          </h2>
+          <div className="flex flex-col gap-3">
+            {profileData.education.map((edu, index) => (
+              <div key={index} className="flex gap-3">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center font-bold text-zinc-300 text-xs shrink-0 mt-0.5">
+                  🎓
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold text-white">{edu.school}</h3>
+                  <p className="text-[11px] text-zinc-300">{edu.degree}</p>
+                  <p className="text-[10px] text-zinc-400 mt-0.5">{edu.period}</p>
+                  <p className="text-xs text-zinc-300 mt-1.5 leading-relaxed">{edu.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Certifications Section */}
+        <div className="bg-[#24292e] rounded-lg p-5 border border-white/10 shadow-sm">
+          <h2 className="text-sm font-bold tracking-wide text-white mb-4 flex items-center gap-2">
+            <FaAward className="text-[#71b5fb]" /> Licenses & Certifications
+          </h2>
+          <div className="flex flex-col gap-3">
+            {profileData.certifications.map((cert, index) => (
+              <div key={index} className="flex gap-3 pb-3 border-b border-white/5 last:border-none last:pb-0">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-xs shrink-0 mt-0.5">
+                  📜
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold text-white">{cert.title}</h3>
+                  <p className="text-[11px] text-zinc-300">{cert.issuer}</p>
+                  <p className="text-[10px] text-zinc-400 mt-0.5">Issued {cert.issueDate}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Skills Section */}
+        <div className="bg-[#24292e] rounded-lg p-5 border border-white/10 shadow-sm">
+          <h2 className="text-sm font-bold tracking-wide text-white mb-3 flex items-center gap-2">
+            <FaCode className="text-[#71b5fb]" /> Skills
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {profileData.skills.map((skill, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 rounded-full bg-[#38434f]/50 border border-white/10 text-xs text-zinc-200 font-medium hover:bg-[#38434f] transition-colors cursor-pointer"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
