@@ -1,0 +1,245 @@
+import React, { useState, useEffect } from "react";
+import {
+  Search,
+  MapPin,
+  Link as LinkIcon,
+  Users,
+  BookOpen,
+  Star,
+  GitFork,
+  ExternalLink,
+  Loader2,
+  Package,
+  Boxes,
+  Edit2,
+  Pencil,
+  Smile
+} from "lucide-react";
+
+export default function GitHubProfile() {
+  const [profileInput, setProfileInput] = useState("");
+  const [profile, setProfile] = useState(null);
+  const [repos, setRepos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("overview");
+
+  // Helper to extract clean username from plain text or URL inputs
+  const extractUsername = (input) => {
+    let cleaned = input.trim();
+    if (!cleaned) return "";
+
+    cleaned = cleaned.replace(/\/+$/, "");
+
+    if (cleaned.includes("github.com/")) {
+      const parts = cleaned.split("github.com/");
+      const pathParts = parts[parts.length - 1].split("/");
+      return pathParts[0];
+    }
+
+    return cleaned;
+  };
+
+  const fetchGitHubData = async (rawInput) => {
+    const user = extractUsername(rawInput);
+    if (!user) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // 1. Fetch User Profile Data via GitHub API
+      const userRes = await fetch(`https://api.github.com/users/${user}`);
+      
+      if (!userRes.ok) {
+        throw new Error(
+          userRes.status === 404
+            ? "GitHub profile not found."
+            : userRes.status === 403
+            ? "GitHub API rate limit exceeded. Please try again later."
+            : "Failed to load GitHub profile."
+        );
+      }
+      const userData = await userRes.json();
+
+      // 2. Fetch User Repositories (sorted by updated date)
+      const reposRes = await fetch(
+        `https://api.github.com/users/${user}/repos?sort=updated&per_page=6`
+      );
+      const reposData = reposRes.ok ? await reposRes.json() : [];
+
+      setProfile(userData);
+      setRepos(reposData);
+    } catch (err) {
+      setError(err.message || "An error occurred while fetching the profile.");
+      setProfile(null);
+      setRepos([]);
+    }finally {
+      setLoading(false);
+    }
+  };
+
+  // Automatically fetch default profile on initial render
+  useEffect(() => {
+    fetchGitHubData("bikashdalapati-09");
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (profileInput.trim()) {
+      fetchGitHubData(profileInput);
+    }
+  };
+
+  return (
+    <div className="w-full min-h-screen bg-[#0d1117] text-[#c9d1d9] font-sans antialiased overflow-y-auto">
+      {/* Top Desktop Navigation Bar */}
+      <header className="sticky top-0 z-50 bg-[#161b22] border-b border-[#30363d] px-4 py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <svg
+              className="w-8 h-8 fill-white cursor-pointer hover:opacity-80 transition-opacity"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+            </svg>
+            <span className="font-semibold text-white text-sm hidden sm:inline-block">
+              {profile?.login || "GitHub"}
+            </span>
+          </div>
+
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="relative w-full max-w-md">
+            <input
+              type="text"
+              value={profileInput}
+              onChange={(e) => setProfileInput(e.target.value)}
+              placeholder="Type '/' to search or paste profile URL..."
+              className="w-full bg-[#0d1117] border border-[#30363d] rounded-md py-1.5 pl-9 pr-8 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff] transition-all"
+            />
+            <Search className="w-4 h-4 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <span className="hidden sm:inline-block absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-gray-500 border border-[#30363d] px-1.5 py-0.5 rounded bg-[#161b22]">
+              /
+            </span>
+          </form>
+
+          <div className="flex items-center gap-3">
+            <a
+              href={profile?.html_url || "#"}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-[#58a6ff] hover:underline flex items-center gap-1"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Open on GitHub</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+        {/* Full Screen Loader */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-40 gap-3 text-[#8b949e]">
+            <Loader2 className="w-8 h-8 animate-spin text-[#58a6ff]" />
+            <p className="text-sm font-medium animate-pulse">
+              Loading profile details...
+            </p>
+          </div>
+        )}
+
+        {/* Error Display */}
+        {error && !loading && (
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-md p-4 text-center my-10 text-sm">
+            {error}
+          </div>
+        )}
+
+        {!loading && profile && (
+          <>
+            {/* Desktop Tabs Header */}
+            <div className="border-b border-[#30363d] mb-6">
+              <nav className="flex gap-6 text-sm font-medium">
+                <button
+                  onClick={() => setActiveTab("overview")}
+                  className={`flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+                    activeTab === "overview"
+                      ? "border-[#f78166] text-white font-semibold"
+                      : "border-transparent text-[#8b949e] hover:text-white"
+                  }`}
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Overview
+                </button>
+                <button
+                  onClick={() => setActiveTab("repositories")}
+                  className={`flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+                    activeTab === "repositories"
+                      ? "border-[#f78166] text-white font-semibold"
+                      : "border-transparent text-[#8b949e] hover:text-white"
+                  }`}
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Repositories
+                  <span className="bg-[#21262d] text-[#8b949e] text-xs px-2 py-0.5 rounded-full border border-[#30363d]">
+                    {profile.public_repos}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveTab("projects")}
+                  className={`hidden sm:flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+                    activeTab === "projects"
+                      ? "border-[#f78166] text-white font-semibold"
+                      : "border-transparent text-[#8b949e] hover:text-white"
+                  }`}
+                >
+                  <Boxes className="w-4 h-4" />
+                  Projects
+                </button>
+                <button
+                  onClick={() => setActiveTab("packages")}
+                  className={`hidden sm:flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+                    activeTab === "packages"
+                      ? "border-[#f78166] text-white font-semibold"
+                      : "border-transparent text-[#8b949e] hover:text-white"
+                  }`}
+                >
+                  <Package className="w-4 h-4" />
+                  Packages
+                </button>
+                <button
+                  onClick={() => setActiveTab("stars")}
+                  className={`flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+                    activeTab === "stars"
+                      ? "border-[#f78166] text-white font-semibold"
+                      : "border-transparent text-[#8b949e] hover:text-white"
+                  }`}
+                >
+                  <Star className="w-4 h-4" />
+                  Stars
+                </button>
+              </nav>
+            </div>
+
+            {/* Layout Grid: Sidebar Profile + Main Content Column */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Left Column: Fixed/Sticky Sidebar Profile Info */}
+              <div className="lg:col-span-1">
+                <div className="lg:sticky lg:top-20 flex flex-col items-center lg:items-start">
+                  {/* User Avatar with Status Icon */}
+                  <div className="relative mb-4 group">
+                    <img
+                      src={profile.avatar_url}
+                      alt={profile.name || profile.login}
+                      className="w-48 h-48 sm:w-64 sm:h-64 lg:w-full lg:h-auto rounded-full border border-[#30363d] object-cover"
+                    />
+                    <div className="absolute bottom-2 right-2 bg-[#161b22] border border-[#30363d] p-1.5 rounded-full text-gray-400 hover:text-white cursor-pointer shadow-md">
+                      <Smile className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  {/* Name and Handle */}
+                  <h1 className="text-2xl font-bold text-white leading-tight">
+                    {profile.name || profile.login}
+                  </h1>
