@@ -243,3 +243,249 @@ export default function GitHubProfile() {
                   <h1 className="text-2xl font-bold text-white leading-tight">
                     {profile.name || profile.login}
                   </h1>
+                  <h2 className="text-lg text-[#8b949e] font-light mb-4">
+                    {profile.login}
+                  </h2>
+
+                  {/* Edit Profile Button */}
+                  <button className="w-full bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-white text-xs font-semibold py-1.5 px-3 rounded-md transition-colors mb-4">
+                    Edit profile
+                  </button>
+
+                  {/* Followers & Following */}
+                  <div className="flex items-center gap-2 text-xs text-[#8b949e] mb-4 w-full">
+                    <Users className="w-4 h-4" />
+                    <span className="font-semibold text-white">
+                      {profile.followers}
+                    </span>{" "}
+                    followers
+                    <span>·</span>
+                    <span className="font-semibold text-white">
+                      {profile.following}
+                    </span>{" "}
+                    following
+                  </div>
+
+                  {/* Profile Metadata */}
+                  <div className="w-full space-y-2 text-xs text-[#8b949e] border-t border-[#30363d] pt-4">
+                    {profile.company && (
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 shrink-0" />
+                        <span className="truncate">{profile.company}</span>
+                      </div>
+                    )}
+                    {profile.location && (
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 shrink-0" />
+                        <span className="truncate">{profile.location}</span>
+                      </div>
+                    )}
+                    {profile.blog && (
+                      <div className="flex items-center gap-2">
+                        <LinkIcon className="w-4 h-4 shrink-0" />
+                        <a
+                          href={
+                            profile.blog.startsWith("http")
+                              ? profile.blog
+                              : `https://${profile.blog}`
+                          }
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-white hover:text-[#58a6ff] hover:underline truncate"
+                        >
+                          {profile.blog}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Main Content */}
+              <div className="lg:col-span-3 space-y-8">
+                {/* Simulated README Markdown Box */}
+                <div className="border border-[#30363d] rounded-md bg-[#0d1117]">
+                  <div className="flex items-center justify-between px-4 py-2 border-b border-[#30363d] text-xs text-[#8b949e]">
+                    <span className="font-mono">
+                      {profile.login} / README.md
+                    </span>
+                    <Pencil className="w-3.5 h-3.5 cursor-pointer hover:text-white" />
+                  </div>
+
+                  <div className="p-6 space-y-6 text-sm text-[#c9d1d9]">
+                    {/* Header */}
+                    <div className="text-center sm:text-left">
+                      <h2 className="text-2xl font-bold text-white mb-2">
+                        Hi 👋, I'm {profile.name || profile.login}
+                      </h2>
+                      <p className="text-gray-300 font-medium">
+                        A passionate Problem Solver and Full Stack Developer
+                        from India
+                      </p>
+                      <div className="mt-3 inline-flex items-center gap-1.5 bg-[#21262d] px-2.5 py-1 rounded text-xs text-gray-300 border border-[#30363d]">
+                        <span>Profile views</span>
+                        <span className="bg-[#da3633] text-white font-bold px-1.5 py-0.2 rounded text-[11px]">
+                          731
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* About Me Section */}
+                    <div>
+                      <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                        <span>🚀</span> About Me:
+                      </h3>
+                      <ul className="space-y-2 text-xs sm:text-sm text-gray-300 pl-2">
+                        <li className="flex items-start gap-2">
+                          <span>🔭</span>
+                          <span>
+                            I'm currently working on{" "}
+                            <strong className="text-white">Next.js</strong>
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span>🌱</span>
+                          <span>
+                            I'm currently learning{" "}
+                            <strong className="text-white">MERN Stack</strong>
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span>📫</span>
+                          <span>
+                            How to reach me:{" "}
+                            <a
+                              href="mailto:bikashdalapati09@gmail.com"
+                              className="text-[#58a6ff] hover:underline"
+                            >
+                              bikashdalapati09@gmail.com
+                            </a>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Connect With Me */}
+                    <div className="border-t border-[#30363d] pt-4">
+                      <h3 className="text-sm font-semibold text-white mb-3">
+                        Connect with me
+                      </h3>
+                      <div className="flex items-center gap-3">
+                        <a
+                          href="https://linkedin.com"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[#0a66c2] hover:opacity-80"
+                        >
+                          <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                          </svg>
+                        </a>
+                        <a
+                          href="https://twitter.com"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[#1da1f2] hover:opacity-80"
+                        >
+                          <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Dynamic GitHub Stats Card */}
+                    <div className="border-t border-[#30363d] pt-4 flex flex-col items-center">
+                      <img
+                        src={`https://github-readme-stats.vercel.app/api?username=${profile.login}&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117`}
+                        alt="GitHub Stats"
+                        className="max-w-full h-auto rounded"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pinned Repositories Grid */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-semibold text-white">Pinned</h3>
+                    <span className="text-xs text-[#8b949e] hover:text-[#58a6ff] cursor-pointer">
+                      Customize your pins
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {repos.length === 0 ? (
+                      <p className="text-xs text-gray-500 col-span-2">
+                        No pinned repositories available.
+                      </p>
+                    ) : (
+                      repos.slice(0, 4).map((repo) => (
+                        <div
+                          key={repo.id}
+                          className="bg-[#0d1117] border border-[#30363d] rounded-md p-4 flex flex-col justify-between hover:border-[#8b949e] transition-colors"
+                        >
+                          <div>
+                            <div className="flex items-center justify-between gap-2 mb-2">
+                              <a
+                                href={repo.html_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[#58a6ff] font-semibold text-xs hover:underline truncate flex items-center gap-1.5"
+                              >
+                                <BookOpen className="w-3.5 h-3.5 text-[#8b949e]" />
+                                {repo.name}
+                              </a>
+                              <span className="text-[10px] text-[#8b949e] border border-[#30363d] px-2 py-0.5 rounded-full capitalize">
+                                {repo.visibility}
+                              </span>
+                            </div>
+
+                            <p className="text-xs text-[#8b949e] line-clamp-2 mb-4 min-h-[32px]">
+                              {repo.description || "No description provided."}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-4 text-xs text-[#8b949e]">
+                            {repo.language && (
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#f1e05a]" />
+                                <span>{repo.language}</span>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-1 hover:text-[#58a6ff]">
+                              <Star className="w-3.5 h-3.5" />
+                              <span>{repo.stargazers_count}</span>
+                            </div>
+                            <div className="flex items-center gap-1 hover:text-[#58a6ff]">
+                              <GitFork className="w-3.5 h-3.5" />
+                              <span>{repo.forks_count}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* Contribution Graph Section */}
+                <div className="border-t border-[#30363d] pt-6">
+                  <h3 className="text-sm font-semibold text-white mb-3">
+                    Contribution Graph
+                  </h3>
+                  <div className="border border-[#30363d] rounded-md p-4 overflow-x-auto bg-[#0d1117] flex justify-center">
+                    <img
+                      src={`https://ghchart.rshah.org/40c463/${profile.login}`}
+                      alt="Contribution Graph"
+                      className="w-full min-w-[600px] h-auto"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
