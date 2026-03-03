@@ -248,3 +248,254 @@ export default function CodeChefApp() {
                       d="M 10 130 L 40 100 L 70 85 L 100 85 L 130 80 L 160 70 L 190 60 L 220 60 L 250 55 L 280 50 L 310 42 L 340 30 L 370 25 L 400 18 L 430 10"
                       fill="none"
                       stroke="#15803d"
+                      strokeWidth="2.5"
+                    />
+
+                    {[
+                      [10, 130], [40, 100], [70, 85], [100, 85], [130, 80],
+                      [160, 70], [190, 60], [220, 60], [250, 55], [280, 50],
+                      [310, 42], [340, 30], [370, 25], [400, 18], [430, 10]
+                    ].map(([x, y], idx) => (
+                      <circle key={idx} cx={x} cy={y} r="3" fill="#000" />
+                    ))}
+                  </svg>
+                </div>
+
+                <div className="flex justify-between text-[11px] text-zinc-400 font-mono px-2 pt-2 border-t border-zinc-100">
+                  <span>2025</span>
+                  <span>2026</span>
+                  <span>2026</span>
+                  <span>2026</span>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <a href="https://www.codechef.com/ratings/info" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline font-medium">
+                  How the rating system works?
+                </a>
+              </div>
+            </div>
+
+            {/* LEARNING & PRACTICE PATHS */}
+            <div className="bg-white border border-zinc-200 rounded-lg p-4 shadow-sm flex flex-col gap-2">
+              <h3 className="font-bold text-sm text-zinc-800">Learning Paths (0)</h3>
+            </div>
+            <div className="bg-white border border-zinc-200 rounded-lg p-4 shadow-sm flex flex-col gap-2">
+              <h3 className="font-bold text-sm text-zinc-800">Practice Paths (5)</h3>
+            </div>
+
+          </div>
+
+          {/* RIGHT COLUMN: RATING CARD, SKILL TESTS & BADGES (5 COLS) */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            
+            {/* RATING CARD */}
+            <div className="bg-white border border-zinc-200 rounded-lg shadow-sm overflow-hidden">
+              
+              {/* Rating Tabs */}
+              <div className="flex border-b border-zinc-200 bg-zinc-50 p-1.5 gap-1 text-xs font-semibold">
+                <button
+                  onClick={() => setActiveTab("CodeChef Rating")}
+                  className={`flex-1 py-1.5 rounded transition-all cursor-pointer ${
+                    activeTab === "CodeChef Rating"
+                      ? "bg-white text-zinc-800 shadow-sm"
+                      : "text-zinc-500 hover:text-zinc-800"
+                  }`}
+                >
+                  CodeChef Rating
+                </button>
+                <button
+                  onClick={() => setActiveTab("DSA Rating")}
+                  className={`flex-1 py-1.5 rounded transition-all cursor-pointer ${
+                    activeTab === "DSA Rating"
+                      ? "bg-white text-zinc-800 shadow-sm"
+                      : "text-zinc-500 hover:text-zinc-800"
+                  }`}
+                >
+                  DSA Rating
+                </button>
+              </div>
+
+              {/* Rating Numbers */}
+              <div className="p-6 flex flex-col items-center justify-center text-center">
+                <span className="text-4xl font-black text-zinc-800 tracking-tight">1537</span>
+                <span className="text-xs text-zinc-500 font-medium mt-0.5">(Div 3)</span>
+
+                <div className="flex items-center gap-1 my-2">
+                  <span className="bg-green-700 text-white text-[10px] px-1 rounded font-bold">★</span>
+                  <span className="bg-green-700 text-white text-[10px] px-1 rounded font-bold">★</span>
+                </div>
+
+                <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-blue-600 hover:underline">
+                  CodeChef Rating
+                </a>
+                <span className="text-[10px] text-zinc-400 mt-0.5">(Highest Rating 1539)</span>
+
+                <div className="w-full grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-zinc-200 text-center">
+                  <div>
+                    <span className="text-xl font-bold text-blue-600 block">21589</span>
+                    <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">
+                      Global Rank
+                    </span>
+                  </div>
+                  <div className="border-l border-zinc-200">
+                    <span className="text-xl font-bold text-blue-600 block">20010</span>
+                    <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">
+                      Country Rank
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* SKILL TESTS */}
+            <div className="bg-white border border-zinc-200 rounded-lg p-5 shadow-sm flex flex-col gap-4">
+              <h3 className="font-bold text-sm text-zinc-800 text-center">Skill tests</h3>
+
+              <div className="flex flex-col gap-4 text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full border-2 border-zinc-200 flex items-center justify-center font-bold text-zinc-500 shrink-0">
+                    3%
+                  </div>
+                  <div className="flex flex-col">
+                    <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:underline leading-snug">
+                      Data structures and Algorithms in C test
+                    </a>
+                    <span className="text-[10px] text-zinc-400">Attempted on October 2025</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full border-2 border-blue-500 text-blue-600 flex items-center justify-center font-bold shrink-0">
+                    97%
+                  </div>
+                  <div className="flex flex-col">
+                    <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:underline leading-snug">
+                      C++ Skill test
+                    </a>
+                    <span className="text-[10px] text-zinc-400">Attempted on October 2025</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full border-2 border-blue-400 text-blue-500 flex items-center justify-center font-bold shrink-0">
+                    67%
+                  </div>
+                  <div className="flex flex-col">
+                    <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:underline leading-snug">
+                      Skill-test: Operating systems
+                    </a>
+                    <span className="text-[10px] text-zinc-400">Attempted on December 2025</span>
+                  </div>
+                </div>
+              </div>
+
+              <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline font-semibold text-center mt-1">
+                View skill tests
+              </a>
+            </div>
+
+            {/* BADGES */}
+            <div className="bg-white border border-zinc-200 rounded-lg p-5 shadow-sm flex flex-col gap-4">
+              <h3 className="font-bold text-sm text-zinc-800 text-center">Badges</h3>
+
+              <div className="flex flex-col gap-3 text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center text-slate-500 shrink-0 text-base">
+                    🥈
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-zinc-700">Contest Contender - Silver Badge</span>
+                    <span className="text-[10px] text-zinc-400">Received for participating in 25 Contests</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-amber-50 border border-amber-300 flex items-center justify-center text-amber-600 shrink-0 text-base">
+                    🥉
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-zinc-700">Problem Solver - Bronze Badge</span>
+                    <span className="text-[10px] text-zinc-400">Received for solving 50 Problems</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-orange-50 border border-orange-300 flex items-center justify-center text-orange-500 shrink-0 text-base">
+                    🔥
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-zinc-700">Daily Streak - Bronze Badge</span>
+                    <span className="text-[10px] text-zinc-400">Received for maintaining a streak of 5 days</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* PROMO BANNER */}
+            <div className="rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-5 shadow-sm flex flex-col gap-3 relative overflow-hidden">
+              <h4 className="font-bold text-base leading-tight">
+                Master Data Structures and Algorithms
+              </h4>
+              <a href="https://www.codechef.com/practice" target="_blank" rel="noopener noreferrer" className="bg-white text-blue-600 font-bold text-xs px-3 py-1.5 rounded w-fit hover:bg-blue-50 transition-colors">
+                Start Roadmap ›
+              </a>
+            </div>
+
+            {/* RECENT ACTIVITY TABLE */}
+            <div className="bg-white border border-zinc-200 rounded-lg p-5 shadow-sm flex flex-col gap-3">
+              <h3 className="font-bold text-sm text-zinc-800 text-center border-b border-zinc-200 pb-2">
+                Recent Activity
+              </h3>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="bg-zinc-50 text-zinc-500 font-semibold border-b border-zinc-200">
+                      <th className="p-1.5">Time</th>
+                      <th className="p-1.5">Problem</th>
+                      <th className="p-1.5 text-center">Result</th>
+                      <th className="p-1.5">Lang</th>
+                      <th className="p-1.5 text-right">Solution</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100">
+                    <tr>
+                      <td className="p-1.5 text-zinc-400">
+                        <Clock className="w-3 h-3 inline" />
+                      </td>
+                      <td className="p-1.5 font-semibold text-blue-600 hover:underline cursor-pointer">
+                        <a href="https://www.codechef.com/problems/CHEFHQ" target="_blank" rel="noopener noreferrer">
+                          CHEFHO...
+                        </a>
+                      </td>
+                      <td className="p-1.5 text-center font-bold text-green-600">
+                        ✓ <span className="text-[10px] font-normal">(100)</span>
+                      </td>
+                      <td className="p-1.5 font-mono text-zinc-600">C++</td>
+                      <td className="p-1.5 text-right">
+                        <a
+                          href={profileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-semibold px-2.5 py-1 rounded transition-colors"
+                        >
+                          View
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  );
+}
