@@ -261,3 +261,267 @@ export default function FinderApp({ initialCategory = "recents" }) {
         </div>
       );
     }
+    if (file.iconType === "pdf") {
+      return (
+        <div className="w-12 h-14 bg-white rounded-md shadow border border-zinc-300 flex flex-col items-center justify-center relative overflow-hidden">
+          <div className="w-full bg-red-600 py-0.5 text-[9px] font-black text-white text-center uppercase">
+            PDF
+          </div>
+          <FaFilePdf className="text-red-500 text-lg mt-1" />
+        </div>
+      );
+    }
+    if (file.iconType === "react") {
+      return (
+        <div className="w-12 h-12 bg-[#1e1e24] rounded-xl border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl shadow">
+          <FaFileCode />
+        </div>
+      );
+    }
+    return (
+      <div className="w-14 h-11 rounded bg-zinc-800 border border-white/10 overflow-hidden shadow flex items-center justify-center relative">
+        {file.imagePreview ? (
+          <img
+            src={file.imagePreview}
+            alt={file.fullName}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <FaFileImage className="text-zinc-500 text-lg" />
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full h-full flex flex-col font-sans select-none overflow-hidden bg-[#1e1e1e] text-zinc-200">
+      
+      {/* 1. TOP HEADER TOOLBAR */}
+      <div className="px-4 py-2 bg-[#282828] border-b border-black/40 flex items-center justify-between shrink-0">
+        
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-zinc-500">
+            <button className="hover:text-zinc-200 transition-colors p-1">
+              <FaChevronLeft className="text-xs" />
+            </button>
+            <button className="hover:text-zinc-200 transition-colors p-1">
+              <FaChevronRight className="text-xs" />
+            </button>
+          </div>
+          <span className="text-xs font-semibold text-zinc-200 tracking-wide capitalize">
+            {getHeaderTitle(activeCategory)}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* View Toggles */}
+          <div className="flex items-center bg-zinc-800 p-0.5 rounded-lg border border-white/5">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`p-1.5 rounded text-xs transition-all ${
+                viewMode === "grid"
+                  ? "bg-zinc-700 text-white shadow"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              <FaThLarge />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={`p-1.5 rounded text-xs transition-all ${
+                viewMode === "list"
+                  ? "bg-zinc-700 text-white shadow"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              <FaList />
+            </button>
+          </div>
+
+          <div className="hidden md:flex items-center gap-3 text-zinc-400 text-xs px-1">
+            <button className="hover:text-white transition-colors"><FaShareAlt /></button>
+            <button className="hover:text-white transition-colors"><FaTag /></button>
+            <button className="hover:text-white transition-colors"><FaEllipsisH /></button>
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-40 sm:w-52">
+            <FaSearch className="absolute left-2.5 top-2.5 text-[10px] text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#1e1e1e] border border-white/10 rounded-md pl-7 pr-3 py-1 text-xs text-zinc-100 placeholder-zinc-500 outline-none focus:border-blue-500 transition-all"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 2. MAIN BODY */}
+      <div className="flex-1 flex overflow-hidden">
+        
+        {/* Left Sidebar */}
+        <div className="w-48 bg-[#252526] border-r border-black/40 p-3 flex flex-col shrink-0 overflow-y-auto space-y-4">
+          {SIDEBAR_SECTIONS.map((section) => (
+            <div key={section.title} className="space-y-1">
+              <div className="text-[10px] font-bold text-zinc-500 tracking-wider px-2">
+                {section.title}
+              </div>
+              <nav className="space-y-0.5">
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeCategory === item.id;
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleCategoryChange(item.id)}
+                      className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
+                        isActive
+                          ? "bg-[#374e75] text-white"
+                          : "text-zinc-300 hover:bg-white/5"
+                      }`}
+                    >
+                      <Icon className={`text-xs ${isActive ? "text-blue-300" : "text-blue-400"}`} />
+                      <span className="truncate">{item.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          ))}
+        </div>
+
+        {/* Center Grid/List View Area */}
+        <div className="flex-1 p-5 overflow-y-auto bg-[#1a1a1a]">
+          {filteredFiles.length === 0 ? (
+            <div className="h-full flex items-center justify-center text-xs text-zinc-500 font-mono">
+              Directory is empty
+            </div>
+          ) : viewMode === "grid" ? (
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6">
+              {filteredFiles.map((file) => {
+                const isSelected = selectedFile?.id === file.id;
+                return (
+                  <div
+                    key={file.id}
+                    onClick={() => setSelectedFile(file)}
+                    className={`flex flex-col items-center p-2 rounded-lg cursor-pointer transition-all ${
+                      isSelected
+                        ? "bg-blue-600/30 border border-blue-500/50"
+                        : "hover:bg-white/5 border border-transparent"
+                    }`}
+                  >
+                    <div className="mb-2 flex items-center justify-center h-14">
+                      {renderFileIcon(file)}
+                    </div>
+                    <span className="text-xs font-medium text-zinc-200 text-center truncate w-full px-1">
+                      {file.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="space-y-1">
+              <div className="grid grid-cols-12 px-3 py-1 text-[10px] font-bold text-zinc-500 border-b border-white/5">
+                <span className="col-span-7">Name</span>
+                <span className="col-span-3">Kind</span>
+                <span className="col-span-2 text-right">Size</span>
+              </div>
+              {filteredFiles.map((file) => {
+                const isSelected = selectedFile?.id === file.id;
+                return (
+                  <div
+                    key={file.id}
+                    onClick={() => setSelectedFile(file)}
+                    className={`grid grid-cols-12 items-center px-3 py-1.5 rounded cursor-pointer text-xs transition-all ${
+                      isSelected ? "bg-blue-600 text-white" : "hover:bg-white/5 text-zinc-300"
+                    }`}
+                  >
+                    <span className="col-span-7 truncate">{file.fullName}</span>
+                    <span className={`col-span-3 truncate text-[11px] ${isSelected ? "text-blue-100" : "text-zinc-400"}`}>
+                      {file.type}
+                    </span>
+                    <span className={`col-span-2 text-right text-[10px] font-mono ${isSelected ? "text-blue-100" : "text-zinc-500"}`}>
+                      {file.size}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Right Inspector Panel */}
+        {selectedFile && (
+          <div className="w-60 bg-[#252526] border-l border-black/40 p-4 flex flex-col justify-between shrink-0 overflow-y-auto">
+            <div className="space-y-4">
+              <div className="flex flex-col items-center text-center pb-3 border-b border-white/10">
+                <div className="mb-3">{renderFileIcon(selectedFile)}</div>
+                <h4 className="text-xs font-bold text-white break-all">
+                  {selectedFile.fullName}
+                </h4>
+                <span className="text-[10px] text-zinc-400 font-mono mt-1">
+                  {selectedFile.type} • {selectedFile.size}
+                </span>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
+                  Information
+                </div>
+                <p className="text-xs text-zinc-300 leading-relaxed bg-black/20 p-2.5 rounded border border-white/5">
+                  {selectedFile.description}
+                </p>
+              </div>
+
+              {selectedFile.tech && (
+                <div className="space-y-1.5">
+                  <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
+                    Tech Stack
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {selectedFile.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 bg-zinc-800 text-blue-300 rounded text-[10px] font-mono"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="pt-3 border-t border-white/10 mt-4">
+              {selectedFile.downloadable ? (
+                <button
+                  onClick={() => alert("Downloading Resume...")}
+                  className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <FaDownload className="text-xs" />
+                  <span>Download File</span>
+                </button>
+              ) : selectedFile.category === "applications" ? (
+                <button
+                  onClick={() => alert(`Launching ${selectedFile.name}...`)}
+                  className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <FaExternalLinkAlt className="text-xs" />
+                  <span>Open Application</span>
+                </button>
+              ) : (
+                <div className="text-center text-[10px] text-zinc-500 font-mono">
+                  macOS Preview Active
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
