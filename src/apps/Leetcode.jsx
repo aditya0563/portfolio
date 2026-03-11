@@ -245,3 +245,251 @@ export default function LeetCodeApp() {
               
               {/* Row 1 */}
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                <div className="sm:col-span-7 bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col justify-between gap-4 shadow-md">
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Contest Rating</p>
+                      <p className="text-lg sm:text-xl font-bold text-white mt-0.5">1,532</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Global Ranking</p>
+                      <p className="text-xs font-semibold text-white mt-1">314,988 <span className="text-zinc-500 font-normal text-[10px]">/876,708</span></p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Attended</p>
+                      <p className="text-xs font-semibold text-white mt-1">28</p>
+                    </div>
+                  </div>
+
+                  <div className="w-full h-16 mt-2 flex items-end justify-between border-b border-zinc-700/40 pb-1 relative">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
+                      <div className="w-full h-[1px] bg-[#ffa116]"></div>
+                    </div>
+                    <span className="text-[10px] text-zinc-500 font-mono">2024</span>
+                    <div className="flex items-center gap-1 bg-[#1a1a1a] border border-zinc-700 px-2 py-0.5 rounded text-[10px] text-[#ffa116] font-bold z-10 shadow">
+                      1,608
+                    </div>
+                    <span className="text-[10px] text-zinc-500 font-mono">2026</span>
+                  </div>
+                </div>
+
+                <div className="sm:col-span-5 bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col justify-between gap-4 shadow-md">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Top</p>
+                    <p className="text-2xl font-bold text-white mt-0.5">36.35%</p>
+                  </div>
+                  <div className="flex items-end gap-1 h-12 pt-1">
+                    {[20, 35, 45, 80, 100, 65, 40, 30, 20, 15, 10].map((h, i) => (
+                      <div
+                        key={i}
+                        style={{ height: `${h}%` }}
+                        className={`flex-1 rounded-t-xs transition-all ${i === 4 ? "bg-[#ffa116]" : "bg-zinc-700/60"}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2 */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                <div className="sm:col-span-7 bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-md">
+                  <div className="relative w-32 h-32 flex-shrink-0 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                      <path
+                        className="text-zinc-800"
+                        strokeWidth="3.2"
+                        stroke="currentColor"
+                        fill="none"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <path
+                        className="text-[#ffa116]"
+                        strokeDasharray={`${Math.min(100, Math.round((totalSolved / 4003) * 100))}, 100`}
+                        strokeWidth="3.2"
+                        strokeLinecap="round"
+                        stroke="currentColor"
+                        fill="none"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                    </svg>
+
+                    <div className="absolute flex flex-col items-center justify-center text-center">
+                      <span className="text-xl sm:text-2xl font-bold text-white leading-none">
+                        {totalSolved}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 font-medium mt-1 flex items-center gap-0.5">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Solved
+                      </span>
+                      <span className="text-[9px] text-zinc-500 mt-0.5">
+                        21 Attempting
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2.5 w-full">
+                    <div className="bg-[#1f1f1f] px-3 py-2 rounded-lg border border-[#333] flex justify-between items-center">
+                      <span className="text-emerald-400 font-semibold text-xs">Easy</span>
+                      <span className="text-white font-bold text-xs">{easySolved}<span className="text-zinc-500 font-normal">/956</span></span>
+                    </div>
+                    <div className="bg-[#1f1f1f] px-3 py-2 rounded-lg border border-[#333] flex justify-between items-center">
+                      <span className="text-amber-400 font-semibold text-xs">Med.</span>
+                      <span className="text-white font-bold text-xs">{mediumSolved}<span className="text-zinc-500 font-normal">/2091</span></span>
+                    </div>
+                    <div className="bg-[#1f1f1f] px-3 py-2 rounded-lg border border-[#333] flex justify-between items-center">
+                      <span className="text-rose-400 font-semibold text-xs">Hard</span>
+                      <span className="text-white font-bold text-xs">{hardSolved}<span className="text-zinc-500 font-normal">/956</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="sm:col-span-5 bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col justify-between gap-4 shadow-md">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Badges</p>
+                      <p className="text-xl font-bold text-white mt-0.5">27</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-zinc-400 cursor-pointer hover:text-white transition-colors" />
+                  </div>
+
+                  <div className="flex items-center justify-around my-1 gap-2">
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-md flex-shrink-0 flex items-center justify-center text-[10px] font-extrabold text-black">
+                      500d
+                    </div>
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5 shadow-md flex-shrink-0 flex items-center justify-center text-[10px] font-extrabold text-black">
+                      100d
+                    </div>
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-400 p-0.5 shadow-md flex-shrink-0 flex items-center justify-center text-[10px] font-extrabold text-white">
+                      2026
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-[10px] text-zinc-400">Most Recent Badge</p>
+                    <p className="text-xs font-semibold text-white mt-0.5">500 Days Badge</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 3: Fully Green Heatmap separated by Months */}
+              <div className="bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col gap-3 shadow-md">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-1.5 text-xs sm:text-sm">
+                    <span className="text-base sm:text-lg font-bold text-white tracking-tight">921</span>
+                    <span className="text-zinc-400 font-medium text-xs">submissions in the past one year</span>
+                    <Info className="w-3.5 h-3.5 text-zinc-500 hover:text-zinc-300 cursor-pointer transition-colors" />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 text-zinc-400 text-[11px] sm:text-xs">
+                    <div>
+                      Total active days: <span className="text-white font-semibold">365</span>
+                    </div>
+                    <div>
+                      Max streak: <span className="text-white font-semibold">365</span>
+                    </div>
+
+                    <button className="flex items-center gap-1 bg-[#1f1f1f] border border-zinc-700 hover:border-zinc-500 text-zinc-200 px-2.5 py-1 rounded transition-colors cursor-pointer font-medium text-xs">
+                      <span>Current</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-zinc-400" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Heatmap Grid Separated by Months */}
+                <div className="w-full overflow-x-auto pb-1 pt-2">
+                  <div className="flex items-start gap-4 min-w-[780px]">
+                    {monthlyData.map((month, monthIdx) => (
+                      <div key={monthIdx} className="flex flex-col items-center gap-2">
+                        
+                        {/* Month Grid (All Boxes Green) */}
+                        <div className="grid grid-flow-col grid-rows-7 gap-1">
+                          {Array.from({ length: month.weeks * 7 }).map((_, boxIdx) => (
+                            <div
+                              key={boxIdx}
+                              className={`w-3 h-3 rounded-[2px] ${getActiveGreenShade(monthIdx * 7 + boxIdx)} transition-all hover:scale-110 hover:ring-1 hover:ring-white/80 cursor-pointer`}
+                            />
+                          ))}
+                        </div>
+
+                        {/* Month Name */}
+                        <span className="text-[11px] text-zinc-400 font-medium hover:text-zinc-200 transition-colors select-none">
+                          {month.name}
+                        </span>
+
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 4: Activity Tabs Bar */}
+              <div className="bg-[#262626] border border-[#333] rounded-xl p-4 flex flex-col gap-4 shadow-md">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#333] pb-3">
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => setActiveTab("recent")}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeTab === 'recent' ? 'bg-[#333] text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-[#ffa116]" />
+                      <span>Recent AC</span>
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("list")}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeTab === 'list' ? 'bg-[#333] text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                    >
+                      <ListOrdered className="w-3.5 h-3.5" />
+                      <span>List</span>
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("solutions")}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeTab === 'solutions' ? 'bg-[#333] text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>Solutions</span>
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("discuss")}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeTab === 'discuss' ? 'bg-[#333] text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span>Discuss</span>
+                    </button>
+                  </div>
+
+                  <span className="text-zinc-400 text-xs hover:text-white cursor-pointer transition-colors font-medium">
+                    View all submissions &gt;
+                  </span>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  {[
+                    { title: "Two Sum", difficulty: "Easy", time: "1 day ago", lang: "C++" },
+                    { title: "Add Two Numbers", difficulty: "Medium", time: "2 days ago", lang: "C++" },
+                    { title: "Median of Two Sorted Arrays", difficulty: "Hard", time: "3 days ago", lang: "C++" }
+                  ].map((sub, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-2.5 rounded-lg bg-[#1f1f1f] border border-[#333] hover:border-zinc-600 transition-colors">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                        <span className="text-zinc-200 font-medium truncate">{sub.title}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-[11px] flex-shrink-0">
+                        <span className={`px-2 py-0.5 rounded font-medium ${sub.difficulty === 'Easy' ? 'text-emerald-400 bg-emerald-950/40' : sub.difficulty === 'Medium' ? 'text-amber-400 bg-amber-950/40' : 'text-rose-400 bg-rose-950/40'}`}>
+                          {sub.difficulty}
+                        </span>
+                        <span className="text-zinc-500 hidden sm:inline">{sub.lang}</span>
+                        <span className="text-zinc-400">{sub.time}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        )}
+      </main>
+
+    </div>
+  );
+}
