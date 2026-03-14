@@ -129,3 +129,136 @@ export default function MapApp() {
               <Popup>
                 <div className="text-blue-600 font-sans text-xs font-bold">
                   📍 You are here
+                </div>
+              </Popup>
+            </Marker>
+          )}
+        </MapContainer>
+      </div>
+
+      {/* 2. TOP OVERLAY CONTROLS */}
+      <div className="relative z-10 pt-12 px-3 sm:pt-4 sm:px-4 flex items-start justify-between pointer-events-none gap-2">
+        
+        {/* Search Box: Positioned right of back button on mobile (ml-12), normal on desktop (sm:ml-0) */}
+        <div className="pointer-events-auto bg-[#161a1e]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl p-1.5 ml-12 sm:ml-0 w-full sm:w-80 flex flex-col gap-2">
+          <form onSubmit={handleSearch} className="flex items-center gap-1.5 px-2 py-1 bg-[#21262d] rounded-lg border border-white/5">
+            <Search className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+            <input
+              type="text"
+              placeholder="Search locations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-transparent border-none outline-none text-[11px] sm:text-xs text-white placeholder-zinc-500 w-full font-medium"
+            />
+            {isSearching && (
+              <span className="animate-spin text-xs text-sky-400">⏳</span>
+            )}
+          </form>
+
+          {/* Search Result Suggestions Dropdown */}
+          {searchResults.length > 0 && (
+            <div className="max-h-48 overflow-y-auto flex flex-col divide-y divide-white/5 bg-[#12161a] rounded-xl border border-white/10">
+              {searchResults.slice(0, 4).map((result, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setMapCenter([parseFloat(result.lat), parseFloat(result.lon)]);
+                    setSearchResults([]);
+                  }}
+                  className="p-2 text-left text-[11px] text-zinc-300 hover:bg-sky-500/10 hover:text-sky-400 transition-colors flex items-start gap-1.5"
+                >
+                  <MapPin className="w-3.5 h-3.5 shrink-0 text-sky-400 mt-0.5" />
+                  <span className="truncate">{result.display_name}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right Actions: Layer Switcher & Re-center GPS */}
+        <div className="pointer-events-auto flex flex-col gap-2 shrink-0">
+          {/* Map Layer Switcher */}
+          <div className="bg-[#161a1e]/90 backdrop-blur-xl border border-white/10 p-1 rounded-xl shadow-2xl flex flex-col gap-1">
+            <button
+              onClick={() => setTileStyle("dark")}
+              className={`px-2 py-1 sm:p-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all ${
+                tileStyle === "dark"
+                  ? "bg-sky-500/20 text-sky-400 border border-sky-500/30"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Dark
+            </button>
+            <button
+              onClick={() => setTileStyle("street")}
+              className={`px-2 py-1 sm:p-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all ${
+                tileStyle === "street"
+                  ? "bg-sky-500/20 text-sky-400 border border-sky-500/30"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Vector
+            </button>
+            <button
+              onClick={() => setTileStyle("satellite")}
+              className={`px-2 py-1 sm:p-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all ${
+                tileStyle === "satellite"
+                  ? "bg-sky-500/20 text-sky-400 border border-sky-500/30"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Satel
+            </button>
+          </div>
+
+          {/* GPS Live Location Trigger Button */}
+          <button
+            onClick={handleGetMyLocation}
+            className="bg-[#161a1e]/90 hover:bg-sky-500/20 text-sky-400 p-2 sm:p-3 rounded-xl border border-white/10 backdrop-blur-xl shadow-2xl transition-all flex items-center justify-center cursor-pointer"
+            title="Locate Me"
+          >
+            <Crosshair className="w-4 h-4 sm:w-5 sm:h-5" />
+          </button>
+        </div>
+      </div>
+
+      {/* 3. DAILY LIFE QUICK UTILITY BOTTOM DRAWER */}
+      <div className="absolute bottom-4 left-3 right-3 sm:right-auto sm:left-4 z-10 bg-[#161a1e]/95 backdrop-blur-xl border border-white/10 p-2.5 sm:p-3 rounded-2xl shadow-2xl flex items-center justify-between sm:justify-start gap-2 sm:gap-3 overflow-x-auto scrollbar-none">
+        <span className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider shrink-0">
+          Explore:
+        </span>
+        
+        <button
+          onClick={() => {
+            setSearchQuery("Restaurants near me");
+            handleSearch();
+          }}
+          className="px-2.5 sm:px-3 py-1.5 bg-[#21262d] hover:bg-[#282e37] rounded-xl border border-white/10 text-[11px] sm:text-xs text-zinc-200 flex items-center gap-1.5 transition-all shrink-0 cursor-pointer"
+        >
+          <Utensils className="w-3.5 h-3.5 text-orange-400" /> Food
+        </button>
+
+        <button
+          onClick={() => {
+            setSearchQuery("Cafes near me");
+            handleSearch();
+          }}
+          className="px-2.5 sm:px-3 py-1.5 bg-[#21262d] hover:bg-[#282e37] rounded-xl border border-white/10 text-[11px] sm:text-xs text-zinc-200 flex items-center gap-1.5 transition-all shrink-0 cursor-pointer"
+        >
+          <Coffee className="w-3.5 h-3.5 text-emerald-400" /> Cafes
+        </button>
+
+        <button
+          onClick={() => {
+            setSearchQuery("Gas station near me");
+            handleSearch();
+          }}
+          className="px-2.5 sm:px-3 py-1.5 bg-[#21262d] hover:bg-[#282e37] rounded-xl border border-white/10 text-[11px] sm:text-xs text-zinc-200 flex items-center gap-1.5 transition-all shrink-0 cursor-pointer"
+        >
+          <Fuel className="w-3.5 h-3.5 text-sky-400" /> Fuel
+        </button>
+      </div>
+
+    </div>
+  );
+}
