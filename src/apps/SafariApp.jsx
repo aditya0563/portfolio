@@ -95,3 +95,102 @@ export default function SafariApp() {
                 }`}
               >
                 <span className="truncate">{tab.title}</span>
+                {tabs.length > 1 && (
+                  <button
+                    onClick={(e) => handleCloseTab(tab.id, e)}
+                    className="p-0.5 rounded-full hover:bg-zinc-700 text-zinc-400 hover:text-white text-[10px] sm:opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <FaTimes />
+                  </button>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Add Tab Button */}
+          <button
+            onClick={handleAddTab}
+            className="p-1.5 text-zinc-400 hover:text-white hover:bg-white/10 rounded-md transition-colors cursor-pointer ml-1 shrink-0"
+            title="New Tab"
+          >
+            <FaPlus className="text-xs" />
+          </button>
+        </div>
+
+        {/* Address Bar Row */}
+        <div className="flex items-center gap-2 px-1">
+          {/* Back / Forward / Refresh */}
+          <div className="flex items-center gap-1 text-zinc-400 shrink-0">
+            <button className="p-1.5 hover:text-white rounded hover:bg-white/5 transition-colors">
+              <FaChevronLeft className="text-xs" />
+            </button>
+            <button className="p-1.5 hover:text-white rounded hover:bg-white/5 transition-colors">
+              <FaChevronRight className="text-xs" />
+            </button>
+            <button
+              onClick={() => {
+                const iframe = document.getElementById(`safari-iframe-${activeTabId}`);
+                if (iframe) iframe.src = iframe.src;
+              }}
+              className="p-1.5 hover:text-white rounded hover:bg-white/5 transition-colors"
+              title="Reload"
+            >
+              <FaRedo className="text-xs" />
+            </button>
+          </div>
+
+          {/* URL Input Form */}
+          <form onSubmit={handleNavigate} className="flex-1 relative flex items-center min-w-0">
+            <div className="absolute left-3 text-zinc-500 text-xs flex items-center gap-1.5 pointer-events-none">
+              <FaLock className="text-[10px] text-emerald-500" />
+            </div>
+
+            <input
+              type="text"
+              value={inputUrl}
+              onChange={(e) => setInputUrl(e.target.value)}
+              placeholder="Search or enter website name"
+              className="w-full bg-[#181818] border border-white/10 rounded-lg py-1.5 pl-8 pr-8 text-xs text-zinc-200 focus:outline-none focus:border-blue-500/50 transition-all font-mono truncate"
+            />
+
+            <button
+              type="submit"
+              className="absolute right-2 text-zinc-400 hover:text-white p-1 text-xs"
+            >
+              <FaSearch />
+            </button>
+          </form>
+
+          {/* Privacy & External Link */}
+          <div className="flex items-center gap-1 text-zinc-400 shrink-0">
+            <button className="p-1.5 hover:text-white rounded hover:bg-white/5 transition-colors" title="Privacy Report">
+              <FaShieldAlt className="text-xs text-emerald-400" />
+            </button>
+            <a
+              href={activeTab.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1.5 hover:text-white rounded hover:bg-white/5 transition-colors"
+              title="Open in external browser"
+            >
+              <FaExternalLinkAlt className="text-xs" />
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Webview Viewport scaled for Mobile & Desktop */}
+      <div className="flex-1 bg-white relative overflow-hidden w-full h-full">
+        <iframe
+          id={`safari-iframe-${activeTabId}`}
+          src={activeTab.url}
+          title={activeTab.title}
+          className="border-none w-[160%] h-[160%] scale-[0.625] origin-top-left sm:w-full sm:h-full sm:scale-100"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+        />
+      </div>
+
+    </div>
+  );
+}
