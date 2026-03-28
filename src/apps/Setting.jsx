@@ -359,3 +359,366 @@ export default function Settings({
               <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-1">
                 <span className="flex items-center gap-2"><FaWifi className="text-blue-500" /> Home_Network_5G</span>
                 <span className="text-gray-400 text-[10px]">Connected</span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-1">
+                <span className="flex items-center gap-2"><FaWifi className="text-gray-400" /> CoffeeShop_Guest</span>
+                <span className="text-gray-400 text-[10px]">Saved</span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-1">
+                <span className="flex items-center gap-2"><FaWifi className="text-gray-400" /> Office_Wi-Fi</span>
+                <span className="text-gray-400 text-[10px]">Saved</span>
+              </div>
+            </div>
+
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl px-4 py-3 flex items-center justify-between">
+              <span className="text-xs font-medium text-gray-800 dark:text-gray-200">Ask to join networks</span>
+              <Toggle enabled={askToJoin} onToggle={() => setAskToJoin(!askToJoin)} />
+            </div>
+          </div>
+        );
+
+      case "Bluetooth":
+        return (
+          <div className="space-y-4">
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl p-4 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold text-gray-800 dark:text-gray-200">Bluetooth</div>
+                <div className="text-[11px] text-gray-500">Discoverable as Bikash's MacBook Pro</div>
+              </div>
+              <Toggle enabled={bluetoothActive} onToggle={toggleBluetooth} />
+            </div>
+
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl p-4 space-y-3">
+              <div className="text-xs font-bold text-gray-800 dark:text-gray-200">My Devices</div>
+              <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-1">
+                <span>AirPods Pro</span>
+                <span className="text-emerald-500 font-medium text-[11px]">Connected</span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-1">
+                <span>Magic Keyboard</span>
+                <span className="text-gray-400 text-[11px]">Not Connected</span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-1">
+                <span>MX Master 3S</span>
+                <span className="text-emerald-500 font-medium text-[11px]">Connected</span>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "Appearance":
+        return (
+          <div className="space-y-4">
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl p-4">
+              <div className="text-xs font-bold text-gray-800 dark:text-gray-200 mb-3">Appearance Theme</div>
+              <div className="grid grid-cols-3 gap-3">
+                <button
+                  onClick={() => setDarkMode("light")}
+                  className={`p-3 rounded-lg text-center text-xs font-medium ${
+                    darkMode === "light" ? "bg-blue-50 dark:bg-zinc-800 text-blue-600" : "bg-gray-100 dark:bg-zinc-800/50"
+                  }`}
+                >
+                  ☀️ Light
+                </button>
+                <button
+                  onClick={() => setDarkMode("dark")}
+                  className={`p-3 rounded-lg text-center text-xs font-medium ${
+                    darkMode === "dark" ? "bg-blue-50 dark:bg-zinc-800 text-blue-600" : "bg-gray-100 dark:bg-zinc-800/50"
+                  }`}
+                >
+                  🌙 Dark
+                </button>
+                <button
+                  onClick={() => setDarkMode("auto")}
+                  className={`p-3 rounded-lg text-center text-xs font-medium ${
+                    darkMode === "auto" ? "bg-blue-50 dark:bg-zinc-800 text-blue-600" : "bg-gray-100 dark:bg-zinc-800/50"
+                  }`}
+                >
+                  🔄 Auto
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl px-4 py-3 flex items-center justify-between">
+              <span className="text-xs font-medium text-gray-800 dark:text-gray-200">Accent Color</span>
+              <div className="flex gap-2">
+                <span className="w-4 h-4 rounded-full bg-blue-500 ring-2 ring-blue-400 cursor-pointer"></span>
+                <span className="w-4 h-4 rounded-full bg-purple-500 cursor-pointer"></span>
+                <span className="w-4 h-4 rounded-full bg-pink-500 cursor-pointer"></span>
+                <span className="w-4 h-4 rounded-full bg-orange-500 cursor-pointer"></span>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "General":
+        return (
+          <>
+            <div className="flex flex-col items-center text-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-b from-gray-400 to-gray-600 rounded-2xl flex items-center justify-center text-white shadow-md mb-2">
+                <span className="text-3xl">⚙️</span>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">General</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md">
+                Manage overall preferences, software updates, language settings, and system tools.
+              </p>
+            </div>
+
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl shadow-xs overflow-hidden">
+              {generalSubItems.map((sub, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between px-4 py-2.5 hover:bg-gray-100/60 dark:hover:bg-zinc-800/50 cursor-pointer transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-base">{sub.icon}</span>
+                    <span className="text-xs font-medium text-gray-800 dark:text-gray-200">
+                      {sub.title}
+                    </span>
+                  </div>
+                  <FiChevronRight className="text-gray-400" size={14} />
+                </div>
+              ))}
+            </div>
+          </>
+        );
+
+      default:
+        return (
+          <div className="space-y-4">
+            <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl p-5 shadow-xs">
+              <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-1">{selectedSetting}</h3>
+              <p className="text-xs text-gray-500 mb-4">Configure and customize options for {selectedSetting}.</p>
+              
+              <div className="space-y-3">
+                <div className="flex items-center justify-between py-1">
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Enable feature for {selectedSetting}</span>
+                  <Toggle enabled={true} onToggle={() => {}} />
+                </div>
+                <div className="flex items-center justify-between py-1">
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Allow background process</span>
+                  <Toggle enabled={autoUnlock} onToggle={() => setAutoUnlock(!autoUnlock)} />
+                </div>
+                <div className="flex items-center justify-between py-1">
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Reduce Motion & Animations</span>
+                  <Toggle enabled={reduceMotion} onToggle={() => setReduceMotion(!reduceMotion)} />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <>
+      <style>{scrollbarHideStyle}</style>
+
+      {/* ==================== DESKTOP MACOS LAYOUT ==================== */}
+      <div className="hidden lg:flex w-full h-screen bg-[#e8e8e8] dark:bg-[#1e1e1e] items-center justify-center p-6 text-gray-800 dark:text-gray-100 select-none">
+        {/* Outer Container without internal center dividing border */}
+        <div className="w-[980px] h-[640px] bg-[#f6f6f6] dark:bg-[#282828] rounded-xl shadow-2xl overflow-hidden flex">
+          
+          {/* LEFT SIDEBAR (No right border) */}
+          <div className="w-[280px] bg-[#e8e8e8]/70 dark:bg-[#202020]/80 flex flex-col p-3 backdrop-blur-md">
+            
+            {/* Sidebar Search Bar */}
+            <div className="relative mb-3 pt-1">
+              <FiSearch className="absolute left-2.5 top-3.5 text-gray-400" size={14} />
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-gray-200/80 dark:bg-zinc-700/60 text-xs text-gray-800 dark:text-gray-200 pl-8 pr-3 py-1.5 rounded-md outline-none focus:ring-2 focus:ring-blue-500/50 placeholder-gray-400"
+              />
+            </div>
+
+            {/* User Profile */}
+            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-200/60 dark:hover:bg-zinc-700/40 cursor-pointer mb-2 transition-colors">
+              <img
+                src={profile}
+                alt="Profile"
+                className="w-9 h-9 rounded-full object-cover"
+              />
+              <div className="overflow-hidden">
+                <div className="font-medium text-xs leading-tight text-gray-900 dark:text-gray-100 truncate">
+                  Bikash Dalapati
+                </div>
+                <div className="text-[11px] text-gray-500 dark:text-gray-400">
+                  Apple Account
+                </div>
+              </div>
+            </div>
+
+            {/* Nav Items Scrollable List */}
+            <div className="flex-1 overflow-y-auto no-scrollbar space-y-0.5 pr-1">
+              {sidebarNavItems
+                .filter((item) =>
+                  item.title.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                .map((item) => {
+                  const isSelected = selectedSetting === item.id;
+                  return (
+                    <div
+                      key={item.id}
+                      onClick={() => setSelectedSetting(item.id)}
+                      className={`flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                        isSelected
+                          ? "bg-blue-600 text-white"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200/70 dark:hover:bg-zinc-700/50"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 rounded flex items-center justify-center text-white shrink-0 mr-2.5 ${
+                          typeof item.icon === "string" ? "bg-transparent text-sm" : item.bg
+                        }`}
+                      >
+                        {item.icon}
+                      </div>
+                      <span className="flex-1 truncate">{item.title}</span>
+                      {item.right && (
+                        <div onClick={(e) => e.stopPropagation()}>
+                          {item.right}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+
+          {/* RIGHT MAIN PANEL / PREVIEW (No left border) */}
+          <div className="flex-1 flex flex-col bg-[#f6f6f6] dark:bg-[#282828] overflow-hidden relative">
+            {/* Top Navigation Header */}
+            <div className="flex items-center justify-between px-6 pt-4 pb-2 text-gray-500 shrink-0">
+              <div className="flex items-center gap-3">
+                <button className="hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer">
+                  <FiChevronLeft size={18} />
+                </button>
+                <button className="hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer">
+                  <FiChevronRight size={18} />
+                </button>
+              </div>
+
+              {selectedSetting === "Battery" && (
+                <div className="flex items-center gap-2 text-xs font-semibold text-gray-700 dark:text-gray-200">
+                  <span className="text-sm">Battery</span>
+                  <span className="flex items-center gap-1.5 text-gray-500 font-normal">
+                    {renderBatteryIcon(deviceBatteryLevel)} Battery Level: {deviceBatteryLevel}%
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Scrollable Settings Content Area */}
+            <div className="px-8 py-4 max-w-2xl mx-auto w-full flex-1 overflow-y-auto no-scrollbar pb-16">
+              {renderDetailPane()}
+            </div>
+
+            {/* Bottom Actions */}
+            {selectedSetting === "Battery" && (
+              <div className="absolute bottom-3 right-6 flex items-center gap-2 bg-[#f6f6f6]/90 dark:bg-[#282828]/90 py-1 pl-2 rounded-lg">
+                <button className="bg-gray-200/80 hover:bg-gray-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-gray-800 dark:text-gray-200 text-xs px-3 py-1 rounded-md transition-colors shadow-xs">
+                  Options...
+                </button>
+                <button className="bg-gray-200/80 hover:bg-gray-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-gray-800 dark:text-gray-200 text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold transition-colors shadow-xs">
+                  ?
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== MOBILE LAYOUT (UNCHANGED) ==================== */}
+      <div className="lg:hidden bg-black h-screen overflow-y-auto text-white flex justify-center select-none">
+        <div className="w-full max-w-md px-4 pt-20 sm:pt-6 pb-6">
+          <h1 className="text-3xl font-bold mb-6">Settings</h1>
+
+          {/* Apple ID Card */}
+          <div className="bg-[#1C1C1E] hover:bg-[#2C2C2E] transition-colors rounded-3xl p-5 mb-5 cursor-pointer">
+            <div className="flex items-center">
+              <img
+                src={profile}
+                alt="Profile"
+                className="w-16 h-16 rounded-full object-cover"
+              />
+              <div className="ml-4 flex-1">
+                <h2 className="text-2xl font-semibold">Bikash Dalapati</h2>
+                <p className="text-gray-400 text-sm">
+                  Apple Account, iCloud and more
+                </p>
+              </div>
+              <FiChevronRight className="text-gray-500" size={22} />
+            </div>
+
+            <div className="border-t border-gray-700 my-4"></div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-base">iCloud Storage Almost Full</span>
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-red-500 flex justify-center items-center text-xs font-semibold">
+                  1
+                </div>
+                <FiChevronRight className="text-gray-500" />
+              </div>
+            </div>
+          </div>
+
+          {/* Software Update Card */}
+          <div className="bg-[#1C1C1E] hover:bg-[#2C2C2E] transition-colors rounded-2xl p-5 flex justify-between items-center mb-5 cursor-pointer">
+            <span className="text-base">Software Update Available</span>
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-red-500 flex justify-center items-center text-xs font-semibold">
+                1
+              </div>
+              <FiChevronRight className="text-gray-500" />
+            </div>
+          </div>
+
+          {/* Mobile Settings List */}
+          <div className="bg-[#1C1C1E] rounded-3xl overflow-hidden">
+            {mobileSettings.map((item, index) => (
+              <div
+                key={index}
+                className={`flex items-center px-4 py-3 border-b border-gray-800 last:border-none transition-colors ${
+                  !item.right ? "cursor-pointer hover:bg-[#2C2C2E]" : ""
+                }`}
+              >
+                <div
+                  className={`${item.bg} w-8 h-8 rounded-lg flex justify-center items-center text-white text-base shrink-0`}
+                >
+                  {item.icon}
+                </div>
+
+                <span className="ml-4 flex-1 text-base">{item.title}</span>
+
+                {item.right ? (
+                  item.right
+                ) : (
+                  <FiChevronRight className="text-gray-500" size={18} />
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="h-24"></div>
+        </div>
+
+        {/* Mobile Bottom Search Bar */}
+        <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md px-4 pb-5 pt-2 flex justify-center">
+          <div className="max-w-md w-full bg-[#2C2C2E] rounded-full px-4 py-2.5 flex items-center">
+            <FiSearch className="text-gray-400 cursor-pointer" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="bg-transparent outline-none flex-1 ml-3 text-white placeholder-gray-500 text-sm cursor-text"
+            />
+            <FiMic className="text-gray-400 cursor-pointer hover:text-white transition-colors" />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
