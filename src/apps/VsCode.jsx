@@ -196,3 +196,202 @@ export default function VSCodeApp() {
                 <div className="absolute left-0 top-1 bottom-1 w-[2px] bg-white" />
               )}
             </button>
+            <button
+              onClick={() => setActiveSidebar("extensions")}
+              className={`p-2 rounded hover:text-white transition-colors relative ${
+                activeSidebar === "extensions" ? "text-white" : ""
+              }`}
+            >
+              <Blocks className="w-5 h-5" />
+              {activeSidebar === "extensions" && (
+                <div className="absolute left-0 top-1 bottom-1 w-[2px] bg-white" />
+              )}
+            </button>
+          </div>
+
+          <button className="p-2 text-[#858585] hover:text-white transition-colors">
+            <Settings className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Sidebar Panel */}
+        <div className="w-60 bg-[#252526] border-r border-[#1e1e1e] flex flex-col shrink-0">
+          <div className="px-4 py-2 text-xs font-semibold tracking-wider text-[#bbbbbb] uppercase flex items-center justify-between">
+            <span>Explorer</span>
+          </div>
+
+          {/* File Tree Header */}
+          <div className="flex-1 overflow-y-auto">
+            <button
+              onClick={() => setIsExplorerOpen(!isExplorerOpen)}
+              className="w-full px-2 py-1 flex items-center gap-1 text-xs font-bold text-[#cccccc] hover:bg-[#2a2d2e]"
+            >
+              {isExplorerOpen ? (
+                <ChevronDown className="w-3.5 h-3.5" />
+              ) : (
+                <ChevronRight className="w-3.5 h-3.5" />
+              )}
+              <Folder className="w-3.5 h-3.5 text-sky-400" />
+              <span className="truncate">PORTFOLIO-PROJECT</span>
+            </button>
+
+            {/* File List */}
+            {isExplorerOpen && (
+              <div className="pl-4 flex flex-col mt-0.5">
+                {files.map((file) => (
+                  <button
+                    key={file.id}
+                    onClick={() => handleOpenFile(file)}
+                    className={`w-full px-2 py-1 flex items-center gap-2 text-xs hover:bg-[#2a2d2e] transition-colors ${
+                      activeTabId === file.id
+                        ? "bg-[#37373d] text-white"
+                        : "text-[#cccccc]"
+                    }`}
+                  >
+                    <FileCode2 className={`w-3.5 h-3.5 shrink-0 ${file.iconColor}`} />
+                    <span className="truncate">{file.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Code Workspace Editor Area */}
+        <div className="flex-1 flex flex-col bg-[#1e1e1e] overflow-hidden">
+          
+          {/* Tab Navigation */}
+          <div className="flex items-center bg-[#252526] overflow-x-auto border-b border-[#1e1e1e] no-scrollbar">
+            {openTabs.map((tab) => (
+              <div
+                key={tab.id}
+                onClick={() => setActiveTabId(tab.id)}
+                className={`group flex items-center gap-2 px-3 py-2 text-xs border-r border-[#1e1e1e] cursor-pointer min-w-[120px] max-w-[180px] justify-between ${
+                  activeTabId === tab.id
+                    ? "bg-[#1e1e1e] text-white border-t-2 border-t-[#007acc]"
+                    : "bg-[#2d2d2d] text-[#969696] hover:bg-[#2a2d2e]"
+                }`}
+              >
+                <div className="flex items-center gap-1.5 truncate">
+                  <FileCode2 className={`w-3.5 h-3.5 shrink-0 ${tab.iconColor}`} />
+                  <span className="truncate">{tab.name}</span>
+                </div>
+                {openTabs.length > 1 && (
+                  <button
+                    onClick={(e) => handleCloseTab(e, tab.id)}
+                    className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-[#454545] rounded text-gray-400 hover:text-white"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Editable Code Workspace */}
+          {activeFile ? (
+            <div className="flex-1 flex overflow-hidden font-mono text-xs p-4 overflow-y-auto leading-relaxed">
+              {/* Dynamic Line Numbers */}
+              <div className="flex flex-col text-right pr-4 select-none text-[#5a5a5a] border-r border-[#333333]">
+                {activeFile.content.split("\n").map((_, i) => (
+                  <span key={i}>{i + 1}</span>
+                ))}
+              </div>
+
+              {/* Editable Text Area */}
+              <textarea
+                value={activeFile.content}
+                onChange={handleCodeChange}
+                spellCheck={false}
+                className="flex-1 bg-transparent text-[#d4d4d4] resize-none outline-none pl-4 font-mono text-xs leading-relaxed overflow-x-auto selection:bg-[#264f78]"
+              />
+            </div>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-xs text-[#5a5a5a]">
+              No files open
+            </div>
+          )}
+
+          {/* Integrated Interactive Terminal */}
+          {isTerminalOpen && (
+            <div className="h-44 bg-[#181818] border-t border-[#333333] flex flex-col shrink-0">
+              {/* Terminal Header Bar */}
+              <div className="px-4 py-1.5 bg-[#252526] border-b border-[#333333] flex items-center justify-between text-xs text-[#cccccc]">
+                <div className="flex items-center gap-2">
+                  <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="font-semibold">Terminal</span>
+                </div>
+                <button
+                  onClick={() => setIsTerminalOpen(false)}
+                  className="hover:text-white p-0.5 rounded hover:bg-[#333333]"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Terminal Logs View */}
+              <div className="flex-1 p-3 overflow-y-auto font-mono text-xs flex flex-col gap-1 text-[#cccccc]">
+                {terminalLogs.map((log, index) => (
+                  <div
+                    key={index}
+                    className={`whitespace-pre-wrap ${
+                      log.type === "error"
+                        ? "text-red-400"
+                        : log.type === "system"
+                        ? "text-zinc-500"
+                        : log.type === "response"
+                        ? "text-emerald-400"
+                        : "text-sky-300"
+                    }`}
+                  >
+                    {log.text}
+                  </div>
+                ))}
+
+                {/* Terminal Input Form */}
+                <form
+                  onSubmit={handleTerminalSubmit}
+                  className="flex items-center gap-2 mt-1"
+                >
+                  <span className="text-emerald-400 font-bold">$</span>
+                  <input
+                    type="text"
+                    value={terminalInput}
+                    onChange={(e) => setTerminalInput(e.target.value)}
+                    placeholder="Type command ('help', 'ls', 'npm start')..."
+                    className="flex-1 bg-transparent border-none outline-none text-white font-mono text-xs placeholder-zinc-600"
+                  />
+                  <button type="submit" className="hidden">
+                    <Send className="w-3 h-3" />
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* VS Code Bottom Status Bar */}
+      <div className="h-6 bg-[#007acc] text-white text-[11px] px-3 flex items-center justify-between shrink-0 font-sans select-none">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setIsTerminalOpen(!isTerminalOpen)}
+            className="flex items-center gap-1 hover:bg-[#005999] px-1 py-0.5 rounded transition-colors"
+          >
+            <Terminal className="w-3 h-3" />
+            <span>Terminal</span>
+          </button>
+          <span>main*</span>
+        </div>
+        <div className="flex items-center gap-4 text-white/90">
+          <span>
+            Ln {activeFile ? activeFile.content.split("\n").length : 1}, Col 1
+          </span>
+          <span>UTF-8</span>
+          <span>JavaScript React</span>
+        </div>
+      </div>
+
+    </div>
+  );
+}
