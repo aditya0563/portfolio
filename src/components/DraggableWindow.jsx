@@ -101,3 +101,107 @@ export default function DraggableWindow({
             : { x: position.x, y: position.y }
         }
         disableDragging={isFullScreen}
+        enableResizing={
+          isFullScreen
+            ? false
+            : {
+                bottom: true,
+                bottomLeft: true,
+                bottomRight: true,
+                left: true,
+                right: true,
+                top: true,
+                topLeft: true,
+                topRight: true,
+              }
+        }
+        minWidth={isFullScreen ? undefined : 400}
+        minHeight={isFullScreen ? undefined : 300}
+        onDragStop={(e, d) => {
+          if (!isFullScreen) {
+            setPosition({ x: d.x, y: d.y });
+          }
+          onBringToFront?.();
+        }}
+        onResizeStop={(e, direction, ref, delta, newPosition) => {
+          if (!isFullScreen) {
+            setSize({
+              width: parseInt(ref.style.width, 10),
+              height: parseInt(ref.style.height, 10),
+            });
+            setPosition(newPosition);
+          }
+          onBringToFront?.();
+        }}
+        onMouseDown={() => onBringToFront?.()}
+        dragHandleClassName="drag-handle"
+        style={{
+          position: isFullScreen ? "fixed" : "absolute",
+          top: isFullScreen ? 0 : undefined,
+          left: isFullScreen ? 0 : undefined,
+          zIndex: isFullScreen ? 99999 : zIndex,
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+        }}
+        className="overflow-hidden"
+      >
+        <motion.div
+          initial="opening"
+          animate={animationState}
+          variants={windowVariants}
+          className={`w-full h-full flex flex-col overflow-hidden origin-center ${
+            isFullScreen ? "rounded-none" : "rounded-2xl"
+          } border ${borderColor} ${bgColor} shadow-2xl`}
+        >
+          {/* Header Bar */}
+          <div
+            className={`drag-handle h-10 px-4 flex items-center justify-between ${headerColor} border-b ${
+              isDarkMode ? "border-white/10" : "border-black/10"
+            } select-none ${
+              isFullScreen ? "cursor-default" : "cursor-grab active:cursor-grabbing"
+            } shrink-0 z-20`}
+          >
+            {/* macOS Window Controls */}
+            <div className="flex items-center gap-2 w-20">
+              <button
+                type="button"
+                onClick={handleClose}
+                title="Close"
+                className="w-3 h-3 rounded-full bg-[#FF5F56] hover:brightness-110 active:scale-90 transition-all cursor-pointer shrink-0 border-0 p-0"
+              />
+              <button
+                type="button"
+                onClick={handleMinimize}
+                title="Minimize"
+                className="w-3 h-3 rounded-full bg-[#FFBD2E] hover:brightness-110 active:scale-90 transition-all cursor-pointer shrink-0 border-0 p-0"
+              />
+              <button
+                type="button"
+                onClick={handleToggleFullScreen}
+                title={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
+                className="w-3 h-3 rounded-full bg-[#27C93F] hover:brightness-110 active:scale-90 transition-all cursor-pointer shrink-0 border-0 p-0"
+              />
+            </div>
+
+            {/* Window Title */}
+            <span
+              className={`text-xs font-medium tracking-wide text-center flex-1 truncate ${
+                isDarkMode ? "text-zinc-400" : "text-zinc-600"
+              }`}
+            >
+              {title}
+            </span>
+
+            <div className="w-20" />
+          </div>
+
+          {/* Inner Content Area */}
+          <div className="flex-1 min-h-0 w-full overflow-hidden flex flex-col relative">
+            {children}
+          </div>
+        </motion.div>
+      </Rnd>
+    </AnimatePresence>
+  );
+}
