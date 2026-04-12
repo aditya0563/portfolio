@@ -280,3 +280,286 @@ export default function TopBar({
               strokeLinecap="round"
             >
               <line x1="3" y1="13" x2="13" y2="3" />
+            </svg>
+          )}
+        </div>
+
+        {/* Spotlight Search Icon */}
+        <FaSearch className="text-[11px] opacity-80 cursor-pointer hover:opacity-100 transition-opacity" />
+
+        {/* macOS Battery Icon */}
+        <div
+          className="flex items-center gap-1.5 text-[11px] font-medium cursor-default"
+          title={`Battery: ${batteryLevel}%${isCharging ? " (Charging)" : ""}`}
+        >
+          <span>{batteryLevel}%</span>
+          <div className="relative flex items-center">
+            <div
+              className={`w-[22px] h-[11px] rounded-[4px] border-[1.5px] p-[1.5px] flex items-center relative overflow-hidden backdrop-blur-sm shadow-sm ${
+                isDarkMode
+                  ? "border-white/70 bg-white/10"
+                  : "border-black/60 bg-black/5"
+              }`}
+            >
+              <div
+                className={`h-full rounded-[2px] transition-all duration-300 ${getBatteryColor()}`}
+                style={{ width: `${batteryLevel}%` }}
+              />
+            </div>
+            <div
+              className={`w-[2px] h-[4px] rounded-r-[1.5px] -ml-[0.5px] ${
+                isDarkMode ? "bg-white/70" : "bg-black/60"
+              }`}
+            />
+          </div>
+          {isCharging && (
+            <span className="text-[10px] text-emerald-500 font-mono leading-none">
+              ⚡
+            </span>
+          )}
+        </div>
+
+        {/* Control Center Toggle Button & Popover Modal */}
+        <div className="relative" ref={controlCenterRef}>
+          <button
+            onClick={() => setShowControlCenter(!showControlCenter)}
+            className={`p-1 rounded transition-colors cursor-pointer ${
+              showControlCenter
+                ? isDarkMode
+                  ? "bg-white/30"
+                  : "bg-black/20"
+                : isDarkMode
+                ? "hover:bg-white/10"
+                : "hover:bg-black/10"
+            }`}
+            title="Control Center"
+          >
+            <FaSlidersH className="text-[13px] opacity-90" />
+          </button>
+
+          {/* Control Panel Popover */}
+          {showControlCenter && (
+            <div
+              className={`absolute top-9 right-0 w-[300px] backdrop-blur-3xl border rounded-3xl p-3 shadow-2xl z-50 flex flex-col gap-3 font-sans transition-all duration-300 ${
+                isDarkMode
+                  ? "bg-black/40 border-white/20 text-white shadow-black/50"
+                  : "bg-white/60 border-black/15 text-zinc-900 shadow-xl"
+              }`}
+            >
+              {/* Top Grid: Connectivity & Toggles */}
+              <div className="grid grid-cols-2 gap-2.5">
+                {/* Left Card: Connectivity Switches */}
+                <div
+                  className={`border rounded-2xl p-3 flex flex-col gap-3 backdrop-blur-md ${
+                    isDarkMode
+                      ? "bg-white/15 border-white/20"
+                      : "bg-black/5 border-black/10"
+                  }`}
+                >
+                  <div
+                    onClick={() => setIsWifiActive(!isWifiActive)}
+                    className="flex items-center gap-2.5 cursor-pointer group"
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+                        isWifiActive
+                          ? "bg-blue-500 text-white"
+                          : isDarkMode
+                          ? "bg-white/20 text-white/60"
+                          : "bg-black/15 text-zinc-600"
+                      }`}
+                    >
+                      <FaWifi className="text-xs" />
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <span className="font-bold text-xs">Wi-Fi</span>
+                      <span className="text-[10px] opacity-70">
+                        {isWifiActive ? "Home" : "Off"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={() => setIsBluetooth(!isBluetooth)}
+                    className="flex items-center gap-2.5 cursor-pointer group"
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+                        isBluetooth
+                          ? "bg-blue-500 text-white"
+                          : isDarkMode
+                          ? "bg-white/20 text-white/60"
+                          : "bg-black/15 text-zinc-600"
+                      }`}
+                    >
+                      <FaBluetoothB className="text-xs" />
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <span className="font-bold text-xs">Bluetooth</span>
+                      <span className="text-[10px] opacity-70">
+                        {isBluetooth ? "On" : "Off"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={() => setIsAirDrop(!isAirDrop)}
+                    className="flex items-center gap-2.5 cursor-pointer group"
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+                        isAirDrop
+                          ? "bg-blue-500 text-white"
+                          : isDarkMode
+                          ? "bg-white/20 text-white/60"
+                          : "bg-black/15 text-zinc-600"
+                      }`}
+                    >
+                      <FaPowerOff className="text-xs" />
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <span className="font-bold text-xs">AirDrop</span>
+                      <span className="text-[10px] opacity-70">
+                        {isAirDrop ? "On" : "Off"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Cards: Quick Actions & Dark Mode Toggle */}
+                <div className="flex flex-col gap-2.5">
+                  <div
+                    onClick={() => setIsDarkMode(!isDarkMode)}
+                    className={`border rounded-2xl p-2.5 flex items-center gap-2.5 cursor-pointer transition-colors backdrop-blur-md ${
+                      isDarkMode
+                        ? "bg-white/15 border-white/20 hover:bg-white/25"
+                        : "bg-black/5 border-black/10 hover:bg-black/10"
+                    }`}
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+                        isDarkMode
+                          ? "bg-indigo-600 text-white"
+                          : "bg-amber-400 text-zinc-900"
+                      }`}
+                    >
+                      {isDarkMode ? (
+                        <FaMoon className="text-xs" />
+                      ) : (
+                        <FaSun className="text-xs" />
+                      )}
+                    </div>
+                    <span className="font-bold text-xs">
+                      {isDarkMode ? "Dark Mode" : "Light Mode"}
+                    </span>
+                  </div>
+
+                  {/* Quick Action Tiles */}
+                  <div className="grid grid-cols-2 gap-2 flex-1">
+                    <div
+                      onClick={() => {
+                        if (onOpenCalculator) onOpenCalculator();
+                        setShowControlCenter(false);
+                      }}
+                      className={`border rounded-2xl p-2 flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-colors backdrop-blur-md ${
+                        isDarkMode
+                          ? "bg-white/15 border-white/20 hover:bg-white/25"
+                          : "bg-black/5 border-black/10 hover:bg-black/10"
+                      }`}
+                    >
+                      <FaCalculator className="text-lg opacity-90" />
+                      <span className="text-[10px] font-semibold text-center leading-tight">
+                        Calculator
+                      </span>
+                    </div>
+
+                    <div
+                      onClick={toggleFullScreen}
+                      className={`border rounded-2xl p-2 flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-colors backdrop-blur-md ${
+                        isDarkMode
+                          ? "bg-white/15 border-white/20 hover:bg-white/25"
+                          : "bg-black/5 border-black/10 hover:bg-black/10"
+                      }`}
+                    >
+                      <FaDesktop className="text-lg opacity-90" />
+                      <span className="text-[10px] font-semibold text-center leading-tight">
+                        Full Screen
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Display Brightness Slider */}
+              <div
+                className={`border rounded-2xl p-3 flex flex-col gap-2 backdrop-blur-md ${
+                  isDarkMode
+                    ? "bg-white/15 border-white/20"
+                    : "bg-black/5 border-black/10"
+                }`}
+              >
+                <span className="font-bold text-xs opacity-90">Display</span>
+                <div className="relative flex items-center bg-white/90 rounded-full h-8 px-3 overflow-hidden shadow-inner">
+                  <FaSun className="text-zinc-800 text-xs z-10 pointer-events-none" />
+                  <span className="text-xs font-bold text-zinc-800 ml-2 z-10 pointer-events-none">
+                    {brightness}%
+                  </span>
+                  <input
+                    type="range"
+                    min="20"
+                    max="100"
+                    value={brightness}
+                    onChange={(e) => setBrightness(Number(e.target.value))}
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20"
+                  />
+                  <div
+                    className="absolute left-0 top-0 bottom-0 bg-white transition-all pointer-events-none"
+                    style={{ width: `${brightness}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Universal Sound Volume Slider */}
+              <div
+                className={`border rounded-2xl p-3 flex flex-col gap-2 backdrop-blur-md ${
+                  isDarkMode
+                    ? "bg-white/15 border-white/20"
+                    : "bg-black/5 border-black/10"
+                }`}
+              >
+                <span className="font-bold text-xs opacity-90">Sound</span>
+                <div className="relative flex items-center bg-white/90 rounded-full h-8 px-3 overflow-hidden shadow-inner">
+                  {volume === 0 ? (
+                    <FaVolumeMute className="text-zinc-800 text-xs z-10 pointer-events-none" />
+                  ) : (
+                    <FaVolumeUp className="text-zinc-800 text-xs z-10 pointer-events-none" />
+                  )}
+                  <span className="text-xs font-bold text-zinc-800 ml-2 z-10 pointer-events-none">
+                    {volume}%
+                  </span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={volume}
+                    onChange={(e) => setVolume(Number(e.target.value))}
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20"
+                  />
+                  <div
+                    className="absolute left-0 top-0 bottom-0 bg-white transition-all pointer-events-none"
+                    style={{ width: `${volume}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Clock */}
+        <span className="text-[11px] font-medium tracking-tight ml-0.5">
+          {time || "Wed 19:08"}
+        </span>
+      </div>
+    </header>
+  );
+}
