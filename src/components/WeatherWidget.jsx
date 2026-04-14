@@ -99,3 +99,105 @@ export default function WeatherWidget({ onOpenWeather }) {
         }
       } catch (err) {
         console.error("Failed to fetch weather data:", err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    // Reverse Geocoding via BigDataCloud (CORS friendly)
+    const getCityName = async (lat, lon) => {
+      try {
+        const res = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+        );
+        const data = await res.json();
+        return data.city || data.locality || data.principalSubdivision || "Current Location";
+      } catch {
+        return "Current Location";
+      }
+    };
+
+    // Fast & Unblocked IP Geolocation Fallback (Works on laptops & desktops)
+    const fetchIpLocation = async () => {
+      try {
+        const response = await fetch("https://get.geojs.io/v1/ip/geo.json");
+        const locData = await response.json();
+
+        if (locData && locData.latitude && locData.longitude) {
+          const cityName = locData.city || locData.region || "Current Location";
+          fetchWeather(parseFloat(locData.latitude), parseFloat(locData.longitude), cityName);
+        } else {
+          fetchWeather(22.5726, 88.3639, "Kolkata");
+        }
+      } catch (error) {
+        console.error("IP geolocation failed:", error);
+        fetchWeather(22.5726, 88.3639, "Kolkata");
+      }
+    };
+
+    // Geolocation execution logic
+    if (navigator.geolocation && (window.isSecureContext || window.location.hostname === "localhost")) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          const cityName = await getCityName(latitude, longitude);
+          fetchWeather(latitude, longitude, cityName);
+        },
+        (error) => {
+          console.warn("Browser geolocation failed on laptop, falling back to IP:", error);
+          fetchIpLocation();
+        },
+        { timeout: 4000, enableHighAccuracy: false }
+      );
+    } else {
+      fetchIpLocation();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  return (
+    <div
+      onClick={onOpenWeather}
+      className="h-full flex flex-col justify-between text-white cursor-pointer group select-none transition-transform duration-200 active:scale-95"
+      title="Click to open Weather app"
+    >
+      {/* Top */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-light leading-none group-hover:text-yellow-200 transition-colors">
+            {loading ? "..." : weather.temp}
+          </h1>
+          <p className="text-xs text-white/80 mt-1 truncate max-w-[120px]">
+            {weather.city}
+          </p>
+        </div>
+
+        <div className="transform group-hover:scale-110 transition-transform">
+          {weather.icon || <WiDaySunny className="text-4xl text-yellow-300" />}
+        </div>
+      </div>
+
+      {/* Forecast */}
+      <div className="space-y-1 text-[11px]">
+        {weather.forecast.map((item, index) => (
+          <div
+            key={index}
+            className={`flex justify-between ${
+              index !== weather.forecast.length - 1
+                ? "border-b border-white/10 pb-1"
+                : ""
+            }`}
+          >
+            <span className="text-white/70">{item.day}</span>
+            <span>
+              {item.icon} {item.temp}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
