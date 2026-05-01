@@ -303,3 +303,310 @@ const WindowManager = ({
           title="Maps Explorer"
           defaultWidth={950}
           defaultHeight={620}
+          {...getCenterPosition(950, 620)}
+          zIndex={getWindowZIndex("map")}
+          onBringToFront={() => bringWindowToFront("map")}
+          bgColor={githubBg}
+          headerColor={githubHeader}
+          borderColor={githubBorder}
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <MapApp isDarkMode={isDarkMode} />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* Photos */}
+      {windows.photos?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.photos.isOpen}
+          isMinimized={windows.photos.isMinimized}
+          onClose={() => onClose("photos")}
+          onMinimize={() => onMinimize("photos")}
+          title="Photos"
+          defaultWidth={920}
+          defaultHeight={600}
+          {...getCenterPosition(920, 600)}
+          zIndex={getWindowZIndex("photos")}
+          onBringToFront={() => bringWindowToFront("photos")}
+          bgColor={githubBg}
+          headerColor={githubHeader}
+          borderColor={githubBorder}
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <PhotosApp isDarkMode={isDarkMode} />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* Netflix */}
+      {windows.netflix?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.netflix.isOpen}
+          isMinimized={windows.netflix.isMinimized}
+          onClose={() => onClose("netflix")}
+          onMinimize={() => onMinimize("netflix")}
+          title="Netflix"
+          defaultWidth={980}
+          defaultHeight={640}
+          {...getCenterPosition(980, 640)}
+          zIndex={getWindowZIndex("netflix")}
+          onBringToFront={() => bringWindowToFront("netflix")}
+          bgColor="bg-[#141414]"
+          headerColor="bg-black/90"
+          borderColor="border-white/10"
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <NetflixApp isDarkMode={isDarkMode} />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* Notes */}
+      {windows.notes?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.notes.isOpen}
+          isMinimized={windows.notes.isMinimized}
+          onClose={() => onClose("notes")}
+          onMinimize={() => onMinimize("notes")}
+          title="Notes"
+          defaultWidth={900}
+          defaultHeight={580}
+          {...getCenterPosition(900, 580)}
+          zIndex={getWindowZIndex("notes")}
+          onBringToFront={() => bringWindowToFront("notes")}
+          bgColor={notesBg}
+          headerColor={notesHeader}
+          borderColor={defaultBorder}
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <NotesApp isDarkMode={isDarkMode} />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* Spotify */}
+      {windows.spotify?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.spotify.isOpen}
+          isMinimized={windows.spotify.isMinimized}
+          onClose={() => onClose("spotify")}
+          onMinimize={() => onMinimize("spotify")}
+          title="Spotify"
+          defaultWidth={820}
+          defaultHeight={560}
+          {...getCenterPosition(820, 560)}
+          zIndex={getWindowZIndex("spotify")}
+          onBringToFront={() => bringWindowToFront("spotify")}
+          bgColor={defaultBg}
+          headerColor={defaultHeader}
+          borderColor={defaultBorder}
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <SpotifyApp isDarkMode={isDarkMode} />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* Settings */}
+      {windows.setting?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.setting.isOpen}
+          isMinimized={windows.setting.isMinimized}
+          onClose={() => onClose("setting")}
+          onMinimize={() => onMinimize("setting")}
+          title="System Settings"
+          defaultWidth={820}
+          defaultHeight={560}
+          {...getCenterPosition(820, 560)}
+          zIndex={getWindowZIndex("setting")}
+          onBringToFront={() => bringWindowToFront("setting")}
+          bgColor={defaultBg}
+          headerColor={defaultHeader}
+          borderColor={defaultBorder}
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <Setting
+              isWifiActive={isWifiActive}
+              setIsWifiActive={setIsWifiActive}
+              isBluetooth={isBluetooth}
+              setIsBluetooth={setIsBluetooth}
+              isDarkMode={isDarkMode}
+            />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* Resume */}
+      {windows.resume?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.resume.isOpen}
+          isMinimized={windows.resume.isMinimized}
+          onClose={() => onClose("resume")}
+          onMinimize={() => onMinimize("resume")}
+          title="Resume.pdf"
+          defaultWidth={800}
+          defaultHeight={700}
+          {...getCenterPosition(800, 700)}
+          zIndex={getWindowZIndex("resume")}
+          onBringToFront={() => bringWindowToFront("resume")}
+          bgColor={defaultBg}
+          headerColor={defaultHeader}
+          borderColor={defaultBorder}
+          isDarkMode={isDarkMode}
+        >
+          <iframe
+            src="/Resume.pdf"
+            className="w-full h-full bg-white border-none"
+            title="Resume"
+          />
+        </DraggableWindow>
+      )}
+
+      {/* LeetCode */}
+      {windows.leetcode?.isOpen && (
+        <DraggableWindow
+          isOpen={windows.leetcode.isOpen}
+          isMinimized={windows.leetcode.isMinimized}
+          onClose={() => onClose("leetcode")}
+          onMinimize={() => onMinimize("leetcode")}
+          title="LeetCode"
+          defaultWidth={800}
+          defaultHeight={600}
+          {...getCenterPosition(800, 600)}
+          zIndex={getWindowZIndex("leetcode")}
+          onBringToFront={() => bringWindowToFront("leetcode")}
+          bgColor={defaultBg}
+          headerColor={defaultHeader}
+          borderColor={defaultBorder}
+          isDarkMode={isDarkMode}
+        >
+          <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+            <LeetCodeApp isDarkMode={isDarkMode} />
+          </Suspense>
+        </DraggableWindow>
+      )}
+
+      {/* CodeChef */}
+      <AnimatePresence>
+        {windows.codechef?.isOpen && (
+          <DraggableWindow
+            isOpen={windows.codechef.isOpen}
+            isMinimized={windows.codechef.isMinimized}
+            onClose={() => onClose("codechef")}
+            onMinimize={() => onMinimize("codechef")}
+            title="CodeChef Arena"
+            defaultWidth={1200}
+            defaultHeight={700}
+            {...getCenterPosition(1200, 700)}
+            zIndex={getWindowZIndex("codechef")}
+            onBringToFront={() => bringWindowToFront("codechef")}
+            bgColor={defaultBg}
+            headerColor={defaultHeader}
+            borderColor={defaultBorder}
+            isDarkMode={isDarkMode}
+          >
+            <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+              <CodeChefApp isDarkMode={isDarkMode} />
+            </Suspense>
+          </DraggableWindow>
+        )}
+      </AnimatePresence>
+
+      {/* iMessage */}
+      <AnimatePresence>
+        {windows.imessage?.isOpen && (
+          <DraggableWindow
+            isOpen={windows.imessage.isOpen}
+            isMinimized={windows.imessage.isMinimized}
+            onClose={() => onClose("imessage")}
+            onMinimize={() => onMinimize("imessage")}
+            title="iMessage"
+            defaultWidth={800}
+            defaultHeight={600}
+            {...getCenterPosition(800, 600)}
+            zIndex={getWindowZIndex("imessage")}
+            onBringToFront={() => bringWindowToFront("imessage")}
+            bgColor={defaultBg}
+            headerColor={defaultHeader}
+            borderColor={defaultBorder}
+            isDarkMode={isDarkMode}
+          >
+            <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+              <IMessageApp isDarkMode={isDarkMode} />
+            </Suspense>
+          </DraggableWindow>
+        )}
+      </AnimatePresence>
+
+      {/* Projects Folder */}
+      <AnimatePresence>
+        {windows.projectfolder?.isOpen && (
+          <DraggableWindow
+            isOpen={windows.projectfolder.isOpen}
+            isMinimized={windows.projectfolder.isMinimized}
+            onClose={() => onClose("projectfolder")}
+            onMinimize={() => onMinimize("projectfolder")}
+            title="Finder — Projects Directory"
+            defaultWidth={1200}
+            defaultHeight={700}
+            {...getCenterPosition(1200, 700)}
+            zIndex={getWindowZIndex("projectfolder")}
+            onBringToFront={() => bringWindowToFront("projectfolder")}
+            bgColor={finderBg}
+            headerColor={finderHeader}
+            borderColor={defaultBorder}
+            isDarkMode={isDarkMode}
+          >
+            <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+              <ProjectsFolderSection isDarkMode={isDarkMode} />
+            </Suspense>
+          </DraggableWindow>
+        )}
+      </AnimatePresence>
+
+      {/* Finder */}
+      <AnimatePresence>
+        {windows.finder?.isOpen && (
+          <DraggableWindow
+            isOpen={windows.finder.isOpen}
+            isMinimized={windows.finder.isMinimized}
+            onClose={() => onClose("finder")}
+            onMinimize={() => onMinimize("finder")}
+            title={
+              finderCategory === "bin"
+                ? "Finder — Bin"
+                : finderCategory === "documents"
+                ? "Finder — Documents"
+                : "Finder — Recents"
+            }
+            defaultWidth={1200}
+            defaultHeight={700}
+            {...getCenterPosition(1200, 700)}
+            zIndex={getWindowZIndex("finder")}
+            onBringToFront={() => bringWindowToFront("finder")}
+            bgColor={finderBg}
+            headerColor={finderHeader}
+            borderColor={defaultBorder}
+            isDarkMode={isDarkMode}
+          >
+            <Suspense fallback={<AppLoader isDarkMode={isDarkMode} />}>
+              <FinderApp
+                initialCategory={finderCategory || "documents"}
+                isDarkMode={isDarkMode}
+              />
+            </Suspense>
+          </DraggableWindow>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+export default memo(WindowManager);
