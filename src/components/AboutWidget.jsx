@@ -13,3 +13,20 @@ export default function AboutWidget({ profile, onOpenNodepad }) {
 
       <div className="space-y-2.5 text-xs text-zinc-200 leading-relaxed font-normal">
         <p className="flex items-start gap-2">
+          <span>👉</span>
+          <span>
+            Hi 👋, I'm <strong className="text-white">{profile?.name}</strong>.
+          </span>
+        </p>
+        <p className="flex items-start gap-2">
+          <span>👉</span>
+          <span>{profile?.title}</span>
+        </p>
+        <p className="flex items-start gap-2">
+          <span>👉</span>
+          <span>{profile?.bio}</span>
+        </p>
+      </div>
+    </div>
+  );
+}
