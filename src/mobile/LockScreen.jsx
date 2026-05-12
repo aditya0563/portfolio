@@ -18,3 +18,24 @@ export default function LockScreen({ formattedDate, formattedTime, onUnlockSwipe
       </div>
 
       {/* Quick Action Buttons & Bottom Indicator */}
+      <div className="flex flex-col gap-5 mb-2">
+        <div className="w-full flex justify-between items-center px-2">
+          <div className="w-[50px] h-[50px] rounded-full bg-black/30 backdrop-blur-2xl flex items-center justify-center shadow-lg active:scale-95 transition-transform cursor-pointer border border-white/10">
+            <FlashlightIcon />
+          </div>
+          <div className="w-[50px] h-[50px] rounded-full bg-black/30 backdrop-blur-2xl flex items-center justify-center shadow-lg active:scale-95 transition-transform cursor-pointer border border-white/10">
+            <CameraLockIcon />
+          </div>
+        </div>
+
+        {/* Static iOS Home Bar Indicator */}
+        <div 
+          onClick={() => onUnlockSwipe?.()} 
+          className="flex flex-col items-center gap-1 py-2"
+        >
+          <div className="w-36 h-[4.5px] bg-white/90 rounded-full shadow-md" />
+        </div>
+      </div>
+    </div>
+  );
+}
