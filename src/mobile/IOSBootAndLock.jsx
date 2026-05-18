@@ -183,3 +183,189 @@ export default function IosBootAndLock({ onUnlock }) {
           {/* STATUS BAR & DYNAMIC ISLAND */}
           {screenState !== "booting" && (
             <div className="absolute top-0 inset-x-0 z-50 flex justify-between items-center px-7 pt-3.5 text-white pointer-events-none">
+              <span className="text-[15px] font-semibold tracking-tight text-white/95 pointer-events-auto">
+                {formattedTime}
+              </span>
+
+              <motion.div
+                layout
+                layoutId="dynamic-island"
+                transition={{ type: "spring", stiffness: 500, damping: 28 }}
+                className={`absolute left-1/2 -translate-x-1/2 bg-black flex items-center justify-center overflow-hidden z-50 border-0 outline-none shadow-none ring-0 pointer-events-auto ${
+                  isFaceIdActive
+                    ? "top-2 w-[125px] h-[125px] rounded-[38px]"
+                    : "top-2.5 w-[120px] h-[35px] rounded-full"
+                }`}
+              >
+                {isFaceIdActive && (
+                  <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-[38px]">
+                    <video
+                      ref={videoRef}
+                      src={faceIdVideo}
+                      autoPlay
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover pointer-events-none"
+                    />
+                  </div>
+                )}
+              </motion.div>
+
+              <div className="flex items-center gap-1.5 pointer-events-auto">
+                <SignalBarsIcon />
+                <span className="text-[12px] font-bold tracking-tight text-white/95 -ml-0.5">5G</span>
+                <BatteryPillIcon level={batteryLevel} isCharging={isCharging} />
+              </div>
+            </div>
+          )}
+
+          {/* 1. APPLE BOOT SCREEN */}
+          {screenState === "booting" && (
+            <div className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center gap-6">
+              <img src={logo} alt="Apple Logo" className="w-16 h-16 object-contain" />
+              <div className="w-36 h-1 bg-zinc-800 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.0, ease: "easeInOut" }}
+                  className="h-full bg-white rounded-full"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* 2. iOS LOCK SCREEN (SWIPE FULLY UPWARD) */}
+          <AnimatePresence>
+            {screenState === "lockscreen" && (
+              <motion.div
+                key="lockscreen"
+                className="absolute inset-0 z-30 w-full h-full cursor-grab active:cursor-grabbing touch-none"
+                drag={isSwipingUp ? false : "y"}
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={0.2}
+                animate={isSwipingUp ? { y: "-100%", opacity: 0 } : { y: "0%", opacity: 1 }}
+                exit={{ y: "-100%", opacity: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                onDragEnd={(_, info) => {
+                  if (info.offset.y < -40 || info.velocity.y < -150) {
+                    triggerSwipeUpToUnlock();
+                  }
+                }}
+              >
+                <LockScreen
+                  formattedDate={formattedDate}
+                  formattedTime={formattedTime}
+                  onUnlockSwipe={triggerSwipeUpToUnlock}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* 3. PASSCODE SCREEN */}
+          {screenState === "passcode" && (
+            <div className="relative z-30 h-full flex flex-col justify-between pt-20 pb-8 px-8 backdrop-blur-3xl bg-black/50">
+              <div className="flex flex-col items-center mt-2">
+                <h2 className="text-[20px] font-semibold text-white/95 tracking-wide mb-5">
+                  Enter Passcode
+                </h2>
+
+                <div className="flex gap-4 mb-6">
+                  {[0, 1, 2, 3].map((idx) => (
+                    <div
+                      key={idx}
+                      className={`w-[13px] h-[13px] rounded-full transition-all duration-150 ${
+                        passcode.length > idx
+                          ? "bg-white border-2 border-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                          : "border-2 border-white/80 bg-transparent"
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <p className="text-[12px] font-semibold text-white/90 tracking-wide text-center">
+                  Hint: Enter any 4 digit to unlock
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-y-4 gap-x-6 max-w-[250px] mx-auto my-auto">
+                {[
+                  { num: "1", sub: "" },
+                  { num: "2", sub: "A B C" },
+                  { num: "3", sub: "D E F" },
+                  { num: "4", sub: "G H I" },
+                  { num: "5", sub: "J K L" },
+                  { num: "6", sub: "M N O" },
+                  { num: "7", sub: "P Q R S" },
+                  { num: "8", sub: "T U V" },
+                  { num: "9", sub: "W X Y Z" },
+                ].map((btn) => (
+                  <button
+                    key={btn.num}
+                    onClick={() => handleKeyClick(btn.num)}
+                    className="w-18 h-18 rounded-full bg-white/10 active:bg-white/30 border-0 backdrop-blur-xl flex flex-col items-center justify-center transition-all shadow-md active:scale-95 cursor-pointer"
+                  >
+                    <span className="text-2xl font-light text-white leading-none">{btn.num}</span>
+                    {btn.sub && (
+                      <span className="text-[8px] font-semibold tracking-widest text-white/60 mt-0.5">
+                        {btn.sub}
+                      </span>
+                    )}
+                  </button>
+                ))}
+
+                <div className="col-start-2 flex justify-center">
+                  <button
+                    onClick={() => handleKeyClick("0")}
+                    className="w-18 h-18 rounded-full bg-white/10 active:bg-white/30 border-0 backdrop-blur-xl flex items-center justify-center text-2xl font-light text-white shadow-md active:scale-95 cursor-pointer"
+                  >
+                    0
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center text-xs font-medium text-white/80 px-2 mb-2">
+                <button
+                  onClick={() => alert("Emergency Call Dialed")}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Emergency
+                </button>
+                <button
+                  onClick={() => {
+                    setPasscode([]);
+                    setIsSwipingUp(false);
+                    setScreenState("lockscreen");
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 4. iOS HOME SCREEN */}
+          {screenState === "homescreen" && (
+            <motion.div
+              initial={{ scale: 1.05, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative z-30 h-full w-full flex flex-col justify-between pt-10 pb-4 overflow-hidden"
+            >
+              <div className="flex-1 overflow-y-auto pt-4">
+                <HomeScreenGrid setActiveApp={setActiveApp} />
+              </div>
+
+              <AnimatePresence>
+                {activeApp && (
+                  <AppModal activeApp={activeApp} onClose={() => setActiveApp(null)} />
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )}
+
+        </div>
+      </div>
+    </div>
+  );
+}
