@@ -71,3 +71,77 @@ export default function BikashContactDetails() {
       <div className="space-y-4 mt-4">
         {/* CONTACT PHOTO & POSTER */}
         <div className="bg-[#2c2c2e] rounded-2xl p-3.5 flex items-center justify-between cursor-pointer active:opacity-80 transition-opacity">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-full bg-[#3a3a3c] flex items-center justify-center text-xs text-zinc-300 font-medium">
+              {contact.initials}
+            </div>
+            <span className="text-base text-white font-normal">Contact Photo & Poster</span>
+          </div>
+          <ChevronRight className="w-5 h-5 text-zinc-500" />
+        </div>
+
+        {/* PHONE & EMAIL */}
+        <div className="bg-[#2c2c2e] rounded-2xl divide-y divide-[#3a3a3c] overflow-hidden">
+          <div className="p-3.5">
+            <div className="text-xs text-zinc-400 font-medium">mobile</div>
+            <div className="text-[17px] text-[#0a84ff] font-normal mt-0.5">
+              {contact.mobile}
+            </div>
+          </div>
+
+          <div className="p-3.5">
+            <div className="text-xs text-zinc-400 font-medium">home</div>
+            <div className="text-[17px] text-[#0a84ff] font-normal mt-0.5 break-all">
+              {contact.email}
+            </div>
+          </div>
+        </div>
+
+        {/* ADDRESS WITH MAP PIN CARD */}
+        <div className="bg-[#2c2c2e] rounded-2xl p-3.5 flex items-start justify-between gap-3">
+          <div className="flex-1 space-y-0.5">
+            <div className="text-xs text-zinc-400 font-medium mb-1">home</div>
+            <div className="text-[15px] text-white leading-snug">{contact.address.line1}</div>
+            <div className="text-[15px] text-white leading-snug">{contact.address.line2}</div>
+            <div className="text-[15px] text-white leading-snug">{contact.address.state}</div>
+            <div className="text-[15px] text-white leading-snug">{contact.address.country}</div>
+          </div>
+
+          <div className="w-24 h-24 rounded-xl bg-[#1c1c1e] border border-zinc-700/60 relative overflow-hidden flex-shrink-0 flex items-center justify-center">
+            <div className="absolute inset-0 bg-blue-900/20" />
+            <MapPin className="w-7 h-7 text-[#ff453a] fill-[#ff453a] relative z-10 drop-shadow-md" />
+          </div>
+        </div>
+
+        {/* NOTES */}
+        <div className="bg-[#2c2c2e] rounded-2xl p-3.5">
+          <div className="text-xs text-zinc-400 font-medium mb-1">Notes</div>
+          <div className="text-[15px] text-zinc-500 h-8"></div>
+        </div>
+
+        {/* ACTION BUTTONS */}
+        <div className="bg-[#2c2c2e] rounded-2xl divide-y divide-[#3a3a3c] overflow-hidden">
+          <button className="w-full p-3.5 text-left text-[17px] text-[#0a84ff] hover:bg-[#3a3a3c] transition-colors">
+            Send Message
+          </button>
+          <button className="w-full p-3.5 text-left text-[17px] text-[#0a84ff] hover:bg-[#3a3a3c] transition-colors">
+            Share Contact
+          </button>
+          <button className="w-full p-3.5 text-left text-[17px] text-[#0a84ff] hover:bg-[#3a3a3c] transition-colors">
+            Add to Favourites
+          </button>
+        </div>
+
+        {/* EMERGENCY & BLOCK */}
+        <div className="bg-[#2c2c2e] rounded-2xl divide-y divide-[#3a3a3c] overflow-hidden">
+          <button className="w-full p-3.5 text-left text-[17px] text-[#0a84ff] hover:bg-[#3a3a3c] transition-colors">
+            Add to Emergency Contacts
+          </button>
+          <button className="w-full p-3.5 text-left text-[17px] text-[#ff453a] hover:bg-[#3a3a3c] transition-colors">
+            Block Contact
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
