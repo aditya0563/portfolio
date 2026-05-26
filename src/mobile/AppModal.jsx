@@ -33,3 +33,40 @@ export default function AppModal({ activeApp, onClose }) {
       {/* FLOATING BACK BUTTON - Added 'external-back-button' class here */}
       <button
         onClick={onClose}
+        className="external-back-button absolute top-12 left-4 z-50 w-8 h-8 rounded-full bg-black/30 hover:bg-black/50 active:scale-95 backdrop-blur-xl border border-white/20 shadow-lg flex items-center justify-center text-white transition-all cursor-pointer"
+        aria-label="Back"
+      >
+        <FaChevronLeft className="w-3 h-3 text-white -ml-0.5" />
+      </button>
+
+      {/* FULLSCREEN APP RENDER CONTAINER */}
+      <div className="flex-1 w-full h-full relative overflow-y-auto">
+        {activeApp === "Calculator" && <CalculatorApp />}
+        {activeApp === "Weather" && <WeatherApp onClose={onClose} />}
+        {activeApp === "Notes" && <NotesApp onClose={onClose} />}
+        {activeApp === "GitHub" && <GitHubMobileProfile onClose={onClose} />}
+        {activeApp === "Calendar" && <CalendarApp onClose={onClose} />}
+        {activeApp === "Settings" && <Setting onClose={onClose} />}
+        {activeApp === "Maps" && <Maps onClose={onClose} />}
+        {activeApp === "Photos" && <PhotosApp onClose={onClose} />}
+        {activeApp === "LinkedIn" && <LinkedInApp onClose={onClose} />}
+        {activeApp === "Safari" && <SafariApp onClose={onClose} />}
+        {activeApp === "Resume.pdf" && <ResumeApp />}
+        {activeApp === "LeetCode" && <LeetCodeApp />}
+        {activeApp === "phone" && <PhoneApp />}
+        {activeApp === "messages" && <Imessage />}
+        {activeApp === "music" && <Spotify />}
+        {activeApp === "camera" && <CameraApp />}
+        {activeApp === "Projects" && <Project />}
+      </div>
+
+      {/* iOS BOTTOM HOME BAR */}
+      <div
+        onClick={onClose}
+        className="absolute bottom-1 inset-x-0 flex justify-center py-2 cursor-pointer z-50 active:opacity-60 transition-opacity"
+      >
+        <div className="w-36 h-1 bg-white/80 rounded-full shadow-md backdrop-blur-md" />
+      </div>
+    </motion.div>
+  );
+}
