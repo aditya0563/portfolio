@@ -170,3 +170,177 @@ const DynamicWeatherWidget = () => {
   return (
     <div className="w-full h-full bg-[#2C3540]/80 backdrop-blur-2xl rounded-[22px] sm:rounded-[26px] p-3.5 sm:p-4 flex flex-col justify-between shadow-xl border border-white/5 text-white select-none">
       <div>
+        <div className="text-[11px] sm:text-[12px] font-semibold text-white/90 truncate flex items-center">
+          <span className="truncate">{weather.location}</span>
+          <LocationArrowIcon />
+        </div>
+        <div className="text-[28px] sm:text-[36px] font-light leading-tight mt-0.5">
+          {weather.temp}°
+        </div>
+      </div>
+      <div>
+        <DrizzleIcon />
+        <div className="text-[10px] sm:text-[11px] font-medium text-white/95 leading-tight mt-0.5">
+          {weather.condition}
+        </div>
+        <div className="text-[9px] sm:text-[10px] font-medium text-white/60 leading-tight">
+          H:{weather.high}° L:{weather.low}°
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- MAIN APP GRID DATA ---
+const APP_GRID = [
+  // Row 1
+  { 
+    id: "calendar", 
+    label: "Calendar", 
+  },
+  { 
+    id: "notes", 
+    label: "Notes", 
+    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/1/18/Notes_%28iOS_26%29_app_icon.png" 
+  },
+  { 
+    id: "calculator", 
+    label: "Calculator", 
+    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Calculator_%28iOS_26%29_app_icon.png" 
+  },
+  { 
+    id: "github", 
+    label: "GitHub", 
+    imgSrc: "https://img.icons8.com/ios11/1200/github.jpg" 
+  },
+  // Row 2
+  { 
+    id: "leetcode", 
+    label: "LeetCode", 
+    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" 
+  },
+  { 
+    id: "settings", 
+    label: "Settings", 
+    imgSrc: "https://cdn.iconscout.com/icon/free/png-256/free-apple-settings-icon-svg-download-png-493162.png?f=webp", 
+    badge: 2 
+  },
+  { 
+    id: "maps", 
+    label: "Maps", 
+    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/2/21/Apple_Maps_iOS_26_icon.png" 
+  },
+  { 
+    id: "photos", 
+    label: "Photos", 
+    imgSrc: "https://cdn.iconscout.com/icon/free/png-256/free-apple-photos-icon-svg-download-png-493155.png?f=webp" 
+  },
+  // Row 3
+  { 
+    id: "linkedin", 
+    label: "LinkedIn", 
+    imgSrc: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/linkedin-app-icon.png", 
+    badge: 26 
+  },
+  { 
+    id: "safari", 
+    label: "Safari", 
+    imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcZzmhhfkg4fZrWCOJ8TJqDk4m_XkI6MAh6YgnxuPaUH8CZgBa88BPSkY&s=10" 
+  },
+  { 
+    id: "projects", 
+    label: "Projects", 
+    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Files_App_icon_iOS.png" 
+  },
+  { 
+    id: "resume", 
+    label: "Resume.pdf", 
+    imgSrc: "https://p1.hiclipart.com/preview/390/359/771/ios-style-adobe-icons-pdf-ios7-red-png-icon.jpg" 
+  },
+];
+
+export default function HomeScreenGrid({ setActiveApp }) {
+  return (
+    <div className="relative z-30 w-full h-full overflow-hidden px-4 sm:px-6 py-2 flex flex-col justify-start max-w-[420px] max-h-[720px] my-auto mx-auto select-none touch-none">
+      
+      {/* 1. TOP WIDGETS ROW */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 shrink-0 mb-3 sm:mb-5">
+        {/* Dynamic Calendar Widget */}
+        <div 
+          onClick={() => setActiveApp && setActiveApp("Calendar")}
+          className="flex flex-col items-center gap-1 cursor-pointer active:scale-95 transition-transform w-full"
+        >
+          <div className="w-full max-w-[155px] aspect-square mx-auto">
+            <DynamicCalendarWidget />
+          </div>
+          <span className="text-[11px] font-medium text-white/90 tracking-tight drop-shadow">
+            Calendar
+          </span>
+        </div>
+
+        {/* Dynamic Weather Widget */}
+        <div 
+          onClick={() => setActiveApp && setActiveApp("Weather")}
+          className="flex flex-col items-center gap-1 cursor-pointer active:scale-95 transition-transform w-full"
+        >
+          <div className="w-full max-w-[155px] aspect-square mx-auto">
+            <DynamicWeatherWidget />
+          </div>
+          <span className="text-[11px] font-medium text-white/90 tracking-tight drop-shadow">
+            Weather
+          </span>
+        </div>
+      </div>
+
+      {/* 2. MAIN APP GRID */}
+      <div className="grid grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-3 sm:gap-y-4 justify-items-center items-center">
+        {APP_GRID.map((app) => (
+          <div
+            key={app.id}
+            onClick={() => setActiveApp && setActiveApp(app.label)}
+            className="flex flex-col items-center gap-1 cursor-pointer active:scale-90 transition-transform duration-150"
+          >
+            {/* iOS Continuous Squircle Outer Container */}
+            <div className="relative w-[58px] h-[58px] sm:w-[62px] sm:h-[62px] drop-shadow-[0_4px_8px_rgba(0,0,0,0.35)] shrink-0">
+              <div className="relative w-full h-full [clip-path:inset(0_round_22.5%)] flex items-center justify-center overflow-hidden">
+                {/* App Content */}
+                {app.id === "calendar" ? (
+                  <DynamicCalendarIcon />
+                ) : app.imgSrc ? (
+                  <img
+                    src={app.imgSrc}
+                    alt={app.label}
+                    className="w-full h-full object-cover scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-slate-700/80 flex items-center justify-center">
+                    <span className="text-[10px] text-white/80 font-semibold uppercase tracking-wider">
+                      {app.label.substring(0, 2)}
+                    </span>
+                  </div>
+                )}
+
+                {/* --- iOS GLASS LIGHTING OVERLAYS --- */}
+                <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white/35 via-white/10 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 rounded-[22.5%] border border-white/30 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              </div>
+
+              {/* Notification Badge */}
+              {app.badge && (
+                <span className="absolute -top-1 -right-1 bg-[#FF3B30] text-white text-[10px] sm:text-[11px] font-bold px-1 min-w-[18px] h-[18px] rounded-full flex items-center justify-center border-2 border-white/20 shadow-md z-10">
+                  {app.badge}
+                </span>
+              )}
+            </div>
+
+            <span className="text-[11px] font-medium text-white/90 tracking-tight drop-shadow truncate max-w-[62px] text-center">
+              {app.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
+}
