@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Colors */
+  --color-secondary-container: #0566d9;
+  --color-surface-container-highest: #39323d;
+  --color-on-secondary-fixed: #001a42;
+  --color-surface-bright: #3d3741;
+  --color-inverse-primary: #842bd2;
+  --color-on-error-container: #ffdad6;
+  --color-surface-tint: #ddb7ff;
+  --color-on-background: #eadfed;
+  --color-surface-container: #231e27;
+  --color-on-surface: #eadfed;
+  --color-surface-dim: #16111b;
+  --color-outline-variant: #4d4354;
+  --color-on-tertiary-fixed-variant: #604100;
+  --color-primary-fixed-dim: #ddb7ff;
+  --color-surface-variant: #39323d;
+  --color-tertiary-fixed: #ffdead;
+  --color-outline: #988d9f;
+  --color-surface: #16111b;
+  --color-secondary-fixed: #d8e2ff;
+  --color-on-surface-variant: #cfc2d6;
+  --color-on-error: #690005;
+  --color-on-primary-fixed-variant: #6900b3;
+  --color-error: #ffb4ab;
+  --color-on-tertiary-container: #3a2600;
+  --color-inverse-on-surface: #342e38;
+  --color-on-primary-fixed: #2c0051;
+  --color-on-primary-container: #400071;
+  --color-tertiary-fixed-dim: #fabc4e;
+  --color-surface-container-lowest: #110c15;
+  --color-inverse-surface: #eadfed;
+  --color-on-secondary: #002e6a;
+  --color-primary-container: #b76dff;
+  --color-on-primary: #490080;
+  --color-secondary-fixed-dim: #adc6ff;
+  --color-surface-container-high: #2e2832;
+  --color-primary-fixed: #f0dbff;
+  --color-secondary: #adc6ff;
+  --color-on-tertiary: #432c00;
+  --color-tertiary-container: #bd871a;
+  --color-on-secondary-container: #e6ecff;
+  --color-surface-container-low: #1f1a23;
+  --color-on-tertiary-fixed: #281900;
+  --color-background: #16111b;
+  --color-error-container: #93000a;
+  --color-primary: #ddb7ff;
+  --color-on-secondary-fixed-variant: #004395;
+  --color-tertiary: #fabc4e;
+  
+  --color-app-bg: #0b0b0b;
+  --color-card-bg: #121212;
+
+  /* Spacing */
+  --spacing-gutter: 1.5rem;
+  --spacing-bento-gap: 1.5rem;
+  --spacing-sidebar-width: 280px;
+  --spacing-margin-desktop: 3rem;
+  --spacing-margin-mobile: 1.25rem;
+
+  /* Typography */
+  --font-headline-md: 'Inter', sans-serif;
+  --font-headline-lg-mobile: 'Inter', sans-serif;
+  --font-label-sm: 'Inter', sans-serif;
+  --font-body-md: 'Inter', sans-serif;
+  --font-display-lg: 'Inter', sans-serif;
+  --font-headline-lg: 'Inter', sans-serif;
+  --font-body-lg: 'Inter', sans-serif;
+
+  /* We'll use classes for text sizes since v4 text- sizes combine font-size and line-height.
+     But we can also define them as standard values. */
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 1.4;
+  --text-headline-md--font-weight: 500;
+  
+  --text-headline-lg-mobile: 32px;
+  --text-headline-lg-mobile--line-height: 1.2;
+  --text-headline-lg-mobile--font-weight: 600;
+
+  --text-label-sm: 14px;
+  --text-label-sm--line-height: 1;
+  --text-label-sm--letter-spacing: 0.05em;
+  --text-label-sm--font-weight: 500;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 1.6;
+  --text-body-md--font-weight: 400;
+
+  --text-display-lg: 64px;
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.04em;
+  --text-display-lg--font-weight: 700;
+
+  --text-headline-lg: 40px;
+  --text-headline-lg--line-height: 1.2;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--font-weight: 400;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-app-bg text-on-surface font-body-md min-h-screen antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Utility classes matching previous HTML usage */
+  .font-headline-md {
+    font-family: var(--font-headline-md);
+  }
+  .font-headline-lg-mobile {
+    font-family: var(--font-headline-lg-mobile);
+  }
+  .font-label-sm {
+    font-family: var(--font-label-sm);
+  }
+  .font-body-md {
+    font-family: var(--font-body-md);
+  }
+  .font-display-lg {
+    font-family: var(--font-display-lg);
+  }
+  .font-headline-lg {
+    font-family: var(--font-headline-lg);
+  }
+  .font-body-lg {
+    font-family: var(--font-body-lg);
+  }
 }
