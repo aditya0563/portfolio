@@ -112,6 +112,18 @@ export const projects: Project[] = [
     liveUrl: "#",
     isFeatured: false,
   },
+  {
+    id: "ai-code-reviewer",
+    title: "AI Code Reviewer",
+    description: "An intelligent, real-time code analysis platform featuring a glassmorphism UI. Uses Google Gemini API for automated code feedback and syntax highlighting.",
+    tags: ["React", "Vite", "Tailwind CSS", "Gemini API", "Node.js"],
+    imageUrl: "https://your-live-site-url.com/preview-image.png", // Replace with your screenshot link
+    imageAlt: "Dashboard of the AI Code Reviewer showing code editor and analysis results",
+    githubUrl: "https://github.com/aditya0563/code-reviewer",
+    liveUrl: "https://code-reviewer-coral-psi.vercel.app/",
+    isFeatured: true,
+    type: "AI/Developer Tool",
+  }
 ];
 
 export const certifications: Certification[] = [
