@@ -10,3 +10,17 @@ const App = () => {
       setIsMobile(window.innerWidth < 786);
     };
 
+    // Set initial value on mount
+    handleResize();
+
+    // Listen for screen resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return isMobile ? <Mobile /> : <Laptop />;
+};
+
+export default App;
