@@ -57,3 +57,63 @@ This project reimagines the classic portfolio website by turning it into a livin
 ```bash
 git clone https://github.com/bikashdalapati-09/ios-portfolio.git
 cd ios-portfolio
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Run Development Server
+```bash
+npm run dev
+# or
+npm start
+```
+
+### 4. Build for Production
+```bash
+npm run build
+```
+
+---
+
+
+## 🎥 Demo
+
+* **Live Demo:** https://ios-portfolio-chi.vercel.app/ *(Best experienced on a desktop/laptop browser!)*
+
+---
+
+## 🚀 Future Improvements
+
+* Adaptive terminal with working CLI commands (`cat resume`, `ls projects`)
+* Custom audio feedback for bootup, window closing, and screen locking
+* Multiple high-resolution wallpaper presets
+* PWA (Progressive Web App) support for home screen installation
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork this repository and submit a pull request for new apps, widgets, or UI optimizations!
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+## 👨‍💻 Author
+
+**Biaksh Dalapati**
+* **GitHub:** https://github.com/bikashdalapati-09
+* **LinkedIn:** https://www.linkedin.com/in/bikashdalapati09/
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
