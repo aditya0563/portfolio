@@ -15,43 +15,25 @@ export default function YouTubeApp() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Default initial feed videos
-  const [videos, setVideos] = useState([
-    {
-      id: "dQw4w9WgXcQ",
-      title: "Rick Astley - Never Gonna Give You Up (Official Music Video)",
-      channel: "Rick Astley",
-      views: "1.5B views",
-      time: "14 years ago",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-    },
-    {
-      id: "L_LUpnjgPso",
-      title: "Build and Deploy a Full Stack MERN Desktop Portfolio",
-      channel: "Code Mastery",
-      views: "245K views",
-      time: "2 weeks ago",
-      thumbnail: "https://img.youtube.com/vi/L_LUpnjgPso/hqdefault.jpg",
-    },
-    {
-      id: "3JZ_D3ELwOQ",
-      title: "C++ Advanced Data Structures & Algorithms Roadmap",
-      channel: "Tech Algo",
-      views: "120K views",
-      time: "1 month ago",
-      thumbnail: "https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg",
-    },
-    {
-      id: "fJ9rUzIMcZQ",
-      title: "BMW M4 Competition - Pure Engine Sound & Aesthetics",
-      channel: "Auto Motion",
-      views: "890K views",
-      time: "3 months ago",
-      thumbnail: "https://img.youtube.com/vi/fJ9rUzIMcZQ/hqdefault.jpg",
-    },
-  ]);
+  // Local Database of Videos for mock searching
+  const ALL_VIDEOS = [
+    { id: "dQw4w9WgXcQ", title: "Rick Astley - Never Gonna Give You Up", channel: "Rick Astley", views: "1.5B views", time: "14 years ago" },
+    { id: "L_LUpnjgPso", title: "Build and Deploy a Full Stack MERN Desktop Portfolio", channel: "Code Mastery", views: "245K views", time: "2 weeks ago" },
+    { id: "3JZ_D3ELwOQ", title: "C++ Advanced Data Structures & Algorithms Roadmap", channel: "Tech Algo", views: "120K views", time: "1 month ago" },
+    { id: "fJ9rUzIMcZQ", title: "BMW M4 Competition - Pure Engine Sound & Aesthetics", channel: "Auto Motion", views: "890K views", time: "3 months ago" },
+    { id: "pkmAksHqU20", title: "The Next Generation of AI Models Explained", channel: "TechInsider", views: "1.2M views", time: "5 days ago" },
+    { id: "jNQXAC9IVRw", title: "Me at the zoo", channel: "jawed", views: "305M views", time: "18 years ago" },
+    { id: "VqgUkExPvLY", title: "Next.js 14 Crash Course", channel: "Web Dev Simplified", views: "450K views", time: "4 months ago" },
+    { id: "KJwYBJOUIG0", title: "Sony A7IV vs Canon R6 Mark II", channel: "Camera Geek", views: "320K views", time: "1 month ago" },
+    { id: "0e3GPea1Tyg", title: "Chill Lofi Beats to Study/Relax To", channel: "Lofi Girl", views: "50M views", time: "Live" },
+    { id: "B4Yq21wWwI4", title: "How computers actually work", channel: "Computerphile", views: "2.1M views", time: "3 years ago" },
+    { id: "yWgb2n70yE8", title: "Cyberpunk 2077 - Phantom Liberty Gameplay", channel: "Gaming HUB", views: "3.4M views", time: "6 months ago" },
+    { id: "8dWL3wF_OMw", title: "Top 10 VS Code Extensions for Web Developers", channel: "Dev Tips", views: "500K views", time: "2 months ago" }
+  ].map(v => ({ ...v, thumbnail: `https://img.youtube.com/vi/${v.id}/hqdefault.jpg` }));
 
-  // Real search engine integration
+  const [videos, setVideos] = useState(ALL_VIDEOS.slice(0, 4));
+
+  // Local mock search engine integration
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
@@ -60,33 +42,17 @@ export default function YouTubeApp() {
     setSelectedVideo(null);
 
     try {
-      // Fetch dynamic search results using an open API proxy
-      const res = await fetch(
-        `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(searchQuery)}&filter=all`
+      // Simulate network request for realism
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      const results = ALL_VIDEOS.filter((video) =>
+        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        video.channel.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      const data = await res.json();
 
-      if (data && data.items) {
-        const formattedResults = data.items
-          .filter((item) => item.type === "stream")
-          .map((item) => {
-            const videoId = item.url.split("v=")[1] || item.url.replace("/watch?v=", "");
-            return {
-              id: videoId,
-              title: item.title,
-              channel: item.uploaderName || "YouTube Creator",
-              views: `${(item.views / 1000).toFixed(0)}K views`,
-              time: item.uploadedDate || "Recently",
-              thumbnail: item.thumbnail || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-            };
-          });
-
-        if (formattedResults.length > 0) {
-          setVideos(formattedResults);
-        }
-      }
+      setVideos(results);
     } catch (err) {
-      console.error("Failed to fetch videos:", err);
+      console.error("Failed to search videos:", err);
     } finally {
       setLoading(false);
     }
@@ -95,6 +61,7 @@ export default function YouTubeApp() {
   const handleResetHome = () => {
     setSelectedVideo(null);
     setSearchQuery("");
+    setVideos(ALL_VIDEOS.slice(0, 4));
   };
 
   return (
