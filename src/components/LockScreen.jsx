@@ -96,7 +96,7 @@ export default function LockScreen({ profile, onUnlock }) {
       <div className="relative z-10 flex flex-col items-center gap-3 mb-12" onClick={(e) => e.stopPropagation()}>
         {/* Profile Initials Circle ("BD") with Frosted Glass Effect */}
         <div className="w-24 h-24 rounded-full border border-white/40 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] bg-gradient-to-b from-white/20 to-white/5 backdrop-blur-2xl flex items-center justify-center text-white text-2xl font-semibold tracking-wider drop-shadow-md">
-          BD
+          AT
         </div>
 
         {/* User Name */}

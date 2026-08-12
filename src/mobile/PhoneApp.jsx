@@ -11,7 +11,7 @@ import {
 export default function AdityaContactDetails() {
   const contact = {
     name: "Aditya Thakur",
-    initials: "BD",
+    initials: "AT",
     mobile: "89271 82293",
     email: "taditiya870@gmail.com",
     address: {
