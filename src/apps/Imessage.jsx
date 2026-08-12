@@ -15,7 +15,7 @@ export default function IMessageApp() {
   // EMAILJS CONFIGURATION
   // ==============================
 
-  const MY_EMAIL = "bikashdalapati09@gmail.com";
+  const MY_EMAIL = "taditiya870@gmail.com";
   const SERVICE_ID = "service_8h1ueni";
   const TEMPLATE_ID = "template_gwh23vg";
   const PUBLIC_KEY = "0Ri5ZPAZXH-9LkaEK";
@@ -315,7 +315,7 @@ export default function IMessageApp() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-xs text-white leading-tight">
-                Bikash
+                Aditya
               </span>
               <span className="text-[10px] text-zinc-400">
                 Full-Stack Developer •{" "}

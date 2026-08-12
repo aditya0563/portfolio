@@ -5,7 +5,7 @@ export default function CodeChefApp() {
   const [activeTab, setActiveTab] = useState("CodeChef Rating");
 
   // CodeChef profile base URL
-  const profileUrl = "https://www.codechef.com/users/bikash_09";
+  const profileUrl = "https://www.codechef.com/users/major_epic_51";
 
   // Heatmap generation (Last 6 Months grid)
   const days = ["Mon", "Wed", "Fri", "Sun"];
@@ -98,7 +98,7 @@ export default function CodeChefApp() {
         
         {/* Breadcrumb */}
         <div className="text-xs text-zinc-500">
-          <a href="https://www.codechef.com" target="_blank" rel="noopener noreferrer" className="hover:underline text-blue-600">Home</a> » bikash_09
+          <a href="https://www.codechef.com" target="_blank" rel="noopener noreferrer" className="hover:underline text-blue-600">Home</a> » major_epic_51
         </div>
 
         {/* MAIN LAYOUT GRID */}
@@ -115,7 +115,7 @@ export default function CodeChefApp() {
                 <div className="w-16 h-16 rounded-md overflow-hidden bg-zinc-100 border border-zinc-200 shrink-0">
                   <img
                     src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=200&q=80"
-                    alt="bikash_09"
+                    alt="major_epic_51"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -126,7 +126,7 @@ export default function CodeChefApp() {
                     rel="noopener noreferrer"
                     className="text-xl font-bold text-zinc-800 hover:text-blue-600 transition-colors flex items-center gap-1.5"
                   >
-                    bikash_09 <ExternalLink className="w-4 h-4 text-zinc-400" />
+                    major_epic_51 <ExternalLink className="w-4 h-4 text-zinc-400" />
                   </a>
                 </div>
               </div>
@@ -137,7 +137,7 @@ export default function CodeChefApp() {
                   <span className="font-semibold text-zinc-500">Username:</span>
                   <span className="col-span-2 font-medium flex items-center gap-1.5">
                     <span className="bg-green-700 text-white text-[10px] px-1 rounded font-bold">2★</span> 
-                    <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">bikash_09</a>
+                    <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">major_epic_51</a>
                   </span>
                 </div>
 

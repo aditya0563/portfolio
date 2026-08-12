@@ -383,7 +383,7 @@ export default function Settings({
             <div className="bg-white/80 dark:bg-[#1e1e1e]/80 rounded-xl p-4 flex items-center justify-between">
               <div>
                 <div className="text-xs font-bold text-gray-800 dark:text-gray-200">Bluetooth</div>
-                <div className="text-[11px] text-gray-500">Discoverable as Bikash's MacBook Pro</div>
+                <div className="text-[11px] text-gray-500">Discoverable as Aditya's Macbook Pro</div>
               </div>
               <Toggle enabled={bluetoothActive} onToggle={toggleBluetooth} />
             </div>
@@ -543,7 +543,7 @@ export default function Settings({
               />
               <div className="overflow-hidden">
                 <div className="font-medium text-xs leading-tight text-gray-900 dark:text-gray-100 truncate">
-                  Bikash Dalapati
+                  Aditya Thakur
                 </div>
                 <div className="text-[11px] text-gray-500 dark:text-gray-400">
                   Apple Account
@@ -645,7 +645,7 @@ export default function Settings({
                 className="w-16 h-16 rounded-full object-cover"
               />
               <div className="ml-4 flex-1">
-                <h2 className="text-2xl font-semibold">Bikash Dalapati</h2>
+                <h2 className="text-2xl font-semibold">Aditya Thakur</h2>
                 <p className="text-gray-400 text-sm">
                   Apple Account, iCloud and more
                 </p>

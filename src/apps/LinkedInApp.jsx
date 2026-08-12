@@ -10,7 +10,7 @@ export default function LinkedInApp() {
 
   // Profile data matched precisely to your LinkedIn screenshot details
   const [profileData] = useState({
-    name: "Bikash Dalapati",
+    name: "Aditya Thakur",
     headline: "Final Year CSE Student | Full Stack Developer (MERN) | Next.js | TypeScript | React.js | Node.js | REST APIs | Building Responsive & Scalable Web Applications.",
     location: "Midnapore, West Bengal, India",
     connections: "43",
@@ -87,7 +87,7 @@ export default function LinkedInApp() {
             className="w-full h-full object-cover"
           />
           <a
-            href="https://www.linkedin.com/in/bikashdalapati09/"
+            href="https://www.linkedin.com/in/aditya-thakur-1507091aa/"
             target="_blank"
             rel="noopener noreferrer"
             className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0a66c2] hover:bg-[#004182] text-[11px] sm:text-xs font-semibold text-white transition-all shadow-md cursor-pointer z-10"
@@ -100,7 +100,7 @@ export default function LinkedInApp() {
           <div className="absolute -bottom-10 left-4 sm:-bottom-12 sm:left-6 w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-[#24292e] shadow-2xl overflow-hidden bg-zinc-800 z-10">
             <img 
               src={profileImage} 
-              alt="Bikash Dalapati" 
+              alt="Aditya Thakur" 
               className="w-full h-full object-cover"
             />
           </div>

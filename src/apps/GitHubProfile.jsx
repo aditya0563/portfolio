@@ -81,7 +81,7 @@ export default function GitHubProfile() {
 
   // Automatically fetch default profile on initial render
   useEffect(() => {
-    fetchGitHubData("bikashdalapati-09");
+    fetchGitHubData("aditya0563");
   }, []);
 
   const handleSearch = (e) => {
@@ -355,10 +355,10 @@ export default function GitHubProfile() {
                           <span>
                             How to reach me:{" "}
                             <a
-                              href="mailto:bikashdalapati09@gmail.com"
+                              href="mailto:taditiya870@gmail.com"
                               className="text-[#58a6ff] hover:underline"
                             >
-                              bikashdalapati09@gmail.com
+                              taditiya870@gmail.com
                             </a>
                           </span>
                         </li>

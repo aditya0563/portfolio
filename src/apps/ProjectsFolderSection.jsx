@@ -117,7 +117,7 @@ const ICLOUD_FILES_DATA = [
           "Framer Motion",
         ],
 
-        githubUrl: "https://github.com/bikashdalapati-09",
+        githubUrl: "https://github.com/aditya0563",
         liveUrl: "https://ai-interview-agent-client-o7ai.onrender.com/",
 
         featured: true,
@@ -200,7 +200,7 @@ const ICLOUD_FILES_DATA = [
           "MongoDB",
         ],
 
-        githubUrl: "https://github.com/bikashdalapati-09/expense-tracker",
+        githubUrl: "https://github.com/aditya0563/expense-tracker",
         liveUrl: null,
 
         featured: false,
@@ -285,7 +285,7 @@ const ICLOUD_FILES_DATA = [
           "Tailwind CSS",
         ],
 
-        githubUrl: "https://github.com/bikashdalapati-09/chat-app",
+        githubUrl: "https://github.com/aditya0563/chat-app",
         liveUrl: null,
 
         featured: true,
@@ -362,7 +362,7 @@ const ICLOUD_FILES_DATA = [
           "React Icons",
         ],
 
-        githubUrl: "https://github.com/bikashdalapati-09",
+        githubUrl: "https://github.com/aditya0563",
         liveUrl: "#",
 
         featured: true,
@@ -721,7 +721,7 @@ export default function ProjectsFolderSection({
 
         <div className="flex items-center justify-center text-center">
           <h1 className="text-sm font-semibold tracking-tight truncate max-w-full">
-            {currentFolder ? currentFolder.name : "Bikash's iCloud"}
+            {currentFolder ? currentFolder.name : "Aditya's iCloud"}
           </h1>
         </div>
 

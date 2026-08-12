@@ -8,12 +8,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-export default function BikashContactDetails() {
+export default function AdityaContactDetails() {
   const contact = {
-    name: "Bikash Dalapati",
+    name: "Aditya Thakur",
     initials: "BD",
     mobile: "89271 82293",
-    email: "bikashdalapati09@gmail.com",
+    email: "taditiya870@gmail.com",
     address: {
       line1: "Uluberia",
       line2: "Howrah 711316",

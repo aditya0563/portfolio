@@ -31,8 +31,8 @@ const FILE_DATABASE = [
   // ==================== 1. RECENTS ====================
   {
     id: "f1",
-    name: "Bikash_Resume.pdf",
-    fullName: "Bikash_Resume.pdf",
+    name: "Aditya_Resume.pdf",
+    fullName: "Aditya_Resume.pdf",
     category: "recents",
     type: "PDF Document",
     size: "245 KB",

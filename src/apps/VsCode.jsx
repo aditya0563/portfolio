@@ -22,7 +22,7 @@ const initialFiles = [
     name: "Portfolio.jsx",
     language: "javascript",
     iconColor: "text-yellow-400",
-    content: `import React from 'react';\nimport { Motion } from 'framer-motion';\n\nexport default function Portfolio() {\n  return (\n    <div className="bg-zinc-950 text-white min-h-screen p-8">\n      <h1 className="text-3xl font-bold">Bikash Dalapati's Portfolio</h1>\n      <p className="text-zinc-400 mt-2">Full-Stack MERN Developer & DSA Specialist</p>\n    </div>\n  );\n}`
+    content: `import React from 'react';\nimport { Motion } from 'framer-motion';\n\nexport default function Portfolio() {\n  return (\n    <div className="bg-zinc-950 text-white min-h-screen p-8">\n      <h1 className="text-3xl font-bold">Aditya Thakur's Portfolio</h1>\n      <p className="text-zinc-400 mt-2">Full-Stack MERN Developer & DSA Specialist</p>\n    </div>\n  );\n}`
   },
   {
     id: "styles",
@@ -122,7 +122,7 @@ export default function VSCodeApp() {
         return;
       case "whoami":
         newLogs.push({
-          text: "Bikash - Full Stack Developer & DSA Specialist",
+          text: "Aditya - Full Stack Developer & DSA Specialist",
           type: "response"
         });
         break;

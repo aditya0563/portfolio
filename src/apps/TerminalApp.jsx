@@ -27,20 +27,20 @@ export default function TerminalApp() {
     const cmd = input.trim().toLowerCase();
     if (!cmd) return;
 
-    const newHistory = [...history, { type: "input", text: `bikash@macbook-pro ~ % ${input}` }];
+    const newHistory = [...history, { type: "input", text: `aditya@macbook-pro ~ % ${input}` }];
 
     switch (cmd) {
       case "help":
         newHistory.push({
           type: "output",
-          text: "Available commands:\n  about         - Learn about Bikash\n  education     - View degree & college info\n  skills        - View languages, tools & tech stack\n  projects      - View featured software projects\n  achievements  - View competitive programming & LeetCode stats\n  contact       - View email, phone & social profiles\n  clear         - Clear terminal screen\n  date          - Show current date & time",
+          text: "Available commands:\n  about         - Learn about Aditya\n  education     - View degree & college info\n  skills        - View languages, tools & tech stack\n  projects      - View featured software projects\n  achievements  - View competitive programming & LeetCode stats\n  contact       - View email, phone & social profiles\n  clear         - Clear terminal screen\n  date          - Show current date & time",
         });
         break;
 
       case "about":
         newHistory.push({
           type: "output",
-          text: "BIKASH DALAPATI\nLocation: Uluberia, West Bengal, India\nSummary: Computer Science Engineering student specializing in MERN stack web development and DSA problem solving.",
+          text: "ADITYA THAKUR\nLocation: Uluberia, West Bengal, India\nSummary: Computer Science Engineering student specializing in MERN stack web development and DSA problem solving.",
         });
         break;
 
@@ -75,7 +75,7 @@ export default function TerminalApp() {
       case "contact":
         newHistory.push({
           type: "output",
-          text: "Phone: +91-8927182293\nEmail: bikashdalapati09@gmail.com\nLinkedIn: linkedin.com/in/bikashdalapati09\nGitHub: github.com/bikashdalapati-09",
+          text: "Phone: +91 8368561339\nEmail: taditiya870@gmail.com\nLinkedIn: linkedin.com/in/aditya-thakur-1507091aa\nGitHub: github.com/aditya0563",
         });
         break;
 
@@ -121,7 +121,7 @@ export default function TerminalApp() {
 
         {/* Active Command Prompt Line */}
         <form onSubmit={handleCommand} className="flex items-center gap-2 mt-1 shrink-0">
-          <span className="text-emerald-500 font-bold shrink-0">bikash@macbook ~ %</span>
+          <span className="text-emerald-500 font-bold shrink-0">aditya@macbook ~ %</span>
           <input
             ref={inputRef}
             type="text"

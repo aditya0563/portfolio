@@ -21,7 +21,7 @@ export default function ResumeApp() {
         {/* Title Dropdown */}
         <div className="flex items-center gap-1.5 cursor-pointer ml-10">
           <span className="text-base font-semibold tracking-tight text-white">
-            Bikash CV
+            Aditya CV
           </span>
           <div className="w-4 h-4 rounded-full bg-zinc-800 flex items-center justify-center">
             <FaChevronDown className="text-[9px] text-zinc-400" />
@@ -31,7 +31,7 @@ export default function ResumeApp() {
         {/* Top Right Visible Download Button for Recruiters */}
         <a
           href={pdfUrl}
-          download="Bikash_Dalapati_Resume.pdf"
+          download="Aditya_Thakur_Resume.pdf"
           className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-md active:scale-95 transition-all cursor-pointer"
           title="Download Resume"
         >
@@ -44,7 +44,7 @@ export default function ResumeApp() {
       <div className="flex-1 w-full h-full bg-[#000000] overflow-y-auto p-2 sm:p-4 flex justify-center items-start">
         <iframe
           src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-          title="Bikash CV"
+          title="Aditya CV"
           className="w-full h-full max-w-2xl bg-white rounded-sm shadow-2xl border-none"
         />
       </div>
@@ -69,7 +69,7 @@ export default function ResumeApp() {
 
         <a 
           href={pdfUrl} 
-          download="Bikash_Dalapati_Resume.pdf"
+          download="Aditya_Thakur_Resume.pdf"
           className="w-8 h-8 rounded-full bg-zinc-800/60 flex items-center justify-center hover:text-white transition-colors"
           title="Share Resume"
         >

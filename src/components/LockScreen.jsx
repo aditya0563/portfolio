@@ -101,7 +101,7 @@ export default function LockScreen({ profile, onUnlock }) {
 
         {/* User Name */}
         <h2 className="text-white text-base font-semibold tracking-wide drop-shadow-md font-sans">
-          {profile?.name || "Bikash Dalapati"}
+          {profile?.name || "Aditya Thakur"}
         </h2>
 
         <AnimatePresence mode="wait">

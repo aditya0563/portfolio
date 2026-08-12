@@ -14,7 +14,7 @@ import {
   ExternalLink
 } from "lucide-react";
 
-export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) {
+export default function GitHubMobileProfile({ username = "aditya0563" }) {
   const [profile, setProfile] = useState(null);
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,13 +88,13 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
       {/* 2. Profile Header (Avatar, Name, Bio) */}
       <div className="flex items-center gap-4 mb-4">
         <img
-          src={profile?.avatar_url || "https://github.com/bikashdalapati-09.png"}
+          src={profile?.avatar_url || "https://github.com/aditya0563.png"}
           alt={profile?.name || username}
           className="w-16 h-16 rounded-full border border-[#30363d] object-cover"
         />
         <div className="flex flex-col">
           <h1 className="text-xl font-bold text-white leading-snug">
-            {profile?.name || "Bikash Dalapati"}
+            {profile?.name || "Aditya Thakur"}
           </h1>
           <span className="text-sm text-[#8b949e]">
             {profile?.login || username}
@@ -243,7 +243,7 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
               alt="hi"
               className="w-7 h-7"
             />
-            , I'm Bikash Dalapati
+            , I'm Aditya Thakur
           </h1>
           <h3 className="text-xs font-medium text-[#ff6b6b] mt-1">
             A passionate Problem Solver and Full Stack Developer from India
@@ -262,7 +262,7 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
         {/* Profile Views Badge */}
         <div>
           <img
-            src="https://komarev.com/ghpvc/?username=bikashdalapati-09&label=Profile%20views&color=ff6b6b&style=plastic"
+            src="https://komarev.com/ghpvc/?username=aditya0563&label=Profile%20views&color=ff6b6b&style=plastic"
             alt="profile views"
             className="h-5"
           />
@@ -296,10 +296,10 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
               <span>
                 How to reach me{" "}
                 <a
-                  href="mailto:bikashdalapati09@gmail.com"
+                  href="mailto:taditiya870@gmail.com"
                   className="text-white underline break-all"
                 >
-                  bikashdalapati09@gmail.com
+                  taditiya870@gmail.com
                 </a>
               </span>
             </li>
@@ -310,14 +310,14 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
         <div>
           <h2 className="text-sm font-bold text-white mb-3">Connect with me</h2>
           <div className="flex items-center gap-3">
-            <a href="https://linkedin.com/in/bikashdalapati09" target="_blank" rel="noreferrer">
+            <a href="https://linkedin.com/in/aditya-thakur-1507091aa" target="_blank" rel="noreferrer">
               <img
                 src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg"
                 alt="linkedin"
                 className="h-8"
               />
             </a>
-            <a href="https://twitter.com/bikashdalapati" target="_blank" rel="noreferrer">
+            <a href="https://twitter.com/adityathakur" target="_blank" rel="noreferrer">
               <img
                 src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg"
                 alt="twitter"
@@ -331,14 +331,14 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
         <div>
           <h2 className="text-sm font-bold text-white mb-3">Coding Profiles</h2>
           <div className="flex items-center gap-3">
-            <a href="https://www.leetcode.com/bikash_09" target="_blank" rel="noreferrer">
+            <a href="https://www.leetcode.com/Aditya_0567" target="_blank" rel="noreferrer">
               <img
                 src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg"
                 alt="leetcode"
                 className="h-8"
               />
             </a>
-            <a href="https://www.codechef.com/users/bikash_09" target="_blank" rel="noreferrer">
+            <a href="https://www.codechef.com/users/major_epic_51" target="_blank" rel="noreferrer">
               <img
                 src="https://img.icons8.com/color/48/codechef.png"
                 alt="codechef"
@@ -394,12 +394,12 @@ export default function GitHubMobileProfile({ username = "bikashdalapati-09" }) 
         {/* Stats Cards & Contribution Graph */}
         <div className="flex flex-col gap-4 pt-2">
           <img
-            src="https://github-readme-stats-lyart-six-14.vercel.app/api?username=bikashdalapati-09&show_icons=true&theme=radical&include_all_commits=true&count_private=true&hide_border=true&bg_color=0D1117&title_color=ff6b6b&icon_color=ff6b6b&text_color=c9d1d9"
+            src="https://github-readme-stats-lyart-six-14.vercel.app/api?username=aditya0563&show_icons=true&theme=radical&include_all_commits=true&count_private=true&hide_border=true&bg_color=0D1117&title_color=ff6b6b&icon_color=ff6b6b&text_color=c9d1d9"
             alt="GitHub Stats"
             className="w-full rounded-lg"
           />
           <img
-            src="https://github-readme-activity-graph.vercel.app/graph?username=bikashdalapati-09&custom_title=Contribution%20Graph&bg_color=0D1117&color=ff6b6b&line=ff6b6b&point=c9d1d9&area_color=ff6b6b&area=true&hide_border=true"
+            src="https://github-readme-activity-graph.vercel.app/graph?username=aditya0563&custom_title=Contribution%20Graph&bg_color=0D1117&color=ff6b6b&line=ff6b6b&point=c9d1d9&area_color=ff6b6b&area=true&hide_border=true"
             alt="Contribution Graph"
             className="w-full rounded-lg"
           />

@@ -108,7 +108,7 @@ const WindowManager = ({
           isMinimized={windows.terminal.isMinimized}
           onClose={() => onClose("terminal")}
           onMinimize={() => onMinimize("terminal")}
-          title="bikash@macbook-pro:~"
+          title="aditya@macbook-pro:~"
           defaultWidth={600}
           defaultHeight={380}
           {...getCenterPosition(600, 380)}

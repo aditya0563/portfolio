@@ -81,7 +81,7 @@ const dockVariants = {
 };
 
 const profile = {
-  name: "Bikash Dalapati",
+  name: "Aditya Thakur",
   title: "Full-Stack MERN Developer & DSA Problem Solver",
   bio: "Building high-performance web applications and solving complex algorithmic challenges with clean, modern code.",
 };
