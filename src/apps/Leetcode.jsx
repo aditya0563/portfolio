@@ -66,9 +66,9 @@ export default function LeetCodeApp() {
     fetchLeetCodeStats();
   }, [username]);
 
-  const easySolved = stats?.easySolved ?? 428;
-  const mediumSolved = stats?.mediumSolved ?? 429;
-  const hardSolved = stats?.hardSolved ?? 126;
+  const easySolved = stats?.easySolved ?? 0;
+  const mediumSolved = stats?.mediumSolved ?? 0;
+  const hardSolved = stats?.hardSolved ?? 0;
   const totalSolved = stats ? stats.easySolved + stats.mediumSolved + stats.hardSolved : (easySolved + mediumSolved + hardSolved);
 
   // Months grouped with week column counts for precise month-by-month grid separation
@@ -172,7 +172,7 @@ export default function LeetCodeApp() {
                 </div>
 
                 <p className="text-zinc-300 italic text-xs bg-[#1f1f1f] p-2.5 rounded-lg border border-[#333]">
-                  "Be the GameChanger !!!..."
+                  "Mastering DSA in C++ 🚀"
                 </p>
 
                 <div className="flex items-center gap-4 text-zinc-400 text-xs">
@@ -187,7 +187,7 @@ export default function LeetCodeApp() {
                   </div>
                   <div className="flex items-center gap-2.5">
                     <GraduationCap className="w-4 h-4 text-zinc-500 flex-shrink-0" />
-                    <span className="text-zinc-300 truncate">OmDayal Group of Institutions</span>
+                    <span className="text-zinc-300 truncate">BTech CSE Student</span>
                   </div>
 
                   <a href="https://github.com/aditya0563" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 hover:text-[#ffa116] transition-colors truncate">

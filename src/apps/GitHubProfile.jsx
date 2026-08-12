@@ -319,8 +319,7 @@ export default function GitHubProfile() {
                         Hi 👋, I'm {profile.name || profile.login}
                       </h2>
                       <p className="text-gray-300 font-medium">
-                        A passionate Problem Solver and Full Stack Developer
-                        from India
+                        BTech CSE student passionate about AI ML and full-stack development 🚀
                       </p>
                       <div className="mt-3 inline-flex items-center gap-1.5 bg-[#21262d] px-2.5 py-1 rounded text-xs text-gray-300 border border-[#30363d]">
                         <span>Profile views</span>
@@ -340,14 +339,14 @@ export default function GitHubProfile() {
                           <span>🔭</span>
                           <span>
                             I'm currently working on{" "}
-                            <strong className="text-white">Next.js</strong>
+                            <strong className="text-white">AI/ML Projects</strong>
                           </span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span>🌱</span>
                           <span>
                             I'm currently learning{" "}
-                            <strong className="text-white">MERN Stack</strong>
+                            <strong className="text-white">DSA in C++</strong>
                           </span>
                         </li>
                         <li className="flex items-start gap-2">
@@ -397,7 +396,7 @@ export default function GitHubProfile() {
                     {/* Dynamic GitHub Stats Card */}
                     <div className="border-t border-[#30363d] pt-4 flex flex-col items-center">
                       <img
-                        src={`https://github-readme-stats.vercel.app/api?username=${profile.login}&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117`}
+                        src={`https://github-readme-stats.vercel.app/api?username=aditya0563&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117`}
                         alt="GitHub Stats"
                         className="max-w-full h-auto rounded"
                       />
