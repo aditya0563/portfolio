@@ -13,7 +13,7 @@ import {
 import { FaCalendarAlt, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 
 export default function WeatherApp() {
-  const [city, setCity] = useState("Kolkata");
+  const [city, setCity] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -121,7 +121,51 @@ export default function WeatherApp() {
   };
 
   useEffect(() => {
-    fetchWeather(city);
+    const fetchInitialLocation = async () => {
+      if (navigator.geolocation && (window.isSecureContext || window.location.hostname === "localhost")) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+              const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+              const data = await res.json();
+              const cityName = data.city || data.locality || data.principalSubdivision || "Delhi";
+              setCity(cityName);
+              fetchWeather(cityName);
+            } catch {
+              fetchIpLocation();
+            }
+          },
+          (error) => {
+            console.warn("Browser geolocation failed, falling back to IP:", error);
+            fetchIpLocation();
+          },
+          { timeout: 4000, enableHighAccuracy: false }
+        );
+      } else {
+        fetchIpLocation();
+      }
+    };
+
+    const fetchIpLocation = async () => {
+      try {
+        const response = await fetch("https://get.geojs.io/v1/ip/geo.json");
+        const locData = await response.json();
+        if (locData && locData.city) {
+          setCity(locData.city);
+          fetchWeather(locData.city);
+        } else {
+          setCity("Delhi");
+          fetchWeather("Delhi");
+        }
+      } catch (error) {
+        console.error("IP geolocation failed:", error);
+        setCity("Delhi");
+        fetchWeather("Delhi");
+      }
+    };
+
+    fetchInitialLocation();
   }, []);
 
   const handleSearch = (e) => {
