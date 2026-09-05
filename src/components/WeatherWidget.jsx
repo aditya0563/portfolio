@@ -127,11 +127,11 @@ export default function WeatherWidget({ onOpenWeather }) {
           const cityName = locData.city || locData.region || "Current Location";
           fetchWeather(parseFloat(locData.latitude), parseFloat(locData.longitude), cityName);
         } else {
-          fetchWeather(22.5726, 88.3639, "Kolkata");
+          fetchWeather(28.7041, 77.1025, "Delhi");
         }
       } catch (error) {
         console.error("IP geolocation failed:", error);
-        fetchWeather(22.5726, 88.3639, "Kolkata");
+        fetchWeather(28.7041, 77.1025, "Delhi");
       }
     };
 
