@@ -45,14 +45,14 @@ export default function LeetCodeApp() {
     async function fetchLeetCodeStats() {
       try {
         setLoading(true);
-        const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+        const response = await fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${username}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        if (data.status === "success") {
+        if (data && !data.errors) {
           setStats(data);
         }
       } catch (err) {
@@ -66,10 +66,37 @@ export default function LeetCodeApp() {
     fetchLeetCodeStats();
   }, [username]);
 
-  const easySolved = stats?.easySolved ?? 0;
-  const mediumSolved = stats?.mediumSolved ?? 0;
-  const hardSolved = stats?.hardSolved ?? 0;
-  const totalSolved = stats ? stats.easySolved + stats.mediumSolved + stats.hardSolved : (easySolved + mediumSolved + hardSolved);
+  const getSolvedCount = (difficulty) => {
+    if (!stats || !stats.matchedUserStats || !stats.matchedUserStats.acSubmissionNum) return 0;
+    const item = stats.matchedUserStats.acSubmissionNum.find(d => d.difficulty === difficulty);
+    return item ? item.count : 0;
+  };
+
+  const easySolved = getSolvedCount("Easy");
+  const mediumSolved = getSolvedCount("Medium");
+  const hardSolved = getSolvedCount("Hard");
+  const totalSolved = getSolvedCount("All") || (easySolved + mediumSolved + hardSolved);
+  const ranking = stats?.ranking?.toLocaleString() ?? "34,364";
+  const bio = stats?.about ?? "Mastering DSA in C++ 🚀";
+  const totalSubmissionsPastYear = stats?.submissionCalendar 
+    ? Object.values(stats.submissionCalendar).reduce((a, b) => a + b, 0)
+    : 921;
+
+  const formatTimeAgo = (timestamp) => {
+    if (!timestamp) return "";
+    const seconds = Math.floor((new Date() - new Date(timestamp * 1000)) / 1000);
+    let interval = seconds / 31536000;
+    if (interval > 1) return Math.floor(interval) + " years ago";
+    interval = seconds / 2592000;
+    if (interval > 1) return Math.floor(interval) + " months ago";
+    interval = seconds / 86400;
+    if (interval > 1) return Math.floor(interval) + " days ago";
+    interval = seconds / 3600;
+    if (interval > 1) return Math.floor(interval) + " hours ago";
+    interval = seconds / 60;
+    if (interval > 1) return Math.floor(interval) + " minutes ago";
+    return "just now";
+  };
 
   // Months grouped with week column counts for precise month-by-month grid separation
   const monthlyData = [
@@ -166,13 +193,13 @@ export default function LeetCodeApp() {
                     </div>
                     <p className="text-zinc-400 text-xs truncate mt-0.5">{username}</p>
                     <div className="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-[#1f1f1f] border border-zinc-700 text-zinc-300 text-[11px] font-medium">
-                      Rank <span className="text-white font-bold ml-1">34,364</span>
+                      Rank <span className="text-white font-bold ml-1">{ranking}</span>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-zinc-300 italic text-xs bg-[#1f1f1f] p-2.5 rounded-lg border border-[#333]">
-                  "Mastering DSA in C++ 🚀"
+                <p className="text-zinc-300 italic text-xs bg-[#1f1f1f] p-2.5 rounded-lg border border-[#333] whitespace-pre-wrap">
+                  "{bio}"
                 </p>
 
                 <div className="flex items-center gap-4 text-zinc-400 text-xs">
@@ -374,7 +401,7 @@ export default function LeetCodeApp() {
               <div className="bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col gap-3 shadow-md">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="text-base sm:text-lg font-bold text-white tracking-tight">921</span>
+                    <span className="text-base sm:text-lg font-bold text-white tracking-tight">{totalSubmissionsPastYear}</span>
                     <span className="text-zinc-400 font-medium text-xs">submissions in the past one year</span>
                     <Info className="w-3.5 h-3.5 text-zinc-500 hover:text-zinc-300 cursor-pointer transition-colors" />
                   </div>
@@ -461,7 +488,18 @@ export default function LeetCodeApp() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  {[
+                  {stats?.recentSubmissions?.slice(0, 5).map((sub, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-2.5 rounded-lg bg-[#1f1f1f] border border-[#333] hover:border-zinc-600 transition-colors">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                        <span className="text-zinc-200 font-medium truncate">{sub.title}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-[11px] flex-shrink-0">
+                        <span className="text-zinc-500 hidden sm:inline uppercase">{sub.lang}</span>
+                        <span className="text-zinc-400">{formatTimeAgo(sub.timestamp)}</span>
+                      </div>
+                    </div>
+                  )) || [
                     { title: "Two Sum", difficulty: "Easy", time: "1 day ago", lang: "C++" },
                     { title: "Add Two Numbers", difficulty: "Medium", time: "2 days ago", lang: "C++" },
                     { title: "Median of Two Sorted Arrays", difficulty: "Hard", time: "3 days ago", lang: "C++" }
