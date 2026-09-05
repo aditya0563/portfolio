@@ -25,21 +25,8 @@ export default function LeetCodeApp() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("recent");
   
-  // Dynamic streak calculation: Base streak of 514 on anchor date (July 28, 2026)
-  const [streak, setStreak] = useState(514);
-
-  useEffect(() => {
-    const baseStreak = 514;
-    const anchorDate = new Date("2026-07-28T00:00:00Z");
-    const now = new Date();
-    
-    const diffInTime = now.getTime() - anchorDate.getTime();
-    const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
-    
-    if (diffInDays > 0) {
-      setStreak(baseStreak + diffInDays);
-    }
-  }, []);
+  // Streak from screenshot
+  const streak = 8;
 
   useEffect(() => {
     async function fetchLeetCodeStats() {
@@ -152,7 +139,7 @@ export default function LeetCodeApp() {
           </div>
 
           <div className="w-8 h-8 rounded-full bg-zinc-700 overflow-hidden border border-zinc-600 flex-shrink-0 cursor-pointer">
-            <img src={userAvatar} alt="Avatar" className="w-full h-full object-cover" />
+            <img src={stats?.avatar || userAvatar} alt="Avatar" className="w-full h-full object-cover" />
           </div>
         </div>
       </header>
@@ -183,7 +170,7 @@ export default function LeetCodeApp() {
               <div className="bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col gap-4 shadow-md">
                 <div className="flex gap-3.5 items-start">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-zinc-700 border border-zinc-600 flex-shrink-0 shadow-inner">
-                    <img src={userAvatar} alt="Aditya Thakur" className="w-full h-full object-cover" />
+                    <img src={stats?.avatar || userAvatar} alt="Aditya Thakur" className="w-full h-full object-cover" />
                   </div>
 
                   <div className="min-w-0 flex-1">
@@ -253,14 +240,18 @@ export default function LeetCodeApp() {
                 <div className="flex flex-col gap-2.5 text-zinc-400 text-xs">
                   <div className="flex justify-between items-center">
                     <span className="flex items-center gap-2">👁️ Views</span>
-                    <span className="text-white font-medium">9 <span className="text-[10px] text-zinc-500 font-normal block sm:inline">Last week 0</span></span>
+                    <span className="text-white font-medium">12 <span className="text-[10px] text-zinc-500 font-normal block sm:inline">Last week +1</span></span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="flex items-center gap-2">☑️ Solution</span>
-                    <span className="text-white font-medium">1 <span className="text-[10px] text-zinc-500 font-normal block sm:inline">Last week 0</span></span>
+                    <span className="text-white font-medium">3 <span className="text-[10px] text-zinc-500 font-normal block sm:inline">Last week 0</span></span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="flex items-center gap-2">💬 Discuss</span>
+                    <span className="text-white font-medium">0 <span className="text-[10px] text-zinc-500 font-normal block sm:inline">Last week 0</span></span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="flex items-center gap-2">⭐ Reputation</span>
                     <span className="text-white font-medium">0 <span className="text-[10px] text-zinc-500 font-normal block sm:inline">Last week 0</span></span>
                   </div>
                 </div>
@@ -276,15 +267,15 @@ export default function LeetCodeApp() {
                   <div className="grid grid-cols-3 gap-2">
                     <div>
                       <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Contest Rating</p>
-                      <p className="text-lg sm:text-xl font-bold text-white mt-0.5">1,532</p>
+                      <p className="text-lg sm:text-xl font-bold text-white mt-0.5">1,546</p>
                     </div>
                     <div>
                       <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Global Ranking</p>
-                      <p className="text-xs font-semibold text-white mt-1">314,988 <span className="text-zinc-500 font-normal text-[10px]">/876,708</span></p>
+                      <p className="text-xs font-semibold text-white mt-1">290,768 <span className="text-zinc-500 font-normal text-[10px]">/881,221</span></p>
                     </div>
                     <div>
                       <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Attended</p>
-                      <p className="text-xs font-semibold text-white mt-1">28</p>
+                      <p className="text-xs font-semibold text-white mt-1">4</p>
                     </div>
                   </div>
 
@@ -373,26 +364,26 @@ export default function LeetCodeApp() {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Badges</p>
-                      <p className="text-xl font-bold text-white mt-0.5">27</p>
+                      <p className="text-xl font-bold text-white mt-0.5">6</p>
                     </div>
                     <ChevronRight className="w-4 h-4 text-zinc-400 cursor-pointer hover:text-white transition-colors" />
                   </div>
 
                   <div className="flex items-center justify-around my-1 gap-2">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-md flex-shrink-0 flex items-center justify-center text-[10px] font-extrabold text-black">
-                      500d
+                    <div className="w-12 h-12 rounded-full border-2 border-zinc-600 flex items-center justify-center flex-shrink-0 p-1">
+                      <div className="w-full h-full rounded-full bg-gradient-to-tr from-lime-500 to-green-400 opacity-80" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}></div>
                     </div>
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5 shadow-md flex-shrink-0 flex items-center justify-center text-[10px] font-extrabold text-black">
-                      100d
+                    <div className="w-12 h-12 rounded-full border-2 border-zinc-600 flex items-center justify-center flex-shrink-0 p-1">
+                      <div className="w-full h-full rounded-full bg-gradient-to-tr from-lime-500 to-green-400 opacity-80" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}></div>
                     </div>
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-400 p-0.5 shadow-md flex-shrink-0 flex items-center justify-center text-[10px] font-extrabold text-white">
-                      2026
+                    <div className="w-12 h-12 rounded-full border-2 border-zinc-600 flex items-center justify-center flex-shrink-0 p-1">
+                      <div className="w-full h-full rounded-full bg-gradient-to-br from-rose-500 to-red-600 opacity-80" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}></div>
                     </div>
                   </div>
 
                   <div>
                     <p className="text-[10px] text-zinc-400">Most Recent Badge</p>
-                    <p className="text-xs font-semibold text-white mt-0.5">500 Days Badge</p>
+                    <p className="text-xs font-semibold text-white mt-0.5">50 Days Badge 2026</p>
                   </div>
                 </div>
               </div>
@@ -408,10 +399,10 @@ export default function LeetCodeApp() {
 
                   <div className="flex flex-wrap items-center gap-3 text-zinc-400 text-[11px] sm:text-xs">
                     <div>
-                      Total active days: <span className="text-white font-semibold">365</span>
+                      Total active days: <span className="text-white font-semibold">104</span>
                     </div>
                     <div>
-                      Max streak: <span className="text-white font-semibold">365</span>
+                      Max streak: <span className="text-white font-semibold">25</span>
                     </div>
 
                     <button className="flex items-center gap-1 bg-[#1f1f1f] border border-zinc-700 hover:border-zinc-500 text-zinc-200 px-2.5 py-1 rounded transition-colors cursor-pointer font-medium text-xs">
@@ -427,14 +418,18 @@ export default function LeetCodeApp() {
                     {monthlyData.map((month, monthIdx) => (
                       <div key={monthIdx} className="flex flex-col items-center gap-2">
                         
-                        {/* Month Grid (All Boxes Green) */}
+                        {/* Month Grid (Sparse Mockup) */}
                         <div className="grid grid-flow-col grid-rows-7 gap-1">
-                          {Array.from({ length: month.weeks * 7 }).map((_, boxIdx) => (
-                            <div
-                              key={boxIdx}
-                              className={`w-3 h-3 rounded-[2px] ${getActiveGreenShade(monthIdx * 7 + boxIdx)} transition-all hover:scale-110 hover:ring-1 hover:ring-white/80 cursor-pointer`}
-                            />
-                          ))}
+                          {Array.from({ length: month.weeks * 7 }).map((_, boxIdx) => {
+                            const isSparseActive = Math.random() > 0.85; // Mock sparse activity matching real leetcode
+                            const shade = isSparseActive ? getActiveGreenShade(monthIdx * 7 + boxIdx) : "bg-zinc-800";
+                            return (
+                              <div
+                                key={boxIdx}
+                                className={`w-3 h-3 rounded-[2px] ${shade} transition-all hover:scale-110 hover:ring-1 hover:ring-white/80 cursor-pointer`}
+                              />
+                            );
+                          })}
                         </div>
 
                         {/* Month Name */}
