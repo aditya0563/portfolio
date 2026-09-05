@@ -40,11 +40,13 @@ function MapFlyTo({ center, zoom }) {
 }
 
 export default function MapApp() {
-  const [mapCenter, setMapCenter] = useState([21.1926, 81.332]); // Default Bhilai coordinates
+  const ADITYA_LOCATION = [28.7158, 77.1705]; // Adarsh Nagar, Delhi
+  const [mapCenter, setMapCenter] = useState(ADITYA_LOCATION);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
+  const [distance, setDistance] = useState(null);
   const [tileStyle, setTileStyle] = useState("dark"); // 'dark' | 'street' | 'satellite'
 
   // Map Tile Providers
@@ -53,6 +55,24 @@ export default function MapApp() {
     street: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
   };
+
+  // Auto-fetch viewer's location on mount
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = [position.coords.latitude, position.coords.longitude];
+          setUserLocation(coords);
+          // Calculate straight-line distance in km using Leaflet
+          const dist = L.latLng(ADITYA_LOCATION).distanceTo(L.latLng(coords));
+          setDistance((dist / 1000).toFixed(1));
+        },
+        (error) => {
+          console.warn("Location permission denied or failed.");
+        }
+      );
+    }
+  }, []);
 
   // Real Global Location Search using OpenStreetMap's free Nominatim API
   const handleSearch = async (e) => {
@@ -80,7 +100,7 @@ export default function MapApp() {
     }
   };
 
-  // Get Live Real-Time User GPS Geolocation
+  // Get Live Real-Time User GPS Geolocation manually
   const handleGetMyLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -88,6 +108,8 @@ export default function MapApp() {
           const coords = [position.coords.latitude, position.coords.longitude];
           setUserLocation(coords);
           setMapCenter(coords);
+          const dist = L.latLng(ADITYA_LOCATION).distanceTo(L.latLng(coords));
+          setDistance((dist / 1000).toFixed(1));
         },
         (error) => {
           alert("Could not access your location. Check browser permissions.");
@@ -114,11 +136,11 @@ export default function MapApp() {
 
           <MapFlyTo center={mapCenter} zoom={14} />
 
-          {/* Active Searched Pin */}
-          <Marker position={mapCenter} icon={customIcon}>
+          {/* Aditya's Pinned Location */}
+          <Marker position={ADITYA_LOCATION} icon={customIcon}>
             <Popup>
-              <div className="text-zinc-900 font-sans text-xs font-semibold">
-                Selected Location
+              <div className="text-emerald-600 font-sans text-xs font-bold">
+                📍 Aditya is here (Adarsh Nagar, Delhi)
               </div>
             </Popup>
           </Marker>
@@ -133,13 +155,44 @@ export default function MapApp() {
               </Popup>
             </Marker>
           )}
+
+          {/* Active Searched Pin (Hide if it overlaps exactly with Aditya or User) */}
+          {mapCenter[0] !== ADITYA_LOCATION[0] && (!userLocation || mapCenter[0] !== userLocation[0]) && (
+            <Marker position={mapCenter} icon={customIcon}>
+              <Popup>
+                <div className="text-zinc-900 font-sans text-xs font-semibold">
+                  Selected Location
+                </div>
+              </Popup>
+            </Marker>
+          )}
         </MapContainer>
       </div>
+
+      {/* DISTANCE OVERLAY */}
+      {userLocation && distance && (
+        <div className="absolute top-24 sm:top-20 left-1/2 -translate-x-1/2 z-20 bg-[#161a1e]/95 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-2xl flex flex-col items-center gap-1 pointer-events-auto">
+          <div className="text-[11px] sm:text-xs font-semibold text-zinc-300">
+            Distance from Aditya
+          </div>
+          <div className="text-base sm:text-lg font-bold text-sky-400">
+            {distance} km
+          </div>
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation[0]},${userLocation[1]}&destination=${ADITYA_LOCATION[0]},${ADITYA_LOCATION[1]}`}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1 px-3 py-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 rounded-lg text-[10px] sm:text-[11px] font-medium transition-colors"
+          >
+            Directions on Google Maps
+          </a>
+        </div>
+      )}
 
       {/* 2. TOP OVERLAY CONTROLS */}
       <div className="relative z-10 pt-12 px-3 sm:pt-4 sm:px-4 flex items-start justify-between pointer-events-none gap-2">
         
-        {/* Search Box: Positioned right of back button on mobile (ml-12), normal on desktop (sm:ml-0) */}
+        {/* Search Box */}
         <div className="pointer-events-auto bg-[#161a1e]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl p-1.5 ml-12 sm:ml-0 w-full sm:w-80 flex flex-col gap-2">
           <form onSubmit={handleSearch} className="flex items-center gap-1.5 px-2 py-1 bg-[#21262d] rounded-lg border border-white/5">
             <Search className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
@@ -177,7 +230,6 @@ export default function MapApp() {
 
         {/* Right Actions: Layer Switcher & Re-center GPS */}
         <div className="pointer-events-auto flex flex-col gap-2 shrink-0">
-          {/* Map Layer Switcher */}
           <div className="bg-[#161a1e]/90 backdrop-blur-xl border border-white/10 p-1 rounded-xl shadow-2xl flex flex-col gap-1">
             <button
               onClick={() => setTileStyle("dark")}
@@ -223,7 +275,7 @@ export default function MapApp() {
       </div>
 
       {/* 3. DAILY LIFE QUICK UTILITY BOTTOM DRAWER */}
-      <div className="absolute bottom-4 left-3 right-3 sm:right-auto sm:left-4 z-10 bg-[#161a1e]/95 backdrop-blur-xl border border-white/10 p-2.5 sm:p-3 rounded-2xl shadow-2xl flex items-center justify-between sm:justify-start gap-2 sm:gap-3 overflow-x-auto scrollbar-none">
+      <div className="absolute bottom-4 left-3 right-3 sm:right-auto sm:left-4 z-10 bg-[#161a1e]/95 backdrop-blur-xl border border-white/10 p-2.5 sm:p-3 rounded-2xl shadow-2xl flex items-center justify-between sm:justify-start gap-2 sm:gap-3 overflow-x-auto scrollbar-none pointer-events-auto">
         <span className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider shrink-0">
           Explore:
         </span>
