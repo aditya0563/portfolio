@@ -32,14 +32,14 @@ export default function LeetCodeApp() {
     async function fetchLeetCodeStats() {
       try {
         setLoading(true);
-        const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+        const response = await fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${username}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        if (data.status === "success") {
+        if (data && !data.errors) {
           setStats(data);
         }
       } catch (err) {
@@ -53,13 +53,21 @@ export default function LeetCodeApp() {
     fetchLeetCodeStats();
   }, [username]);
 
-  const easySolved = stats?.easySolved ?? 0;
-  const mediumSolved = stats?.mediumSolved ?? 0;
-  const hardSolved = stats?.hardSolved ?? 0;
-  const totalSolved = stats ? stats.easySolved + stats.mediumSolved + stats.hardSolved : (easySolved + mediumSolved + hardSolved);
-  const ranking = "34,364";
-  const bio = "Mastering DSA in C++ 🚀";
-  const totalSubmissionsPastYear = 671;
+  const getSolvedCount = (difficulty) => {
+    if (!stats || !stats.matchedUserStats || !stats.matchedUserStats.acSubmissionNum) return null;
+    const item = stats.matchedUserStats.acSubmissionNum.find(d => d.difficulty === difficulty);
+    return item ? item.count : null;
+  };
+
+  const easySolved = getSolvedCount("Easy") ?? 192;
+  const mediumSolved = getSolvedCount("Medium") ?? 249;
+  const hardSolved = getSolvedCount("Hard") ?? 35;
+  const totalSolved = getSolvedCount("All") ?? 476;
+  const ranking = stats?.ranking?.toLocaleString() ?? "230,567";
+  const bio = stats?.about ?? "BTech CSE student passionate about Data Structures, Algorithms, and Problem-Solving. Focused on writing clean, efficient solutions and building strong fundamentals for coding interviews.";
+  const totalSubmissionsPastYear = stats?.submissionCalendar 
+    ? Object.values(stats.submissionCalendar).reduce((a, b) => a + b, 0)
+    : 671;
 
   // Months grouped with week column counts for precise month-by-month grid separation
   const monthlyData = [
@@ -156,7 +164,7 @@ export default function LeetCodeApp() {
                     </div>
                     <p className="text-zinc-400 text-xs truncate mt-0.5">{username}</p>
                     <div className="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-[#1f1f1f] border border-zinc-700 text-zinc-300 text-[11px] font-medium">
-                      Rank <span className="text-white font-bold ml-1">34,364</span>
+                      Rank <span className="text-white font-bold ml-1">{ranking}</span>
                     </div>
                   </div>
                 </div>
@@ -270,7 +278,7 @@ export default function LeetCodeApp() {
                 <div className="sm:col-span-5 bg-[#262626] border border-[#333] rounded-xl p-4 sm:p-5 flex flex-col justify-between gap-4 shadow-md">
                   <div>
                     <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Top</p>
-                    <p className="text-2xl font-bold text-white mt-0.5">36.35%</p>
+                    <p className="text-2xl font-bold text-white mt-0.5">33.39%</p>
                   </div>
                   <div className="flex items-end gap-1 h-12 pt-1">
                     {[20, 35, 45, 80, 100, 65, 40, 30, 20, 15, 10].map((h, i) => (
@@ -315,7 +323,7 @@ export default function LeetCodeApp() {
                         <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Solved
                       </span>
                       <span className="text-[9px] text-zinc-500 mt-0.5">
-                        21 Attempting
+                        11 Attempting
                       </span>
                     </div>
                   </div>
@@ -323,15 +331,15 @@ export default function LeetCodeApp() {
                   <div className="flex flex-col gap-2.5 w-full">
                     <div className="bg-[#1f1f1f] px-3 py-2 rounded-lg border border-[#333] flex justify-between items-center">
                       <span className="text-emerald-400 font-semibold text-xs">Easy</span>
-                      <span className="text-white font-bold text-xs">{easySolved}<span className="text-zinc-500 font-normal">/956</span></span>
+                      <span className="text-white font-bold text-xs">{easySolved}<span className="text-zinc-500 font-normal">/962</span></span>
                     </div>
                     <div className="bg-[#1f1f1f] px-3 py-2 rounded-lg border border-[#333] flex justify-between items-center">
                       <span className="text-amber-400 font-semibold text-xs">Med.</span>
-                      <span className="text-white font-bold text-xs">{mediumSolved}<span className="text-zinc-500 font-normal">/2091</span></span>
+                      <span className="text-white font-bold text-xs">{mediumSolved}<span className="text-zinc-500 font-normal">/2109</span></span>
                     </div>
                     <div className="bg-[#1f1f1f] px-3 py-2 rounded-lg border border-[#333] flex justify-between items-center">
                       <span className="text-rose-400 font-semibold text-xs">Hard</span>
-                      <span className="text-white font-bold text-xs">{hardSolved}<span className="text-zinc-500 font-normal">/956</span></span>
+                      <span className="text-white font-bold text-xs">{hardSolved}<span className="text-zinc-500 font-normal">/971</span></span>
                     </div>
                   </div>
                 </div>
@@ -389,8 +397,8 @@ export default function LeetCodeApp() {
                 </div>
 
                 {/* Heatmap Grid Separated by Months */}
-                <div className="w-full overflow-x-auto pb-1 pt-2">
-                  <div className="flex items-start gap-4 min-w-[780px]">
+                <div className="w-full overflow-x-hidden pb-1 pt-2 relative">
+                  <div className="flex items-start gap-4 min-w-[780px] blur-sm opacity-60 pointer-events-none">
                     {monthlyData.map((month, monthIdx) => (
                       <div key={monthIdx} className="flex flex-col items-center gap-2">
                         
@@ -399,18 +407,30 @@ export default function LeetCodeApp() {
                           {Array.from({ length: month.weeks * 7 }).map((_, boxIdx) => (
                             <div
                               key={boxIdx}
-                              className={`w-3 h-3 rounded-[2px] ${getActiveGreenShade(monthIdx * 7 + boxIdx)} transition-all hover:scale-110 hover:ring-1 hover:ring-white/80 cursor-pointer`}
+                              className={`w-3 h-3 rounded-[2px] ${getActiveGreenShade(monthIdx * 7 + boxIdx)}`}
                             />
                           ))}
                         </div>
 
                         {/* Month Name */}
-                        <span className="text-[11px] text-zinc-400 font-medium hover:text-zinc-200 transition-colors select-none">
+                        <span className="text-[11px] text-zinc-400 font-medium select-none">
                           {month.name}
                         </span>
 
                       </div>
                     ))}
+                  </div>
+
+                  <div className="absolute inset-0 flex items-center justify-center z-10">
+                    <a 
+                      href={leetCodeUrl}
+                      target="_blank"
+                      rel="noreferrer" 
+                      className="bg-[#ffa116] hover:bg-[#ffb84d] text-black font-semibold px-4 py-2 rounded-full shadow-lg transition-colors flex items-center gap-2 text-xs cursor-pointer"
+                    >
+                      <span>View Heatmap on LeetCode</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -449,9 +469,14 @@ export default function LeetCodeApp() {
                     </button>
                   </div>
 
-                  <span className="text-zinc-400 text-xs hover:text-white cursor-pointer transition-colors font-medium">
-                    View all submissions &gt;
-                  </span>
+                  <a 
+                    href={leetCodeUrl} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-zinc-400 text-xs hover:text-white cursor-pointer transition-colors font-medium flex items-center gap-1"
+                  >
+                    View all submissions <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
 
                 <div className="flex flex-col gap-2">
