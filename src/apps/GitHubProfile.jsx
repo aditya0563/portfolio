@@ -15,6 +15,9 @@ import {
   Pencil,
   Smile
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 export default function GitHubProfile() {
   const [profileInput, setProfileInput] = useState("");
@@ -23,6 +26,7 @@ export default function GitHubProfile() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+  const [readmeContent, setReadmeContent] = useState("");
 
   // Helper to extract clean username from plain text or URL inputs
   const extractUsername = (input) => {
@@ -70,11 +74,27 @@ export default function GitHubProfile() {
 
       setProfile(userData);
       setRepos(reposData);
+      // 3. Fetch User README
+      try {
+        const readmeRes = await fetch(`https://api.github.com/repos/${user}/${user}/readme`);
+        if (readmeRes.ok) {
+          const readmeData = await readmeRes.json();
+          // GitHub API returns base64 encoded content
+          // Sometimes there are newlines in the base64 string, so we replace them before decoding
+          setReadmeContent(decodeURIComponent(escape(window.atob(readmeData.content.replace(/\n/g, "")))));
+        } else {
+          setReadmeContent("No README found for this profile.");
+        }
+      } catch (e) {
+        setReadmeContent("Failed to load README.");
+      }
+
     } catch (err) {
       setError(err.message || "An error occurred while fetching the profile.");
       setProfile(null);
       setRepos([]);
-    }finally {
+      setReadmeContent("");
+    } finally {
       setLoading(false);
     }
   };
@@ -310,97 +330,16 @@ export default function GitHubProfile() {
                       {profile.login} / README.md
                     </span>
                     <Pencil className="w-3.5 h-3.5 cursor-pointer hover:text-white" />
-                  </div>
-
-                  <div className="p-6 space-y-6 text-sm text-[#c9d1d9]">
-                    {/* Header */}
-                    <div className="text-center sm:text-left">
-                      <h2 className="text-2xl font-bold text-white mb-2">
-                        Hi 👋, I'm {profile.name || profile.login}
-                      </h2>
-                      <p className="text-gray-300 font-medium">
-                        BTech CSE student passionate about AI ML and full-stack development 🚀
-                      </p>
-                      <div className="mt-3 inline-flex items-center gap-1.5 bg-[#21262d] px-2.5 py-1 rounded text-xs text-gray-300 border border-[#30363d]">
-                        <span>Profile views</span>
-                        <span className="bg-[#da3633] text-white font-bold px-1.5 py-0.2 rounded text-[11px]">
-                          731
-                        </span>
+                  <div className="p-6 text-sm text-[#c9d1d9] overflow-hidden prose prose-invert max-w-none prose-img:max-w-full">
+                    {readmeContent ? (
+                      <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
+                        {readmeContent}
+                      </ReactMarkdown>
+                    ) : (
+                      <div className="text-center text-gray-500 py-10">
+                        {loading ? "Loading README..." : "No README found for this profile."}
                       </div>
-                    </div>
-
-                    {/* About Me Section */}
-                    <div>
-                      <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-                        <span>🚀</span> About Me:
-                      </h3>
-                      <ul className="space-y-2 text-xs sm:text-sm text-gray-300 pl-2">
-                        <li className="flex items-start gap-2">
-                          <span>🔭</span>
-                          <span>
-                            I'm currently working on{" "}
-                            <strong className="text-white">AI/ML Projects</strong>
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span>🌱</span>
-                          <span>
-                            I'm currently learning{" "}
-                            <strong className="text-white">DSA in C++</strong>
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span>📫</span>
-                          <span>
-                            How to reach me:{" "}
-                            <a
-                              href="mailto:taditiya870@gmail.com"
-                              className="text-[#58a6ff] hover:underline"
-                            >
-                              taditiya870@gmail.com
-                            </a>
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    {/* Connect With Me */}
-                    <div className="border-t border-[#30363d] pt-4">
-                      <h3 className="text-sm font-semibold text-white mb-3">
-                        Connect with me
-                      </h3>
-                      <div className="flex items-center gap-3">
-                        <a
-                          href="https://linkedin.com"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-[#0a66c2] hover:opacity-80"
-                        >
-                          <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                          </svg>
-                        </a>
-                        <a
-                          href="https://twitter.com"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-[#1da1f2] hover:opacity-80"
-                        >
-                          <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Dynamic GitHub Stats Card */}
-                    <div className="border-t border-[#30363d] pt-4 flex flex-col items-center">
-                      <img
-                        src={`https://github-readme-stats.vercel.app/api?username=aditya0563&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117`}
-                        alt="GitHub Stats"
-                        className="max-w-full h-auto rounded"
-                      />
-                    </div>
+                    )}
                   </div>
                 </div>
 
