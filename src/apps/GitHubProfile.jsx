@@ -330,6 +330,7 @@ export default function GitHubProfile() {
                       {profile.login} / README.md
                     </span>
                     <Pencil className="w-3.5 h-3.5 cursor-pointer hover:text-white" />
+                  </div>
                   <div className="p-6 text-sm text-[#c9d1d9] overflow-hidden prose prose-invert max-w-none prose-img:max-w-full">
                     {readmeContent ? (
                       <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
