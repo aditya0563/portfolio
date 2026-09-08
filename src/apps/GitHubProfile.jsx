@@ -322,8 +322,28 @@ export default function GitHubProfile() {
               </div>
 
               {/* Right Column: Main Content */}
-              <div className="lg:col-span-3 space-y-8">
-                {/* Simulated README Markdown Box */}
+              <div className="lg:col-span-3 relative">
+                {/* Blur Overlay for non-overview tabs */}
+                {activeTab !== "overview" && (
+                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#0d1117]/30 backdrop-blur-[6px] rounded-md border border-[#30363d]/50">
+                    <h3 className="text-white text-lg font-bold mb-4 capitalize">
+                      {activeTab}
+                    </h3>
+                    <a
+                      href={`https://github.com/${profile.login}?tab=${activeTab}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 bg-[#238636] hover:bg-[#2ea043] text-white px-5 py-2.5 rounded-md font-semibold text-sm transition-colors shadow-lg"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      View on GitHub
+                    </a>
+                  </div>
+                )}
+                
+                {/* Main Content (Blurred if not overview) */}
+                <div className={`space-y-8 transition-all duration-300 ${activeTab !== "overview" ? "blur-[4px] opacity-60 pointer-events-none select-none" : ""}`}>
+                  {/* Simulated README Markdown Box */}
                 <div className="border border-[#30363d] rounded-md bg-[#0d1117]">
                   <div className="flex items-center justify-between px-4 py-2 border-b border-[#30363d] text-xs text-[#8b949e]">
                     <span className="font-mono">
@@ -419,6 +439,7 @@ export default function GitHubProfile() {
                       className="w-full min-w-[600px] h-auto"
                     />
                   </div>
+                </div>
                 </div>
               </div>
             </div>

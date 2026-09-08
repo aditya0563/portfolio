@@ -142,7 +142,7 @@ export default function GitHubMobileProfile({ username = "aditya0563" }) {
 
       {/* 3. iOS GitHub Menu List */}
       <div className="bg-[#161b22] border border-[#30363d] rounded-xl overflow-hidden mb-6 text-sm divide-y divide-[#30363d]">
-        <div className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors">
+        <a href={`https://github.com/${username}?tab=repositories`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors cursor-pointer">
           <div className="flex items-center gap-3 text-white">
             <BookOpen className="w-5 h-5 text-[#8b949e]" />
             <span>Repositories</span>
@@ -151,9 +151,9 @@ export default function GitHubMobileProfile({ username = "aditya0563" }) {
             <span>{profile?.public_repos || repos.length}</span>
             <ChevronRight className="w-4 h-4" />
           </div>
-        </div>
+        </a>
 
-        <div className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors">
+        <a href={`https://github.com/${username}?tab=stars`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors cursor-pointer">
           <div className="flex items-center gap-3 text-white">
             <Star className="w-5 h-5 text-amber-400" />
             <span>Starred</span>
@@ -162,9 +162,9 @@ export default function GitHubMobileProfile({ username = "aditya0563" }) {
             <span>2</span>
             <ChevronRight className="w-4 h-4" />
           </div>
-        </div>
+        </a>
 
-        <div className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors">
+        <a href={`https://github.com/${username}?tab=organizations`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors cursor-pointer">
           <div className="flex items-center gap-3 text-white">
             <Building className="w-5 h-5 text-[#8b949e]" />
             <span>Organizations</span>
@@ -173,9 +173,9 @@ export default function GitHubMobileProfile({ username = "aditya0563" }) {
             <span>0</span>
             <ChevronRight className="w-4 h-4" />
           </div>
-        </div>
+        </a>
 
-        <div className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors">
+        <a href={`https://github.com/${username}?tab=projects`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 hover:bg-[#21262d] transition-colors cursor-pointer">
           <div className="flex items-center gap-3 text-white">
             <FolderGit2 className="w-5 h-5 text-[#8b949e]" />
             <span>Projects</span>
@@ -184,7 +184,7 @@ export default function GitHubMobileProfile({ username = "aditya0563" }) {
             <span>1</span>
             <ChevronRight className="w-4 h-4" />
           </div>
-        </div>
+        </a>
       </div>
 
       {/* 4. Pinned Repositories Carousel */}
