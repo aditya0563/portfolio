@@ -322,7 +322,7 @@ export default function GitHubProfile() {
               </div>
 
               {/* Right Column: Main Content */}
-              <div className="lg:col-span-3 relative">
+              <div className={`lg:col-span-3 relative ${activeTab !== "overview" ? "max-h-[65vh] overflow-hidden rounded-md" : ""}`}>
                 {/* Blur Overlay for non-overview tabs */}
                 {activeTab !== "overview" && (
                   <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#0d1117]/30 backdrop-blur-[6px] rounded-md border border-[#30363d]/50">
