@@ -8,49 +8,31 @@ import profileImage from "../assets/profile-photo.jpeg";
 export default function LinkedInApp() {
   const [loading, setLoading] = useState(true);
 
-  // Profile data matched precisely to your LinkedIn screenshot details
-  const [profileData] = useState({
-    name: "Aditya Thakur",
-    headline: "Final Year CSE Student | Full Stack Developer (MERN) | Next.js | TypeScript | React.js | Node.js | REST APIs | Building Responsive & Scalable Web Applications.",
-    location: "Midnapore, West Bengal, India",
-    connections: "43",
-    followers: "2,450",
-    institution: "Om dayal group of institutions",
-    about: "Passionate Computer Science Engineering student specializing in building high-performance web applications and solving complex algorithmic challenges with clean, modern code. Experienced in the MERN stack, Next.js, and modern responsive design architectures.",
-    experience: [],
-    education: [
-      {
-        school: "Om dayal group of institutions",
-        degree: "Bachelor of Technology - BTech, Computer Science Engineering",
-        period: "2023 - 2027",
-        description: "Focused on core computer science fundamentals including Operating Systems, Computer Organization and Architecture (COA), and Database Management Systems (DBMS)."
-      }
-    ],
-    certifications: [
-      {
-        title: "Advanced Data Structures & Algorithms in C++",
-        issuer: "Codehelp",
-        issueDate: "2025"
-      },
-      {
-        title: "Full Stack Web Development By Harkirat Singh",
-        issuer: "100xDevs",
-        issueDate: "2025"
-      }
-    ],
-    skills: [
-      "Next.js", "TypeScript", "React.js", "Node.js", "Express.js", 
-      "MongoDB", "C++", "Data Structures & Algorithms", "Tailwind CSS", "REST APIs"
-    ]
-  });
+  const [profileData, setProfileData] = useState(null);
+  const [error, setError] = useState(null);
 
-  // Simulating load time for smooth transition
   useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 600);
-    return () => clearTimeout(timer);
+    const fetchProfileData = async () => {
+      try {
+        setLoading(true);
+        // Add a tiny artificial delay so the syncing animation is visible
+        await new Promise(resolve => setTimeout(resolve, 600));
+        
+        const response = await fetch('/data/linkedinProfile.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile data');
+        }
+        const data = await response.json();
+        setProfileData(data);
+      } catch (err) {
+        console.error("Error fetching LinkedIn profile:", err);
+        setError("Failed to load profile. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileData();
   }, []);
 
   if (loading) {
@@ -61,6 +43,16 @@ export default function LinkedInApp() {
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="w-full h-full bg-[#1b1f23] text-white flex flex-col items-center justify-center gap-3 select-none font-sans px-6 text-center">
+        <p className="text-sm text-red-400 tracking-wide font-medium">{error}</p>
+      </div>
+    );
+  }
+
+  if (!profileData) return null;
 
   return (
     <div className="w-full h-full bg-[#1b1f23] text-zinc-100 flex flex-col select-none font-sans overflow-y-auto scrollbar-none pb-8">
