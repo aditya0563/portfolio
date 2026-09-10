@@ -1,18 +1,24 @@
 {
   "name": "Aditya Thakur",
-  "headline": "Final Year CSE Student | Full Stack Developer (MERN) | Next.js | TypeScript | React.js | Node.js | REST APIs | Building Responsive & Scalable Web Applications.",
-  "location": "Midnapore, West Bengal, India",
-  "connections": "43",
+  "headline": "Full-Stack Developer engineering production-ready monorepos for modern web apps | Backed by 400+ LeetCode solutions",
+  "location": "Adarsh Nagar, Delhi, India",
+  "connections": "383",
   "followers": "2,450",
-  "institution": "Om dayal group of institutions",
-  "about": "Passionate Computer Science Engineering student specializing in building high-performance web applications and solving complex algorithmic challenges with clean, modern code. Experienced in the MERN stack, Next.js, and modern responsive design architectures.",
+  "institution": "Delhi Skill and Entrepreneurship University",
+  "about": "Transitioning from a Computer Science student to an industry-ready Full-Stack Developer, I focus on building scalable architectures and writing maintainable code. Having solved 250+ LeetCode problems, I approach development with a strong foundation in Data Structures, Algorithms, and System Design.\n\n𝗪𝗵𝗮𝘁 𝗜 𝗖𝗮𝗿𝗲 𝗔𝗯𝗼𝘂𝘁:\n• 𝗦𝗰𝗮𝗹𝗮𝗯𝗶𝗹𝗶𝘁𝘆 & 𝗣𝗲𝗿𝗳𝗼𝗿𝗺𝗮𝗻𝗰𝗲: Designing APIs that hold up under load and optimizing system bottlenecks.\n• 𝗔𝗿𝗰𝗵𝗶𝘁𝗲𝗰𝘁𝘂𝗿𝗲: Structuring production-ready applications, leveraging monorepos (Turborepo), and building type-safe ecosystems.\n• 𝗠𝗮𝗶𝗻𝘁𝗮𝗶𝗻𝗮𝗯𝗶𝗹𝗶𝘁𝘆: Writing clean, decoupled code that engineers can easily read and scale months down the line.\n\n𝗠𝘆 𝗧𝗲𝗰𝗵 𝗦𝘁𝗮𝗰𝗸:\n• 𝗟𝗮𝗻𝗴𝘂𝗮𝗴𝗲𝘀: C++, JavaScript, TypeScript\n• 𝗙𝗿𝗼𝗻𝘁𝗲𝗻𝗱: React, Next.js, Tailwind CSS\n• 𝗕𝗮𝗰𝗸𝗲𝗻𝗱 & 𝗗𝗕: Node.js, Express, tRPC, Drizzle ORM, MongoDB\n• 𝗔𝗿𝗰𝗵𝗶𝘁𝗲𝗰𝘁𝘂𝗿𝗲: Turborepo, Docker, Kubernetes (Exploring)\n\nI don’t chase shortcuts; I build foundations. I am actively looking for a Full-Stack role where I can contribute to durable systems and continue deepening my engineering expertise.",
   "experience": [],
   "education": [
     {
-      "school": "Om dayal group of institutions",
-      "degree": "Bachelor of Technology - BTech, Computer Science Engineering",
-      "period": "2023 - 2027",
-      "description": "Focused on core computer science fundamentals including Operating Systems, Computer Organization and Architecture (COA), and Database Management Systems (DBMS)."
+      "school": "Delhi Skill and Entrepreneurship University",
+      "degree": "Bachelor of Technology - BTech",
+      "period": "Jul 2024 - Apr 2028",
+      "description": "Guru Nanak Dev Institute of Technology (GNDIT) is a leading engineering institute in Delhi, affiliated with GGSIPU and recognized by AICTE. Known for its strong industry focus, experienced faculty, and modern facilities, GNDIT prepares students for successful careers in technology and innovation."
+    },
+    {
+      "school": "Prabhu Dayal Public School",
+      "degree": "Science",
+      "period": "Apr 2010 - May 2023",
+      "description": "I am a proud alumnus of Prabhu Dayal Public School, where I received a well-rounded education focused on academic excellence, extracurricular activities, and personal development. The school played a key role in shaping my skills and values, which continue to influence my academic and professional growth."
     }
   ],
   "certifications": [
@@ -28,15 +34,9 @@
     }
   ],
   "skills": [
-    "Next.js",
-    "TypeScript",
-    "React.js",
-    "Node.js",
-    "Express.js",
-    "MongoDB",
-    "C++",
-    "Data Structures & Algorithms",
-    "Tailwind CSS",
-    "REST APIs"
+    "C++", "JavaScript", "TypeScript",
+    "React.js", "Next.js", "Tailwind CSS",
+    "Node.js", "Express.js", "tRPC", "MongoDB",
+    "Problem Solving", "Engineering", "Leadership"
   ]
 }
